@@ -1,0 +1,127 @@
+header {
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+header > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+header > div > div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.toggleNav {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    cursor: pointer;
+}
+.toggleNav > div {
+    width: 30px;
+    height: 1px;
+    transition: 0.2s;
+}
+.darkMode .toggleNav > div {
+    background: #fff;
+}
+.lightMode .toggleNav > div {
+    background: #000;
+}
+header nav {
+    overflow: hidden;
+    transition: 0.3s ease;
+    border-bottom: solid 0.7px
+}
+.darkMode header nav {
+    border-color: #ffffff77;
+}
+.lightMode header nav {
+    border-color: #00000077;
+}
+header nav > ul {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+header nav li {
+    padding: 20px;
+    border-top: solid 0.7px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.darkMode header nav li {
+    border-color: #ffffff77;
+}
+.lightMode header nav li {
+    border-color: #00000077;
+}
+header nav li:hover {
+    background: #004585;
+}
+.lightMode header nav li:hover {
+    color: #fff;
+}
+.toggleDarkMode {
+    position: relative;
+    width: 45px;
+    height: 30px;
+    background: #fff;
+    border: solid 0.5px #000;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.toggleDarkMode > div {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background: #004585;
+    border-radius: 50%;
+    top: 50%;
+    transform: translate(0%, -50%);
+    transition: 0.3s;
+}
+.darkToggleThumb {
+    left: 16px;
+}
+.lightToggleThumb {
+    left: 2.5px;
+}
+
+
+/* Laptip scale */
+@media (min-width: 1024px) {
+    header {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    header > div {
+        gap: 20px;
+        order: 2;
+    }
+    .toggleNav {
+        display: none;
+    }
+    header nav {
+        border-bottom: none;
+    }
+    header nav > ul {
+        flex-direction: row;
+        list-style: none;
+    }
+    header nav > ul > li {
+        border-top: none;
+    }
+    header nav li:hover {
+        background: #215687;
+    }
+    .cartWrapper {
+        cursor: pointer;
+    }
+    .lightMode .toggleDarkMode {
+        border: solid 1px #00000055;
+    }
+}

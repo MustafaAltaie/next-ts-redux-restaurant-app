@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { api } from '../features/api/apiSlice';
-import tempReducer from '../features/temp/tempSlice';
+import restaurantReducer from '../features/restaurant/restaurantSlice';
 
 export const store = configureStore({
   reducer: {
-    temp: tempReducer,
+    foodList: restaurantReducer,
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>
