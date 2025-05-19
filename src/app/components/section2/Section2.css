@@ -1,0 +1,63 @@
+.section2 {
+    border-top: solid 0.5px;
+    border-bottom: solid 0.5px;
+}
+.section2 * {
+    color: #000;
+}
+.sec2ImageMainWrapper {
+    overflow-x: scroll;
+    padding: 30px;
+}
+.darkMode .sec2ImageMainWrapper {
+    background-color: #ead1bd;
+}
+.lightMode .sec2ImageMainWrapper {
+    background-color: #eadfd0;
+}
+.sec2ImageWrapper {
+    display: flex;
+    gap: 20px;
+}
+.sec2Card {
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 30px;
+    background-image:
+    radial-gradient(circle at 0% 0%, #fffcf0aa, transparent 40%);
+    background-color: #00000011;
+    border: solid 0.7px #fff;
+}
+.sec2Card h1,
+.sec2Card h5 {
+    text-align: center;
+}
+.sec2Card > div {
+    width: 170px;
+}
+.sec2Card > div > img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    pointer-events: none;
+}
+.sec2Card > div > .flexSpaceBetween > p {
+    white-space: nowrap;
+}
+.sec2Card > div > .flexSpaceBetween > button {
+    width: 100%;
+    background: #00000055;
+    color: #fff;
+}
+
+
+/* Laptop scale */
+@media (min-width: 1024px) {
+    .sec2ImageMainWrapper {
+        overflow-x: unset;
+    }
+    .sec2ImageWrapper {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}

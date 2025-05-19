@@ -1,10 +1,13 @@
+:root {
+    --yellowText: #e4ab24;
+}
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     outline: none;
     text-decoration: none;
-    line-height: 1.5rem;
+    line-height: 1.3rem;
     word-spacing: 0.2rem;
     user-select: none;
     -webkit-user-select: none;
@@ -12,15 +15,47 @@
     font-family: "Dosis", sans-serif;
     font-weight: normal;
 }
-.darkMode header {
-    background-color: #1E2126;
+.darkMode header,
+.darkMode section {
     color: #fff;
     background-image: radial-gradient(circle at 0% 0%, #23344f, transparent 40%);
+    background-color: #1E2126;
     background-attachment: fixed;
 }
-.lightMode header {
+.lightMode header,
+.lightMode section {
     color: #000;
-    background-image: radial-gradient(circle at 0% 0%, rgba(119, 195, 239, 0.438), transparent 40%);
+    background-image: radial-gradient(circle at 0% 0%, #77c3ef70, transparent 40%);
+    background-color: #F1EEE0;
     background-attachment: fixed;
-    background-color: #fff;
+}
+button {
+    cursor: pointer;
+    white-space: nowrap;
+}
+button:hover {
+    filter: brightness(110%);
+}
+button, input, textarea {
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+.flexSpaceBetween {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.gap10 {
+    gap: 10;
+}
+.flexColumn10 {
+    display: flex;
+    flex-direction: column;
+    gap: 10;
+}
+.flexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

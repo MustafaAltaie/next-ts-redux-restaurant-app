@@ -1,0 +1,76 @@
+.section1 {
+    padding: 100px 30px 30px;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+.sec1DetailsWrapper {
+    order: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.sec1DetailsWrapper > div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.sec1DetailsWrapper > div > h1 {
+    font-weight: bold;
+    color: var(--yellowText);
+}
+.sec1DetailsWrapper > button {
+    background: var(--yellowText);
+    padding: 10px 50px;
+}
+.sec1ImagesWrapper {
+    position: relative;
+    min-height: 300px;
+}
+.sec1ImagesWrapper > div {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transition: 2s;
+}
+.sec1ImageShow {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+.sec1ImageHide {
+    opacity: 0;
+    transform: translate(-70%, -50%);
+}
+.sec1ImagesWrapper > div > img {
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+    .section1 {
+        flex-direction: row;
+        align-items: center;
+    }
+    .sec1DetailsWrapper {
+        width: 40%;
+    }
+    .sec1DetailsWrapper > div > h1 {
+        font-size: 40px;
+    }
+    .sec1DetailsWrapper > h5 {
+        padding: 0 100px;
+    }
+    .sec1ImagesWrapper {
+        width: 60%;
+        min-height: 500px;
+        order: 1;
+    }
+    .sec1ImagesWrapper > div > img {
+        width: 500px;
+        height: 500px;
+    }
+}
