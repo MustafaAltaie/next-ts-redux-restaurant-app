@@ -4,7 +4,7 @@ import './Header.css';
 
 const Header = () => {
     const [nav, setNav] = useState(false);
-    const [isDark, setIsDark] = useState(true);
+    const [isDark, setIsDark] = useState(false);
     const navRef = useRef<HTMLElement>(null);
 
     useEffect(() => {

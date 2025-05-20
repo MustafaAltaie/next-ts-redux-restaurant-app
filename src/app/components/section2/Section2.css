@@ -28,7 +28,6 @@
     background-color: #00000011;
     border: solid 0.7px #fff;
 }
-.sec2Card h1,
 .sec2Card h5 {
     text-align: center;
 }
@@ -41,13 +40,15 @@
     object-fit: contain;
     pointer-events: none;
 }
+.flexSpaceBetween {
+    padding: 0 10px;
+}
 .sec2Card > div > .flexSpaceBetween > p {
     white-space: nowrap;
 }
 .sec2Card > div > .flexSpaceBetween > button {
-    width: 100%;
-    background: #00000055;
-    color: #fff;
+    background: #444;
+    width: 50%;
 }
 
 

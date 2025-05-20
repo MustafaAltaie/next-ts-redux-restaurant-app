@@ -27,15 +27,15 @@ const Section2 = () => {
                     <div className="sec2ImageWrapper">
                         {list.map(item =>
                             <div key={item.id} className="sec2Card flexColumn10">
-                                <h1>{item.title}</h1>
+                                <h4>{item.title}</h4>
                                 <div className='flexCenter'>
                                     <img src={item.imageLink} alt="Milkshake" />
                                 </div>
                                 <div className='flexColumn10'>
                                     <h5>{item.description}</h5>
                                     <div className='flexSpaceBetween gap10'>
-                                        <p>{item.price}:-</p>
-                                        <button>Add to cart</button>
+                                        <h3>{item.price}:-</h3>
+                                        <button>🛒</button>
                                     </div>
                                 </div>
                             </div>

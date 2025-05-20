@@ -1,0 +1,112 @@
+.itemsSection {
+    overflow-x: hidden;
+}
+.itemSectionsNav > ul {
+    display: flex;
+    overflow-x: scroll;
+    border-bottom: solid 0.5px;
+}
+.itemSectionsNav > ul > li {
+    padding: 20px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+.itemSectionsNav > ul > li:hover {
+    background: #006dac;
+    color: #fff;
+}
+.itemsWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+.itemCard {
+    position: relative;
+    text-align: center;
+    align-items: center;
+    width: calc(100%/2 - 20px/2);
+    padding: 50px 10px 20px 10px;
+    border-radius: 0 20px 20px 20px;
+    background-image:
+    radial-gradient(circle at 110% 0, #2ab4ff55, transparent 30%),
+    radial-gradient(circle at 0 40%, #ffbb0032, transparent 40%),
+    radial-gradient(circle at 110% 100%, #00a2ff32, transparent 40%);
+    background-color: #aaaaaa1c;
+}
+.lightMode .itemCard {
+    border: solid 0.7px #fff;
+}
+.itemCardCategory {
+    position: absolute;
+    top: 10px;
+    left: -10.5px;
+    padding: 5px 15px 5px 10px;
+    clip-path: polygon(-30px -30px, 100% 0, 90% 50%, 100% 100%, -30px calc(100% + 30px));
+    min-width: 100px;
+    max-width: 170px;
+    font-size: 12px;
+    background: #2a94d6;
+    color: #fff;
+}
+.itemCardCategory::before, .itemCardCategory::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    background-color: #000;
+    transform: translateY(-100%);
+    clip-path: polygon(0 100%, 100% 0, 100% 100%);
+}
+.itemCardCategory::after {
+    top: 100%;
+    transform: translateY(0);
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+.darkMode .itemCardCategory::before,
+.darkMode .itemCardCategory::after {
+    background-color: #806000;
+}
+.itemCard > img {
+    height: 100px;
+    width: 100px;
+    object-fit: contain;
+}
+.itemCard > h3 {
+    font-weight: bold;
+    color: var(--yellowText);
+}
+.lightMode .itemCard > h3 {
+    color: #c99609;
+}
+.itemCard > div {
+    width: 100%;
+}
+.lightMode .itemCard > div > h3 {
+    font-weight: bold;
+}
+.itemCard > div > h2 {
+    padding: 10px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #555555;
+}
+
+
+/* Laptopn scale */
+@media (min-width: 1024px) {
+    .itemSectionsNav > ul {
+        overflow-x: visible;
+        flex-wrap: wrap;
+    }
+    .itemsWrapper {
+        padding: 40px;
+        width: 80%;
+        margin: 0 auto;
+    }
+    .itemCard {
+        width: calc(100%/4 - 60px/4);
+    }
+}

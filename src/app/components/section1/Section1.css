@@ -54,6 +54,7 @@
     .section1 {
         flex-direction: row;
         align-items: center;
+        padding: 70px 30px 10px;
     }
     .sec1DetailsWrapper {
         width: 40%;
@@ -66,11 +67,12 @@
     }
     .sec1ImagesWrapper {
         width: 60%;
-        min-height: 500px;
+        min-height: 400px;
         order: 1;
+        background: #ffffff44;
     }
     .sec1ImagesWrapper > div > img {
-        width: 500px;
-        height: 500px;
+        width: 400px;
+        height: 400px;
     }
 }

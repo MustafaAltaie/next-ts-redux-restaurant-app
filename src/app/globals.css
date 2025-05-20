@@ -29,6 +29,9 @@
     background-color: #F1EEE0;
     background-attachment: fixed;
 }
+ul {
+    list-style: none;
+}
 button {
     cursor: pointer;
     white-space: nowrap;
