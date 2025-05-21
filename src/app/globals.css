@@ -64,3 +64,23 @@ button, input, textarea {
     justify-content: center;
     align-items: center;
 }
+.darkMode .shiningTop {
+    border-top: 0.7px solid transparent;
+    border-image: radial-gradient(circle at 50% 0, #fff, transparent 70%);
+    border-image-slice: 1;
+}
+.lightMode .shiningTop {
+    border-top: 0.7px solid transparent;
+    border-image: radial-gradient(circle at 50% 0, #000, transparent 70%);
+    border-image-slice: 1;
+}
+.darkMode .shiningBottom {
+    border-bottom: 0.7px solid transparent;
+    border-image: radial-gradient(circle at 50% 0, #fff, transparent 70%);
+    border-image-slice: 1;
+}
+.lightMode .shiningBottom {
+    border-bottom: 0.7px solid transparent;
+    border-image: radial-gradient(circle at 50% 0, #000, transparent 70%);
+    border-image-slice: 1;
+}

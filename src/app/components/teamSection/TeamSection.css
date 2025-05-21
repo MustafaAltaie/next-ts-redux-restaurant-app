@@ -1,0 +1,130 @@
+.teamSection {
+    padding: 30px 0;
+}
+.teamSection > h6,
+.teamSection > h1,
+.teamSection > p {
+    padding: 10px 30px;
+}
+.teamSection > h6 {
+    color: #f22;
+}
+.teamSection > h1 {
+    font-weight: bold;
+}
+.teamWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 30px 20px;
+    overflow-x: hidden;
+}
+.teamMember {
+    width: calc(100%/3 - 20px/3);
+    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    border-radius: 20px;
+}
+.darkMode .teamMember {
+    border: solid 0.5px #ffffff55;
+}
+.lightMode .teamMember {
+    border: solid 0.7px #ffffff;
+    background-image:
+    radial-gradient(circle at -20% 30%, #009dff6a, transparent 40%),
+    radial-gradient(circle at 120% 70%, #6a6a6a3e, transparent 40%);
+}
+.memberImageWrapper {
+    width: 90px;
+    height: 90px;
+    border-radius: 10px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.darkMode .memberImageWrapper {
+    background-image: radial-gradient(circle at 0 0, #235389, transparent 80%);
+}
+.lightMode .memberImageWrapper {
+    background-image: radial-gradient(circle at 20% 20%, #44444476, transparent 80%);
+    border: solid 0.5px #00000055;
+}
+.memberImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+.memberInfoWrapper > h5 {
+    color: rgb(160, 112, 0);
+}
+.memberInfoWrapper > p {
+    color: #777777;
+    font-size: 13px;
+}
+.memberSocialWrapper {
+    padding-top: 10px;
+    border-top: 0.7px solid transparent;
+    border-image-slice: 1;
+}
+.darkMode .memberSocialWrapper {
+    border-top: 0.7px solid transparent;
+    border-image: radial-gradient(circle at 50% 0, #ffffffc8, transparent 70%);
+    border-image-slice: 1;
+}
+.lightMode .memberSocialWrapper {
+    border-top: 0.5px solid transparent;
+    border-image: radial-gradient(circle at 50% 0, #000000c8, transparent 70%);
+    border-image-slice: 1;
+}
+.memberSocialWrapper .fa-brands {
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.1s;
+}
+.memberSocialWrapper .fa-brands:hover {
+    transform: scale(1.1);
+}
+.darkMode .memberSocialWrapper .fa-brands {
+    background: #1b3b52;
+}
+.lightMode .memberSocialWrapper .fa-brands {
+    background: #6f6f6f;
+}
+
+
+/* Laptop */
+@media (min-width: 1024px) {
+    .teamWrapper {
+        width: 80%;
+        margin: 0 auto;
+        justify-content: flex-start;
+        gap: 20px;
+    }
+    .teamSection > h6,
+    .teamSection > h1,
+    .teamSection > p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    .teamMember {
+        width: calc(100%/5 - 80px/5);
+    }
+    .memberImageWrapper {
+        width: 150px;
+        height: 150px;
+    }
+    .lightMode .memberImageWrapper {
+        background-image: radial-gradient(circle at 20% 20%, #44444476, transparent 80%);
+        border: solid 0.5px #00000055;
+    }
+}

@@ -39,7 +39,6 @@ header > div > div {
 header nav {
     overflow: hidden;
     transition: 0.3s ease;
-    border-bottom: solid 0.7px
 }
 .darkMode header nav {
     border-color: #ffffff77;

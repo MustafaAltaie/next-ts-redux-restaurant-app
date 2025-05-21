@@ -40,7 +40,7 @@ const Header = () => {
     }
 
     return (
-        <header>
+        <header className='shiningBottom'>
             <div>
                 <h2>Restaurant logo</h2>
                 <div>
@@ -57,7 +57,7 @@ const Header = () => {
                     </div>
                 </div>
             </div>
-            <nav ref={navRef}>
+            <nav ref={navRef} className='shiningTop'>
                 <ul>
                     <li>Home</li>
                     <li>Food list</li>
