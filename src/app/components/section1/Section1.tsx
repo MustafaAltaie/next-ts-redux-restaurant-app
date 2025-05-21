@@ -3,13 +3,14 @@ import { useEffect, useState } from 'react';
 import './Section1.css';
 import Image from 'next/image';
 
+const list: string[] = [
+    '/images/1.webp',
+    '/images/2.webp',
+    '/images/3.png',
+    '/images/4.png'
+]
+
 const Section1 = () => {
-    const [list, setList] = useState<string[]>([
-        '/images/1.webp',
-        '/images/2.webp',
-        '/images/3.png',
-        '/images/4.png'
-    ]);
     const [count, setCount] = useState<number>(0);
 
     useEffect(() => {
