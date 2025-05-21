@@ -1,17 +1,25 @@
 .itemsSection {
-    overflow-x: hidden;
+    position: relative;
+}
+.itemSectionsNav {
+    z-index: 10;
+    position: sticky;
+    top: 50px;
 }
 .itemSectionsNav > ul {
     display: flex;
     overflow-x: scroll;
+    scrollbar-width: none;
     border-bottom: solid 0.5px;
 }
 .itemSectionsNav > ul > li {
     padding: 20px;
     transition: 0.2s;
     cursor: pointer;
+    white-space: nowrap;
 }
-.itemSectionsNav > ul > li:hover {
+.itemSectionsNav > ul > li:hover,
+.selectedCategoryOption {
     background: #006dac;
     color: #fff;
 }
@@ -20,6 +28,7 @@
     flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
+    overflow-x: hidden;
 }
 .itemCard {
     position: relative;
@@ -31,7 +40,8 @@
     background-image:
     radial-gradient(circle at 110% 0, #2ab4ff55, transparent 30%),
     radial-gradient(circle at 0 40%, #ffbb0032, transparent 40%),
-    radial-gradient(circle at 110% 100%, #00a2ff32, transparent 40%);
+    radial-gradient(circle at 110% 100%, #00a2ff32, transparent 40%),
+    radial-gradient(circle at 0 0, #ff00f232, transparent 30%);
     background-color: #aaaaaa1c;
 }
 .lightMode .itemCard {
@@ -69,9 +79,10 @@
 .darkMode .itemCardCategory::after {
     background-color: #806000;
 }
-.itemCard > img {
-    height: 100px;
-    width: 100px;
+.itemWrapperImageWrapper {
+    position: relative;
+}
+.itemWrapperImage {
     object-fit: contain;
 }
 .itemCard > h3 {
@@ -87,8 +98,8 @@
 .lightMode .itemCard > div > h3 {
     font-weight: bold;
 }
-.itemCard > div > h2 {
-    padding: 10px 5px;
+.itemCard > div > h4 {
+    padding: 5px 20px;
     border-radius: 5px;
     cursor: pointer;
     background: #555555;
@@ -97,6 +108,9 @@
 
 /* Laptopn scale */
 @media (min-width: 1024px) {
+    .itemSectionsNav {
+        top: 60px;
+    }
     .itemSectionsNav > ul {
         overflow-x: visible;
         flex-wrap: wrap;

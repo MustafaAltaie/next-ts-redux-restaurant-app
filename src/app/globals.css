@@ -16,14 +16,16 @@
     font-weight: normal;
 }
 .darkMode header,
-.darkMode section {
+.darkMode section,
+.darkMode .itemSectionsNav {
     color: #fff;
     background-image: radial-gradient(circle at 0% 0%, #23344f, transparent 40%);
     background-color: #1E2126;
     background-attachment: fixed;
 }
 .lightMode header,
-.lightMode section {
+.lightMode section,
+.lightMode .itemSectionsNav {
     color: #000;
     background-image: radial-gradient(circle at 0% 0%, #77c3ef70, transparent 40%);
     background-color: #F1EEE0;

@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import './Section1.css';
+import Image from 'next/image';
 
 const Section1 = () => {
     const [list, setList] = useState<string[]>([
@@ -30,7 +31,17 @@ const Section1 = () => {
                 <button>Shop now</button>
             </div>
             <div className='sec1ImagesWrapper'>
-                {list.map((image, index) => <div key={index} className={index === count ? 'sec1ImageShow' : 'sec1ImageHide'}><img src={image} alt="image" /></div>)}
+                {list.map((image, index) =>
+                    <div key={index} className={index === count ? 'sec1ImageShow' : 'sec1ImageHide'}>
+                        <Image
+                            src={image}
+                            alt='Image'
+                            className='sec1Image'
+                            width={300}
+                            height={300}
+                        />
+                    </div>
+                )}
             </div>
         </section>
     )

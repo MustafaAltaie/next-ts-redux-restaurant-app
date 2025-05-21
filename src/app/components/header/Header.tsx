@@ -4,7 +4,7 @@ import './Header.css';
 
 const Header = () => {
     const [nav, setNav] = useState(false);
-    const [isDark, setIsDark] = useState(false);
+    const [isDark, setIsDark] = useState(true);
     const navRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
@@ -15,17 +15,16 @@ const Header = () => {
                 navRef.current.style.maxHeight = '0px';
             }
         }
-        if(window.innerWidth >= 1024) {
-            setNav(true);
-        }
     }, [nav]);
 
     useEffect(() => {
         toggleMode();
+        if(window.innerWidth >= 1024) {
+            setNav(true);
+        }
     }, []);
 
-    const toggleMode = () => {
-        setIsDark(!isDark);
+    useEffect(() => {
         const bodyClassList = document.body.classList;
         if(isDark) {
             bodyClassList.add('darkMode');
@@ -34,6 +33,10 @@ const Header = () => {
             bodyClassList.remove('darkMode');
             bodyClassList.add('lightMode');
         }
+    }, [isDark]);
+
+    const toggleMode = () => {
+        setIsDark(prev => !prev);
     }
 
     return (

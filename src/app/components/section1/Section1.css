@@ -33,6 +33,8 @@
     position: absolute;
     left: 50%;
     top: 50%;
+    width: 300px;
+    height: 300px;
     transition: 2s;
 }
 .sec1ImageShow {
@@ -44,8 +46,8 @@
     transform: translate(-70%, -50%);
 }
 .sec1ImagesWrapper > div > img {
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
     pointer-events: none;
 }
@@ -69,9 +71,8 @@
         width: 60%;
         min-height: 400px;
         order: 1;
-        background: #ffffff44;
     }
-    .sec1ImagesWrapper > div > img {
+    .sec1ImagesWrapper > div {
         width: 400px;
         height: 400px;
     }

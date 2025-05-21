@@ -9,12 +9,22 @@
 .sec3Item {
     gap: 10px;
     padding: 20px;
+    overflow-x: hidden;
 }
 .sec3Item > div {
     width: 50%;
 }
-.sec3ImageWrapper > img {
+.sec3DetailsWrapper {
+    position: relative;
+}
+.sec3ImageWrapper {
+    width: 200px;
+    height: 200px;
+}
+.sec3Image {
+    object-fit: contain;
     width: 100%;
+    height: 100%;
 }
 .sec3DetailsWrapper > h3 {
     font-weight: bold;
@@ -52,13 +62,9 @@
         margin: 0 auto;
     }
     .sec3ImageWrapper {
-        max-width: 20%;
+        max-width: 30%;
     }
     .sec3DetailsWrapper {
         width: 70%;
-    }
-    .sec3ImageWrapper > img {
-        height: 150px;
-        object-fit: contain;
     }
 }
