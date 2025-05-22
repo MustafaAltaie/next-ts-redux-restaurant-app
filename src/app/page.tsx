@@ -1,4 +1,5 @@
 'use client';
+import Footer from "./components/footer/Footer";
 import Header from "./components/header/Header";
 import ItemsSection from "./components/itemsSection/ItemsSection";
 import Section1 from './components/section1/Section1'
@@ -15,6 +16,7 @@ const page = () => {
       <Section3 />
       <ItemsSection />
       <TeamSection />
+      <Footer />
     </div>
   )
 }
