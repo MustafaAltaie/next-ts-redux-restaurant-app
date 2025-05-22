@@ -90,10 +90,10 @@ header nav li:hover {
     transition: 0.3s;
 }
 .darkToggleThumb {
-    left: 16px;
+    left: 17.5px;
 }
 .lightToggleThumb {
-    left: 2.5px;
+    left: 2px;
 }
 
 

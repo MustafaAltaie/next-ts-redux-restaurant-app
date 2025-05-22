@@ -31,6 +31,7 @@ const Section3 = () => {
                                 alt="Salad"
                                 width={150}
                                 height={150}
+                                priority
                             />
                         </div>
                         <div className="sec3DetailsWrapper">

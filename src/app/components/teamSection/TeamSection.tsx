@@ -97,6 +97,7 @@ const TeamSection = () => {
                                 alt={`${member.name}-image`}
                                 width={130}
                                 height={130}
+                                priority
                             />
                         </div>
                         <div className="memberInfoWrapper">

@@ -133,6 +133,7 @@ const ItemsSection = () => {
                                 height={150}
                                 src={item.imageLink}
                                 alt='Category'
+                                priority
                             />
                         </div>
                         <h3>{item.title}</h3>

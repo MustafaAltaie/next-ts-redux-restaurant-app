@@ -8,10 +8,11 @@ const list: string[] = [
     '/images/2.webp',
     '/images/3.png',
     '/images/4.png'
-]
+];
 
 const Section1 = () => {
     const [count, setCount] = useState<number>(0);
+    const [menuPannel, setMenuPannel] = useState(false);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -23,6 +24,19 @@ const Section1 = () => {
 
     return (
         <section className="section1">
+            <div className="overflowMenuButton" onClick={() => setMenuPannel(true)}>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div className={`
+                overflowMenuPanel
+                ${menuPannel ? 'overflowMenuPanelOn' : ''}
+            `}>
+                <h5>Add new image</h5>
+                <h5>View images</h5>
+                <h5 onClick={() => setMenuPannel(false)}>Close menu</h5>
+            </div>
             <div className="sec1DetailsWrapper">
                 <div>
                     <h5>Lorem ipsum dolor sit amet consectetur.</h5>
@@ -40,6 +54,7 @@ const Section1 = () => {
                             className='sec1Image'
                             width={300}
                             height={300}
+                            priority
                         />
                     </div>
                 )}

@@ -37,6 +37,7 @@ const Section2 = () => {
                                         className='sec2CardImage'
                                         width={100}
                                         height={100}
+                                        priority
                                     />
                                 </div>
                                 <div className='flexColumn10'>
