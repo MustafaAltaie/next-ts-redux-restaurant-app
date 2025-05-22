@@ -45,7 +45,7 @@ const list: Member[] = [
     {
         id: '3',
         title: 'Waiter',
-        position: 'Front House Staff',
+        position: 'House Staff',
         name: 'Sara Andersson',
         imageLink: '/images/team-section/3.png',
         socialMedia: {

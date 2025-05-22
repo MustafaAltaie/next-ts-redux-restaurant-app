@@ -43,6 +43,11 @@ footer * {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    transition: 0.1s;
+}
+.footerTop > div > i:hover {
+    transform: scale(1.1);
 }
 
 
@@ -110,7 +115,7 @@ footer * {
     gap: 5px;
 }
 .footerForm > button {
-    background: #bd0000;
+    background: #950000;
     color: #fff;
 }
 
@@ -139,6 +144,12 @@ footer * {
     border: solid 0.5px #ffffff55;
     border-radius: 50%;
     color: #ffffffaa;
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.footerBottom > div > i:hover {
+    transform: scale(1.1);
 }
 .footerBottom > h5 {
     color: #ffffffaa;
@@ -150,6 +161,9 @@ footer * {
     text-align: center;
     padding: 20px;
     border-top: solid 0.5px #ffffff55;
+}
+.footerCopyright {
+    color: #338fff;
 }
 
 .footerDeveloper {
@@ -196,7 +210,12 @@ footer * {
     .footerPart1,
     .footerPart2 {
         width: 50%;
-        align-items: center;
+    }
+    .footerPart21 > h4 {
+        margin-bottom: 10px;
+    }
+    .footerForm {
+        gap: 10px;
     }
     .footerPart2 > div:nth-child(2) {
         border-right: none;
