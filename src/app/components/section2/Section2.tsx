@@ -1,5 +1,4 @@
 'use client';
-import { title } from 'process';
 import Sec2Item from './Sec2Item';
 import './Section2.css';
 import { useEffect, useRef, useState } from "react";
@@ -32,6 +31,7 @@ const Section2 = () => {
         price: '',
         imageLink: ''
     });
+    const [hideSec, setHideSec] = useState(false);
 
     useEffect(() => {
         if(formRef.current) {
@@ -53,6 +53,21 @@ const Section2 = () => {
 
     const handleSaveUpdateItem = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const newItem: Item = {
+            id: itemObj.id,
+            title: itemObj.title,
+            description: itemObj.description,
+            price: Number(itemObj.price),
+            imageLink: ''
+        }
+        setList(prev => {
+            const isExisted = list.some(item => item.id === itemObj.id);
+            if(isExisted) {
+                return prev.map(item => item.id === newItem.id ? newItem : item)
+            } else {
+                return [...prev, newItem];
+            }
+        });
     }
 
     const handlePrepareUpdate = (item: Item) => {
@@ -63,7 +78,7 @@ const Section2 = () => {
             title: item.title,
             description: item.description,
             price: item.price,
-            imageLink: ''
+            imageLink: item.imageLink
         });
     }
 
@@ -91,6 +106,7 @@ const Section2 = () => {
                     ${menuPanel ? 'overflowMenuPanelOn' : ''}
                 `}>
                 <h5 onClick={() => {setForm(true); setMenuPanel(false)}}><i className="fa-regular fa-square-plus"></i>Add new item</h5>
+                <h5 onClick={() => setHideSec(!hideSec)}><i className={hideSec ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'}></i>{hideSec ? 'Show' : 'Hide'} this section</h5>
                 <h5 onClick={() => setMenuPanel(false)}><i className="fa-solid fa-xmark"></i>Close menu</h5>
             </div>
             {/* addUpdateItemForm */}
@@ -99,15 +115,15 @@ const Section2 = () => {
                     <h3 className='closeFormButton' onClick={() => setForm(false)}>X</h3>
                     <div>
                         <h5>Title</h5>
-                        <input type="text" placeholder='Title' name='title' value={itemObj.title} onChange={handlePrepareItem} />
+                        <input type="text" title='Title' placeholder='Title' name='title' value={itemObj.title || ''} onChange={handlePrepareItem} />
                     </div>
                     <div>
                         <h5>Description</h5>
-                        <textarea placeholder='Description' name='description' value={itemObj.description} onChange={handlePrepareItem}></textarea>
+                        <textarea title='Description' placeholder='Description' name='description' value={itemObj.description || ''} onChange={handlePrepareItem}></textarea>
                     </div>
                     <div>
                         <h5>Price</h5>
-                        <input type="number" placeholder='Price' name='price' value={itemObj.price} onChange={handlePrepareItem} />
+                        <input type="number" title='Price' placeholder='Price' name='price' value={itemObj.price || ''} onChange={handlePrepareItem} />
                     </div>
                     <div className='labelButtonWrapper'>
                         <label>
@@ -125,6 +141,7 @@ const Section2 = () => {
             </form>
             {/* html */}
             <div className="sec2MainWrapper">
+                {hideSec && <h1 style={{ color: 'red', textAlign: 'center' }}>This section is hidden for users</h1>}
                 <div className="sec2ImageMainWrapper">
                     <div className="sec2CardWrapper">
                         {list.map(item =>

@@ -23,7 +23,6 @@ footer * {
     color: #ffffffdd;
 }
 .footerTop > p,
-.footerPart11 > h6,
 .footerBottom > h6,
 .footerDeveloper span {
     color: #ef8f2f;
@@ -62,6 +61,10 @@ footer * {
 .footerPart11 {
     width: 45%;
     order: 1;
+}
+.footerPart11 > h6 {
+    color: #b00;
+    font-weight: bold;
 }
 .footerPart12 {
     width: 55%;
@@ -115,7 +118,7 @@ footer * {
     gap: 5px;
 }
 .footerForm > button {
-    background: #950000;
+    background: #a00000;
     color: #fff;
 }
 

@@ -1,12 +1,18 @@
 .section3 {
+    position: relative;
+    border-top: solid 0.5px;
     border-bottom: solid 0.5px;
     padding: 0 30px 40px 30px;
+}
+.section3 .overflowMenuButton {
+    left: 5px;
 }
 .section3 > h1 {
     padding: 40px 0;
     text-align: center;
 }
 .sec3Item {
+    position: relative;
     gap: 10px;
     padding: 20px;
     overflow-x: hidden;
@@ -52,6 +58,27 @@
 }
 .darkMode .sec3DetailsWrapper > h4 {
     color: #ffffffaa;
+}
+
+/* settings */
+.section3 .overflowMenuPanel {
+    top: 10px;
+    left: 10px;
+}
+.section3 .closeFormButton {
+    padding-top: 10px;
+}
+.section3 .formInnerWrapper {
+    border-bottom: solid 0.5px;
+}
+.sec3Item .overflowMenuButton {
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+.sec3Item:nth-of-type(odd) .overflowMenuButton {
+    left: unset;
+    right: 0;
 }
 
 
