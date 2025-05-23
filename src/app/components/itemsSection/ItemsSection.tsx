@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, forwardRef } from 'react';
 import './ItemsSection.css';
 import ProductItem from './Item';
 import Nav from './Nav';
@@ -13,7 +13,7 @@ interface Item {
     category: string
 }
 
-const ItemsSection = () => {
+const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
     const [itemList, setItemList] = useState<Item[]>([
         {
             id: '0',
@@ -185,7 +185,7 @@ const ItemsSection = () => {
     }
 
     return (
-        <section className='itemsSection'>
+        <section ref={ref} className='itemsSection'>
             {/* settings */}
             <div className={`
                     overflowMenuPanel
@@ -258,6 +258,6 @@ const ItemsSection = () => {
             </div>
         </section>
     )
-}
+});
 
 export default ItemsSection;

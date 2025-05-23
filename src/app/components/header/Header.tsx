@@ -1,11 +1,17 @@
 'user client';
 import { useEffect, useRef, useState } from 'react';
 import './Header.css';
+import { usePathname } from 'next/navigation';
 
-const Header = () => {
+interface HeaderProps {
+    scrollToItems: () => void
+}
+
+const Header = ({ scrollToItems }: HeaderProps) => {
     const [nav, setNav] = useState(false);
     const [isDark, setIsDark] = useState(true);
     const navRef = useRef<HTMLElement>(null);
+    const pathName = usePathname();
 
     useEffect(() => {
         if(navRef.current) {
@@ -59,10 +65,10 @@ const Header = () => {
             </div>
             <nav ref={navRef}>
                 <ul>
-                    <li>Home</li>
-                    <li>Food list</li>
-                    <li>About us</li>
-                    <li>Contact</li>
+                    <li className={`${pathName === '/' ? 'active' : ''}`}>Home</li>
+                    <li onClick={() => {scrollToItems(); setNav(false)}}>Food list</li>
+                    <li className={`${pathName === '/about' ? 'active' : ''}`}>About us</li>
+                    <li className={`${pathName === '/contact' ? 'active' : ''}`}>Contact</li>
                 </ul>
             </nav>
         </header>

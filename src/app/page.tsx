@@ -1,4 +1,5 @@
 'use client';
+import { useRef } from "react";
 import Footer from "./components/footer/Footer";
 import Header from "./components/header/Header";
 import ItemsSection from "./components/itemsSection/ItemsSection";
@@ -8,13 +9,16 @@ import Section3 from "./components/section3/Section3";
 import TeamSection from "./components/teamSection/TeamSection";
 
 const page = () => {
+  const itemRef = useRef<HTMLDivElement>(null);
+  const scrollToItems = () => itemRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
   return (
     <div>
-      <Header />
+      <Header scrollToItems={scrollToItems} />
       <Section1 />
       <Section2 />
       <Section3 />
-      <ItemsSection />
+      <ItemsSection ref={itemRef} />
       <TeamSection />
       <Footer />
     </div>

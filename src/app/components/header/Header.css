@@ -70,6 +70,10 @@ header nav li:hover {
 .lightMode header nav li:hover {
     color: #fff;
 }
+.active {
+    background: #004585;
+    color: #fff;
+}
 .toggleDarkMode {
     position: relative;
     width: 45px;
