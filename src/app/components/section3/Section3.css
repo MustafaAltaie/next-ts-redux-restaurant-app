@@ -76,9 +76,8 @@
     left: 0;
     transform: translateY(-50%);
 }
-.sec3Item:nth-of-type(odd) .overflowMenuButton {
-    left: unset;
-    right: 0;
+.sec3Item .overflowMenuPanel > h5 {
+    padding: 15px;
 }
 
 
@@ -93,5 +92,13 @@
     }
     .sec3DetailsWrapper {
         width: 70%;
+    }
+    .section3 .addUpdateItemForm {
+        width: 40%;
+        margin: 0 auto;
+    }
+    .sec3Item .overflowMenuPanel > h5 {
+        padding: 5px 20px;
+        font-size: 12px;
     }
 }

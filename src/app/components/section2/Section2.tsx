@@ -37,6 +37,7 @@ const Section2 = () => {
         if(formRef.current) {
             if(form) {
                 formRef.current.style.height = `${formRef.current.scrollHeight}px`;
+                formRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
             } else {
                 formRef.current.style.height = '0px';
                 clearFields();
@@ -106,7 +107,7 @@ const Section2 = () => {
                     ${menuPanel ? 'overflowMenuPanelOn' : ''}
                 `}>
                 <h5 onClick={() => {setForm(true); setMenuPanel(false)}}><i className="fa-regular fa-square-plus"></i>Add new item</h5>
-                <h5 onClick={() => setHideSec(!hideSec)}><i className={hideSec ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'}></i>{hideSec ? 'Show' : 'Hide'} this section</h5>
+                <h5 onClick={() => {setHideSec(!hideSec); setMenuPanel(false)}}><i className={hideSec ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'}></i>{hideSec ? 'Show' : 'Hide'} this section</h5>
                 <h5 onClick={() => setMenuPanel(false)}><i className="fa-solid fa-xmark"></i>Close menu</h5>
             </div>
             {/* addUpdateItemForm */}
@@ -134,14 +135,14 @@ const Section2 = () => {
                             />
                             <h5><i className="fa-solid fa-images"></i>{file ? 'Change image' : 'Add image'}</h5>
                         </label>
-                        {file && <img src={URL.createObjectURL(file)} alt="Preview" onClick={() => setFile(null)} />}
+                        {file && <img className='formImageView' src={URL.createObjectURL(file)} alt="Preview" onClick={() => setFile(null)} />}
                         <button disabled={!itemObj.title || !itemObj.price || !itemObj.description || !file} type='submit'>Save</button>
                     </div>
                 </div>
             </form>
             {/* html */}
             <div className="sec2MainWrapper">
-                {hideSec && <h1 style={{ color: 'red', textAlign: 'center' }}>This section is hidden for users</h1>}
+                {hideSec && <h1 className='hiddenSection'>HIDDEN</h1>}
                 <div className="sec2ImageMainWrapper">
                     <div className="sec2CardWrapper">
                         {list.map(item =>

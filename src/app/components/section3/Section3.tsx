@@ -33,6 +33,7 @@ const Section3 = () => {
         if(formRef.current) {
             if(form) {
                 formRef.current.style.height = `${formRef.current.scrollHeight}px`;
+                formRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
             } else {
                 formRef.current.style.height = '0px';
                 clearFields();
@@ -45,24 +46,6 @@ const Section3 = () => {
         setItemObj(prev => ({
             ...prev, [name]: value
         }));
-    }
-
-    const handleSaveUpdateItem = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const newItem: Item = {
-            id: itemObj.id,
-            title: itemObj.title,
-            description: itemObj.description,
-            imageLink: ''
-        }
-        setList(prev => {
-            const isExisted = list.some(item => item.id === itemObj.id);
-            if(isExisted) {
-                return prev.map(item => item.id === newItem.id ? newItem : item)
-            } else {
-                return [...prev, newItem];
-            }
-        });
     }
 
     const handlePrepareUpdate = (item: Item) => {
@@ -98,7 +81,7 @@ const Section3 = () => {
                     ${menuPanel ? 'overflowMenuPanelOn' : ''}
                 `}>
                 <h5 onClick={() => {setForm(true); setMenuPanel(false)}}><i className="fa-regular fa-square-plus"></i>Add new dish</h5>
-                <h5 onClick={() => setHideSec(!hideSec)}><i className={hideSec ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'}></i>{hideSec ? 'Show' : 'Hide'} this section</h5>
+                <h5 onClick={() => {setHideSec(!hideSec); setMenuPanel(false)}}><i className={hideSec ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'}></i>{hideSec ? 'Show' : 'Hide'} this section</h5>
                 <h5 onClick={() => setMenuPanel(false)}><i className="fa-solid fa-xmark"></i>Close menu</h5>
             </div>
             <form ref={formRef} className='addUpdateItemForm'>
@@ -121,12 +104,12 @@ const Section3 = () => {
                             />
                             <h5><i className="fa-solid fa-images"></i>{file ? 'Change image' : 'Add image'}</h5>
                         </label>
-                        {file && <img src={URL.createObjectURL(file)} alt="Preview" onClick={() => setFile(null)} />}
+                        {file && <img className='formImageView' src={URL.createObjectURL(file)} alt="Preview" onClick={() => setFile(null)} />}
                         <button disabled={!itemObj.title || !itemObj.description || !file} type='submit'>Save</button>
                     </div>
                 </div>
             </form>
-            {hideSec && <h1 style={{ color: 'red' }}>This section is hidden for users</h1>}
+            {hideSec && <h1 className='hiddenSection'>HIDDEN</h1>}
             <h1>Most popular Pasta salad, Macaroni salad, and Mixed salad</h1>
             <div className="sec3ItemsWrapper">
                 {list.map(item =>

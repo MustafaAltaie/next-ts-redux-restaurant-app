@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useState } from 'react';
 
 interface Item {
     id?: string,
@@ -13,6 +14,7 @@ interface Sec3ItemProps {
 }
 
 const Sec3Item = ({ item, handlePrepareUpdate }: Sec3ItemProps) => {
+    const [menu, setMenu] = useState(false);
     return (
         <div key={item.id} className="sec3Item flexCenter">
             <div className="sec3ImageWrapper flexCenter">
@@ -24,10 +26,18 @@ const Sec3Item = ({ item, handlePrepareUpdate }: Sec3ItemProps) => {
                     height={150}
                     priority
                 />
-                <div className="overflowMenuButton" onClick={() => handlePrepareUpdate(item)}>
+                <div className="overflowMenuButton" onClick={() => setMenu(true)}>
                     <div></div>
                     <div></div>
                     <div></div>
+                </div>
+                <div className={`
+                        overflowMenuPanel
+                        ${menu ? 'overflowMenuPanelOn' : ''}
+                    `}>
+                    <h5 onClick={() => {handlePrepareUpdate(item); setMenu(false)}}><i className="fa-solid fa-pen-to-square"></i>Update item</h5>
+                    <h5><i className="fa-solid fa-trash"></i>Remove item</h5>
+                    <h5 onClick={() => setMenu(false)}><i className="fa-solid fa-xmark"></i>Close menu</h5>
                 </div>
             </div>
             <div className="sec3DetailsWrapper">

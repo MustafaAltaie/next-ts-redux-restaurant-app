@@ -23,9 +23,9 @@ const Sec2Item = ({ item, handlePrepareUpdate }: Sec2ItemProps) => {
                     overflowMenuPanel
                     ${itemMenu ? 'overflowMenuPanelOn' : ''}
                 `}>
-                <h5 onClick={() => {handlePrepareUpdate(item); setItemMenu(false)}}>Edit item</h5>
-                <h5>Delete item</h5>
-                <h5 onClick={() => setItemMenu(false)}>Close menu</h5>
+                <h5 onClick={() => {handlePrepareUpdate(item); setItemMenu(false)}}><i className="fa-solid fa-pen-to-square"></i>Edit item</h5>
+                <h5><i className="fa-solid fa-trash"></i>Remove item</h5>
+                <h5 onClick={() => setItemMenu(false)}><i className="fa-solid fa-xmark"></i>Close menu</h5>
             </div>
             <h4>
                 {item.title}
