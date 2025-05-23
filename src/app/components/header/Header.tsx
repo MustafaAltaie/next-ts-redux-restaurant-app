@@ -12,6 +12,31 @@ const Header = ({ scrollToItems }: HeaderProps) => {
     const [isDark, setIsDark] = useState(true);
     const navRef = useRef<HTMLElement>(null);
     const pathName = usePathname();
+    const lastScrollYRef = useRef(0);
+    const [showHeader, setShowHeader] = useState(true);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        lastScrollYRef.current = window.scrollY;
+
+        const handleScroll = () => {
+            setShowHeader(window.scrollY <lastScrollYRef.current);
+            lastScrollYRef.current = window.scrollY;
+        }
+
+        const handleResize = () => {
+            setNav(window.innerWidth >= 1024);
+        }
+        handleResize();
+
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleResize);
+        }
+    }, []);
 
     useEffect(() => {
         if(navRef.current) {
@@ -46,7 +71,7 @@ const Header = ({ scrollToItems }: HeaderProps) => {
     }
 
     return (
-        <header>
+        <header className={`${!showHeader ? 'hideHeader' : ''}`}>
             <div>
                 <h2>Restaurant logo</h2>
                 <div>

@@ -1,10 +1,13 @@
 .itemsSection {
     position: relative;
-    padding-bottom: 10px;
 }
 .itemSectionsNav {
     z-index: 200;
     position: sticky;
+    top: 0;
+    transition: top 0.3s;
+}
+.itemSectionsNav0 {
     top: 50px;
 }
 .itemSectionsNav > ul {
@@ -110,7 +113,7 @@
 
 /* settings */
 .itemsSection > .overflowMenuPanel {
-    top: 10px;
+    top: 70px;
     left: 10px;;
 }
 .itemsWrapper .overflowMenuButton {

@@ -8,6 +8,11 @@ header {
     flex-direction: column;
     overflow-x: hidden;
     border-bottom: solid 0.5px;
+    transform: translateY(0);
+    transition: transform 0.3s;
+}
+.hideHeader {
+    transform: translateY(-100%);
 }
 header > div {
     display: flex;
@@ -101,7 +106,7 @@ header nav li:hover {
 }
 
 
-/* Laptip scale */
+/* Laptop scale */
 @media (min-width: 1024px) {
     header {
         flex-direction: row;
