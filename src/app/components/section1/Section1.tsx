@@ -2,18 +2,24 @@
 import { useEffect, useRef, useState } from 'react';
 import './Section1.css';
 import Image from 'next/image';
+import { useUploadHomeImagesMutation, useGetHomeImagesQuery, useDeleteHomeImagesMutation } from '../../../../features/restaurant/restaurantApi';
 
 const Section1 = () => {
-    const [list, setList] = useState<string[]>([
-        '/images/1.webp',
-        '/images/2.webp',
-        '/images/3.png',
-        '/images/4.png'
-    ]);
+    const [list, setList] = useState<string[]>([]);
     const [count, setCount] = useState<number>(0);
     const [menuPanel, setMenuPanel] = useState(false);
     const [menuImages, setMenuImages] = useState(false);
     const galleryRef = useRef<HTMLDivElement>(null);
+    const [file, setFile] = useState<File | null>(null);
+    const [uploadHomeImages] = useUploadHomeImagesMutation();
+    const { data: images = [], isLoading } = useGetHomeImagesQuery();
+    const [deleteHomeImages] = useDeleteHomeImagesMutation();
+
+    useEffect(() => {
+        if(images && !isLoading) {
+            setList(images);
+        }
+    }, [images, isLoading]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -32,11 +38,32 @@ const Section1 = () => {
                 galleryRef.current.style.height = '0px';
             }
         }
-    }, [menuImages]);
+    }, [menuImages, list]);
 
-    const handleDeleteImage = (img: string) => {
-        const newList = list.filter(image => image !== img);
-        setList(newList);
+    useEffect(() => {
+        if(file) {
+            uploadImage();
+        }
+    }, [file]);
+
+    const uploadImage = async () => {
+        if(!file) return;
+        if(list.some(image => image === file.name)) return;
+        const formData = new FormData();
+        formData.append('image', file);
+        try {
+            await uploadHomeImages(formData).unwrap();
+        } catch(err) {
+            console.log('Error saving image:', err);
+            alert('Error uploading image');
+        }
+    }
+
+    const handleDeleteImage = async (img: string) => {
+        const imageName = img.split('/').pop();
+        if(!imageName) return;
+        const encodedFilename = encodeURIComponent(imageName);
+        await deleteHomeImages(encodedFilename).unwrap();
     }
 
     return (
@@ -50,8 +77,11 @@ const Section1 = () => {
                 overflowMenuPanel
                 ${menuPanel ? 'overflowMenuPanelOn' : ''}
             `}>
-                <h5><i className="fa-regular fa-square-plus"></i>Add new image</h5>
-                <h5 onClick={() => setMenuImages(!menuImages)}><i className="fa-solid fa-images"></i>View images</h5>
+                <label><i className="fa-regular fa-square-plus"></i>
+                    <input type="file" style={{ display: 'none' }} onChange={e => setFile(e.target.files?.[0] ?? null)} />
+                    Add new image
+                </label>
+                <p onClick={() => setMenuImages(!menuImages)}><i className="fa-solid fa-images"></i>View images</p>
                 <div ref={galleryRef} className='overflowMenuPanelImageWrapper'>
                     <h5>Click on any image to delete it.</h5>
                     <div className='overflowMenuGallery'>
@@ -69,7 +99,7 @@ const Section1 = () => {
                         )}
                     </div>
                 </div>
-                <h5 onClick={() => setMenuPanel(false)}><i className="fa-solid fa-xmark"></i>Close menu</h5>
+                <p onClick={() => setMenuPanel(false)}><i className="fa-solid fa-xmark"></i>Close menu</p>
             </div>
             <div className="sec1DetailsWrapper">
                 <div>

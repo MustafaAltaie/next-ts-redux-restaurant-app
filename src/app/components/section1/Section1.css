@@ -54,9 +54,21 @@
 
 
 /* settings */
+.section1 .overflowMenuPanel {
+    padding: 15px;
+    width: 60%;
+}
 .section1 .overflowMenuButton, .section1 .overflowMenuPanel {
     top: 70px;
     left: 10px;
+}
+.section1 .overflowMenuPanel > label {
+    margin-bottom: 10px;
+}
+.section1 .overflowMenuPanel > label,
+.section1 .overflowMenuPanel > p {
+    cursor: pointer;
+    font-size: 14px;
 }
 
 
@@ -84,5 +96,12 @@
     .sec1ImagesWrapper > div {
         width: 400px;
         height: 400px;
+    }
+    .section1 .overflowMenuPanel > p {
+        margin-bottom: 5px;
+    }
+    .section1 .overflowMenuPanel > label,
+    .section1 .overflowMenuPanel > p {
+        font-size: 14px;
     }
 }

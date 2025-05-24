@@ -129,8 +129,7 @@ button, input, textarea {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    width: 80%;
-    padding: 20px;
+    padding: 15px;
     backdrop-filter: blur(10px);
     border-radius: 15px;
     transform: translateX(-20%);
@@ -154,19 +153,8 @@ button, input, textarea {
     background-color: #ffffff33;
 }
 .overflowMenuPanel > h5 {
-    padding: 20px;
+    padding: 5px;
     cursor: pointer;
-    border-radius: 10px;
-    font-weight: bold;
-    text-align: left;
-}
-.darkMode .overflowMenuPanel > h5 {
-    border-top: solid 0.5px #ffffff33;
-    border-bottom: solid 0.5px #000000aa;   
-}
-.lightMode .overflowMenuPanel > h5 {
-    border-top: solid 0.7px #ffffff;
-    border-bottom: solid 0.5px #00000077;   
 }
 .overflowMenuPanel > h5:hover {
     background-color: #ffffff11;
@@ -189,7 +177,7 @@ button, input, textarea {
 }
 .overflowMenuPanelImageContainer {
     width: calc(100%/3 - 20px/3);
-    height: 100px;
+    height: 50px;
     border-radius: 10px;
     padding: 5px;
     cursor: pointer;
