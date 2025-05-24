@@ -1,7 +1,7 @@
 'use client';
 import { useState, useRef, useEffect, forwardRef } from 'react';
 import './ItemsSection.css';
-import ProductItem from './Item';
+import ProductItem from './ProductItem';
 import Nav from './Nav';
 
 interface Item {

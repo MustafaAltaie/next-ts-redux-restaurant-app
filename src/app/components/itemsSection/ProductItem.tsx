@@ -15,7 +15,7 @@ interface ItemProps {
     handlePrepareUpdate: (item: Item) => void
 }
 
-const Item = ({ item, handlePrepareUpdate }: ItemProps) => {
+const ProductItem = ({ item, handlePrepareUpdate }: ItemProps) => {
     const [itemMenu, setItemMenu] = useState(false);
     return (
         <div className="itemCard flexColumn10">
@@ -55,4 +55,4 @@ const Item = ({ item, handlePrepareUpdate }: ItemProps) => {
     )
 }
 
-export default Item;
+export default ProductItem;

@@ -9,7 +9,7 @@ interface HeaderProps {
 
 const Header = ({ scrollToItems }: HeaderProps) => {
     const [nav, setNav] = useState(false);
-    const [isDark, setIsDark] = useState(true);
+    const [isDark, setIsDark] = useState(false);
     const navRef = useRef<HTMLElement>(null);
     const pathName = usePathname();
     const lastScrollYRef = useRef(0);
@@ -47,13 +47,6 @@ const Header = ({ scrollToItems }: HeaderProps) => {
             }
         }
     }, [nav]);
-
-    useEffect(() => {
-        toggleMode();
-        if(window.innerWidth >= 1024) {
-            setNav(true);
-        }
-    }, []);
 
     useEffect(() => {
         const bodyClassList = document.body.classList;

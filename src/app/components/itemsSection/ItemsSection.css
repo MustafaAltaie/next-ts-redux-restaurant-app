@@ -138,6 +138,9 @@
 /* Laptopn scale */
 @media (min-width: 1024px) {
     .itemSectionsNav {
+        top: 0;
+    }
+    .itemSectionsNav0 {
         top: 60px;
     }
     .itemSectionsNav > ul {
