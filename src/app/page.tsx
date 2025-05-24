@@ -10,17 +10,19 @@ import TeamSection from "./components/teamSection/TeamSection";
 
 const page = () => {
   const itemRef = useRef<HTMLDivElement>(null);
+  const contactRef = useRef<HTMLDivElement>(null);
   const scrollToItems = () => itemRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const scrollToContact = () => contactRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   return (
     <div>
-      <Header scrollToItems={scrollToItems} />
+      <Header scrollToItems={scrollToItems} scrollToContact={scrollToContact} />
       <Section1 />
       <Section2 />
       <Section3 />
       <ItemsSection ref={itemRef} />
       <TeamSection />
-      <Footer />
+      <Footer ref={contactRef} />
     </div>
   )
 }

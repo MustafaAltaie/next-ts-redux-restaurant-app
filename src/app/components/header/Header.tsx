@@ -1,17 +1,19 @@
 'user client';
 import { useEffect, useRef, useState } from 'react';
 import './Header.css';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 interface HeaderProps {
-    scrollToItems: () => void
+    scrollToItems?: () => void,
+    scrollToContact: () => void
 }
 
-const Header = ({ scrollToItems }: HeaderProps) => {
+const Header = ({ scrollToItems, scrollToContact }: HeaderProps) => {
     const [nav, setNav] = useState(false);
     const [isDark, setIsDark] = useState(false);
     const navRef = useRef<HTMLElement>(null);
     const pathName = usePathname();
+    const router = useRouter();
     const lastScrollYRef = useRef(0);
     const [showHeader, setShowHeader] = useState(true);
 
@@ -83,10 +85,11 @@ const Header = ({ scrollToItems }: HeaderProps) => {
             </div>
             <nav ref={navRef}>
                 <ul>
-                    <li className={`${pathName === '/' ? 'active' : ''}`}>Home</li>
-                    <li onClick={() => {scrollToItems(); setNav(false)}}>Food list</li>
-                    <li className={`${pathName === '/about' ? 'active' : ''}`}>About us</li>
-                    <li className={`${pathName === '/contact' ? 'active' : ''}`}>Contact</li>
+                    <li className={`${pathName === '/' ? 'active' : ''}`} onClick={() => router.push('/')}>Home</li>
+                    {pathName !== "/about" &&
+                    <li onClick={() => {scrollToItems && scrollToItems(); window.innerWidth < 1024 && setNav(false)}}>Food list</li>}
+                    <li className={`${pathName === '/about' ? 'active' : ''}`} onClick={() => router.push('/about')}>About us</li>
+                    <li className={`${pathName === '/contact' ? 'active' : ''}`} onClick={() => {scrollToContact(); window.innerWidth < 1024 && setNav(false)}}>Contact</li>
                 </ul>
             </nav>
         </header>
