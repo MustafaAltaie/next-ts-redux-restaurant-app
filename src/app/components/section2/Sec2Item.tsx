@@ -11,10 +11,11 @@ interface Item {
 
 interface Sec2ItemProps {
     item: Item,
-    handlePrepareUpdate: (item: Item) => void
+    handlePrepareUpdate: (item: Item) => void,
+    handleDelete: (item: Item) => void
 }
 
-const Sec2Item = ({ item, handlePrepareUpdate }: Sec2ItemProps) => {
+const Sec2Item = ({ item, handlePrepareUpdate, handleDelete }: Sec2ItemProps) => {
     const [itemMenu, setItemMenu] = useState(false);
 
     return (
@@ -24,7 +25,7 @@ const Sec2Item = ({ item, handlePrepareUpdate }: Sec2ItemProps) => {
                     ${itemMenu ? 'overflowMenuPanelOn' : ''}
                 `}>
                 <h5 onClick={() => {handlePrepareUpdate(item); setItemMenu(false)}}><i className="fa-solid fa-pen-to-square"></i>Edit item</h5>
-                <h5><i className="fa-solid fa-trash"></i>Remove item</h5>
+                <h5 onClick={() => handleDelete(item)}><i className="fa-solid fa-trash"></i>Remove item</h5>
                 <h5 onClick={() => setItemMenu(false)}><i className="fa-solid fa-xmark"></i>Close menu</h5>
             </div>
             <h4>
@@ -37,7 +38,7 @@ const Sec2Item = ({ item, handlePrepareUpdate }: Sec2ItemProps) => {
             </h4>
             <div className='flexCenter sec2CardImageWrapper'>
                 <Image
-                    src={item.imageLink}
+                    src={`/section2-images/${item.imageLink}`}
                     alt='Milkshake'
                     className='sec2CardImage'
                     width={100}

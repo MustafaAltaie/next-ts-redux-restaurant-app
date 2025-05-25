@@ -97,6 +97,9 @@
         width: 400px;
         height: 400px;
     }
+    .section1 .overflowMenuPanel {
+        width: fit-content;
+    }
     .section1 .overflowMenuPanel > p {
         margin-bottom: 5px;
     }
