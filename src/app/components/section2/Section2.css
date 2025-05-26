@@ -89,8 +89,8 @@
 }
 .sec2Card .overflowMenuPanel {
     width: 90%;
-    gap: 5px;
     padding: 10px;
+    gap: 0;
 }
 .sec2Card .overflowMenuPanel > h5 {
     text-align: left;
@@ -100,10 +100,6 @@
     border: solid 0.5px #fff;
     border-top: solid 1px #fff;
     background-color: #ffffff33;
-}
-.darkMode .section2 .overflowMenuPanel > h5 {
-    border-top: solid 0.7px #ffffff;
-    border-bottom: solid 0.5px #00000077;    
 }
 
 /* Laptop scale */
@@ -119,6 +115,10 @@
     .section2 .addUpdateItemForm {
         width: 40%;
         margin: 0 auto;
+    }
+    .section2 > .overflowMenuPanel {
+        gap: 0;
+        padding: 5px;
     }
     .sec2Card .overflowMenuPanel > h5 {
         padding: 5px;
