@@ -2,87 +2,18 @@
 import Employee from './Employee';
 import './TeamSection.css';
 import { useState, useEffect, useRef } from 'react';
-
-interface SocialMedia {
-    instagram: string,
-    facebook: string,
-    linkedIn: string,
-}
-
-interface Member {
-    id: string,
-    title: string,
-    position: string,
-    name: string,
-    imageLink: string,
-    socialMedia: SocialMedia
-}
-
-const list: Member[] = [
-    {
-        id: '1',
-        title: 'Head Chef',
-        position: 'Kitchen Supervisor',
-        name: 'Marco Bellini',
-        imageLink: '/images/team-section/1.webp',
-        socialMedia: {
-            instagram: 'iiiiiii',
-            facebook: 'ffffff',
-            linkedIn: 'lllllll'
-        }
-    },
-    {
-        id: '2',
-        title: 'Sous Chef',
-        position: 'Assistant Kitchen Manager',
-        name: 'Jordan Smith',
-        imageLink: '/images/team-section/2.png',
-        socialMedia: {
-            instagram: 'instagram',
-            facebook: 'facebook',
-            linkedIn: 'linkedIn'
-        }
-    },
-    {
-        id: '3',
-        title: 'Waiter',
-        position: 'House Staff',
-        name: 'Sara Andersson',
-        imageLink: '/images/team-section/3.png',
-        socialMedia: {
-            instagram: 'instagram',
-            facebook: 'facebook',
-            linkedIn: 'linkedIn'
-        }
-    },
-    {
-        id: '4',
-        title: 'Restaurant Manager',
-        position: 'Operations Lead',
-        name: 'Fatima Reyes',
-        imageLink: '/images/team-section/4.webp',
-        socialMedia: {
-            instagram: 'instagram',
-            facebook: 'facebook',
-            linkedIn: 'linkedIn'
-        }
-    },
-    {
-        id: '5',
-        title: 'Dishwasher',
-        position: 'Kitchen Support Staff',
-        name: 'Luka Petrović',
-        imageLink: '/images/team-section/5.png',
-        socialMedia: {
-            instagram: 'instagram',
-            facebook: 'facebook',
-            linkedIn: 'linkedIn'
-        }
-    },
-];
+import { Member } from '../../../../types/Member';
+import {
+    useCreateMemberMutation,
+    useUploadMemberImageMutation,
+    useReadMemberQuery,
+    useUpdateMemberMutation,
+    useUpdateMemberImageMutation,
+} from '../../../../features/teamSection/teamSectionApi';
 
 const TeamSection = () => {
-const [menuPanel, setMenuPanel] = useState(false);
+    const [list, setList] = useState<Member[]>([]);
+    const [menuPanel, setMenuPanel] = useState(false);
     const [form, setForm] = useState(false);
     const formRef = useRef<HTMLFormElement>(null);
     const [hideSec, setHideSec] = useState(false);
@@ -99,12 +30,33 @@ const [menuPanel, setMenuPanel] = useState(false);
             linkedIn: ''
         },
     });
+    const [createMember] = useCreateMemberMutation();
+    const [uploadMemberImage] = useUploadMemberImageMutation();
+    const { data: members = [], isLoading: isMemberListLoading } = useReadMemberQuery();
+    const [updateMember] = useUpdateMemberMutation();
+    const [updateMemberImage] = useUpdateMemberImageMutation();
+
+    useEffect(() => {
+        if(members && !isMemberListLoading) {
+            const transformed: Member[] = members.map(member => ({
+                id: member._id,
+                title: member.title,
+                position: member.position,
+                name: member.name,
+                imageLink: member.imageLink,
+                socialMedia: member.socialMedia,
+            }));
+            setList(transformed);
+        }
+    }, [members, isMemberListLoading]);
 
     useEffect(() => {
         if(formRef.current) {
             if(form) {
                 formRef.current.style.height = `${formRef.current.scrollHeight}px`;
-                formRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                setTimeout(() => {
+                    formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
             } else {
                 formRef.current.style.height = '0px';
                 clearFields();
@@ -146,6 +98,40 @@ const [menuPanel, setMenuPanel] = useState(false);
         });
     }
 
+    const handleSaveMember = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if(!file && !memberObj.id) return;
+        const imageLink = file?.name || memberObj.imageLink;
+        try {
+            if(!memberObj.id) {
+                const formData = new FormData();
+                formData.append('image', file!);
+                await uploadMemberImage(formData).unwrap();
+            } else if(file) {
+                const formData = new FormData();
+                formData.append('image', file);
+                await updateMemberImage({ formData, oldImage: memberObj.imageLink }).unwrap();
+            }
+
+            const newMember: Member = {
+                ...memberObj,
+                imageLink
+            }
+
+            if(!memberObj.id) {
+                await createMember(newMember).unwrap();
+            } else {
+                await updateMember({ id: memberObj.id, data: newMember }).unwrap();
+            }
+
+            clearFields();
+            setFile(null);
+        } catch (err) {
+            console.error('Could not complete saving:', err);
+            alert('Error saving member');
+        }
+    }
+
     const clearFields = () => {
         setMemberObj({
             id: '',
@@ -173,11 +159,11 @@ const [menuPanel, setMenuPanel] = useState(false);
                     overflowMenuPanel
                     ${menuPanel ? 'overflowMenuPanelOn' : ''}
                 `}>
-                <h5 onClick={() => {setForm(true); setMenuPanel(false)}}><i className="fa-regular fa-square-plus"></i>Add new dish</h5>
+                <h5 onClick={() => {setForm(true); setMenuPanel(false)}}><i className="fa-regular fa-square-plus"></i>Add new member</h5>
                 <h5 onClick={() => {setHideSec(!hideSec); setMenuPanel(false)}}><i className={hideSec ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'}></i>{hideSec ? 'Show' : 'Hide'} this section</h5>
                 <h5 onClick={() => setMenuPanel(false)}><i className="fa-solid fa-xmark"></i>Close menu</h5>
             </div>
-            <form ref={formRef} className='addUpdateItemForm'>
+            <form onSubmit={handleSaveMember} ref={formRef} className='addUpdateItemForm'>
                 <h3 className='closeFormButton' onClick={() => setForm(false)}>X</h3>
                 <div className="formInnerWrapper">
                     <div>
@@ -211,9 +197,19 @@ const [menuPanel, setMenuPanel] = useState(false);
                                     setFile(e.target.files[0]);
                                 }}
                             />
-                            <h5><i className="fa-solid fa-images"></i>{file ? 'Change image' : 'Add image'}</h5>
+                            <h5><i className="fa-solid fa-images"></i>{file || memberObj.id ? 'Change image' : 'Add image'}</h5>
                         </label>
-                        {file && <img className='formImageView' src={URL.createObjectURL(file)} alt="Preview" onClick={() => setFile(null)} />}
+                        {(file || memberObj.id) &&
+                        <img
+                            className='formImageView'
+                            src={file ?
+                                URL.createObjectURL(file) :
+                                `/memberSection/${memberObj.imageLink}`
+                            }
+                            alt="Preview"
+                            onClick={() => setFile(null)}
+                        />
+                        }
                         <button type='submit'>Save</button>
                     </div>
                 </div>

@@ -88,7 +88,7 @@ const Section3 = () => {
             } else if(file) {
                 const formData = new FormData();
                 formData.append('image', file);
-                await updateImage({ formData, oldImage: itemObj.imageLink })
+                await updateImage({ formData, oldImage: itemObj.imageLink }).unwrap();
             }
 
             const mewItem: Item = {

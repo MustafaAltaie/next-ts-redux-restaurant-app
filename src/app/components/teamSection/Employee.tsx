@@ -1,20 +1,6 @@
 import Image from 'next/image';
 import { useState } from 'react';
-
-interface socialMedia {
-    instagram: string,
-    facebook: string,
-    linkedIn: string,
-}
-
-interface Member {
-    id: string,
-    title: string,
-    position: string,
-    name: string,
-    imageLink: string,
-    socialMedia: socialMedia
-}
+import { Member } from '../../../../types/Member';
 
 interface EmployeeProps {
     member: Member,
@@ -45,7 +31,7 @@ const Employee = ({ member, handlePrepareUpdate }: EmployeeProps) => {
                 <div className="memberImageWrapper flexCenter">
                     <Image
                         className='memberImage'
-                        src={member.imageLink}
+                        src={`/memberSection/${member.imageLink}`}
                         alt={`${member.name}-image`}
                         width={130}
                         height={130}
