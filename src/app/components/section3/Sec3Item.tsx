@@ -10,17 +10,18 @@ interface Item {
 
 interface Sec3ItemProps {
     item: Item,
-    handlePrepareUpdate: (item: Item) => void
+    handlePrepareUpdate: (item: Item) => void,
+    handleDelete: (item: Item) => void
 }
 
-const Sec3Item = ({ item, handlePrepareUpdate }: Sec3ItemProps) => {
+const Sec3Item = ({ item, handlePrepareUpdate, handleDelete }: Sec3ItemProps) => {
     const [menu, setMenu] = useState(false);
     return (
         <div key={item.id} className="sec3Item flexCenter">
             <div className="sec3ImageWrapper flexCenter">
                 <Image
                     className='sec3Image'
-                    src={item.imageLink}
+                    src={`/section3-images/${item.imageLink}`}
                     alt="Salad"
                     width={150}
                     height={150}
@@ -36,7 +37,7 @@ const Sec3Item = ({ item, handlePrepareUpdate }: Sec3ItemProps) => {
                         ${menu ? 'overflowMenuPanelOn' : ''}
                     `}>
                     <h5 onClick={() => {handlePrepareUpdate(item); setMenu(false)}}><i className="fa-solid fa-pen-to-square"></i>Update item</h5>
-                    <h5><i className="fa-solid fa-trash"></i>Remove item</h5>
+                    <h5 onClick={() => handleDelete(item)}><i className="fa-solid fa-trash"></i>Remove item</h5>
                     <h5 onClick={() => setMenu(false)}><i className="fa-solid fa-xmark"></i>Close menu</h5>
                 </div>
             </div>

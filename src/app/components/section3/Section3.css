@@ -62,9 +62,14 @@
 
 /* settings */
 .section3 .overflowMenuPanel {
-    top: 10px;
+    top: 40px;
     left: 10px;
+    gap: 0;
 }
+.sec3Item .overflowMenuPanel > h5 {
+    padding: 10px;
+}
+
 .section3 .closeFormButton {
     padding-top: 10px;
 }
@@ -76,10 +81,6 @@
     left: 0;
     transform: translateY(-50%);
 }
-.sec3Item .overflowMenuPanel > h5 {
-    padding: 15px;
-}
-
 
 /* Laptop scale */
 @media (min-width: 1024px) {

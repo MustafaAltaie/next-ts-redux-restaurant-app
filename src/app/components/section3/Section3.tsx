@@ -2,21 +2,19 @@
 import { useEffect, useRef, useState } from 'react';
 import './Section3.css';
 import Sec3Item from './Sec3Item';
-
-interface Item {
-    id?: string,
-    title: string,
-    imageLink: string,
-    description: string
-}
+import { Item } from '../../../../types/Dish';
+import {
+    useCreateDishMutation,
+    useUploadImageMutation,
+    useReadDishesQuery,
+    useDeleteDishMutation,
+    useDeleteImageMutation,
+    useUpdateDishMutation,
+    useUpdateImageMutation,
+} from '../../../../features/section3/section3Api';
 
 const Section3 = () => {
-    const [list, setList] = useState<Item[]>([
-        { id: '1', title: 'Lorem ipsum dolor sit amet consectetur', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, architecto.', imageLink: '/images/section3-images/1.png' },
-        { id: '2', title: 'Lorem ipsum dolor sit amet consectetur', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, architecto.', imageLink: '/images/section3-images/2.png' },
-        { id: '3', title: 'Lorem ipsum dolor sit amet consectetur', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, architecto.', imageLink: '/images/section3-images/3.webp' },
-        { id: '4', title: 'Lorem ipsum dolor sit amet consectetur', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, architecto.', imageLink: '/images/section3-images/4.webp' },
-    ]);
+    const [list, setList] = useState<Item[]>([]);
     const [menuPanel, setMenuPanel] = useState(false);
     const [form, setForm] = useState(false);
     const formRef = useRef<HTMLFormElement>(null);
@@ -28,6 +26,25 @@ const Section3 = () => {
         imageLink: '',
         description: ''
     });
+    const [createDish] = useCreateDishMutation();
+    const [uploadImage] = useUploadImageMutation();
+    const { data: dishes = [], isLoading: isDishListLoading } = useReadDishesQuery();
+    const [deleteDish] = useDeleteDishMutation();
+    const [deleteImage] = useDeleteImageMutation();
+    const [updateDish] = useUpdateDishMutation();
+    const [updateImage] = useUpdateImageMutation();
+
+    useEffect(() => {
+        if(dishes && !isDishListLoading) {
+            const transformed: Item[] = dishes.map(dish => ({
+                id: dish._id,
+                title: dish.title,
+                imageLink: dish.imageLink,
+                description: dish.description,
+            }));
+            setList(transformed);
+        }
+    }, [dishes]);
 
     useEffect(() => {
         if(formRef.current) {
@@ -59,6 +76,51 @@ const Section3 = () => {
         });
     }
 
+    const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if(!file && !itemObj.id) return;
+        const imageLink = file?.name || itemObj.imageLink;
+        try {
+            if(!itemObj.id) {
+                const formData = new FormData();
+                formData.append('image', file!);
+                await uploadImage(formData).unwrap(); 
+            } else if(file) {
+                const formData = new FormData();
+                formData.append('image', file);
+                await updateImage({ formData, oldImage: itemObj.imageLink })
+            }
+
+            const mewItem: Item = {
+                ...itemObj,
+                imageLink
+            }
+
+            if(!itemObj.id) {
+                await createDish(mewItem).unwrap();
+            } else {
+                await updateDish({ id: itemObj.id, data: mewItem }).unwrap();
+            }
+
+            clearFields();
+            setFile(null);
+        } catch (err) {
+            console.log('Error saving item:', err);
+            alert('Error saving item');
+        }
+    }
+
+    const handleDelete = async (item: Item) => {
+        if(!item) return;
+        try {
+            await deleteDish(item.id!).unwrap();
+            await deleteImage(item.imageLink).unwrap();
+        } catch (err) {
+            console.log('Error deleting item:', err);
+            alert('Error deleting item');
+        }
+    }
+
     const clearFields = () => {
         setItemObj({
             id: '',
@@ -84,7 +146,7 @@ const Section3 = () => {
                 <h5 onClick={() => {setHideSec(!hideSec); setMenuPanel(false)}}><i className={hideSec ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'}></i>{hideSec ? 'Show' : 'Hide'} this section</h5>
                 <h5 onClick={() => setMenuPanel(false)}><i className="fa-solid fa-xmark"></i>Close menu</h5>
             </div>
-            <form ref={formRef} className='addUpdateItemForm'>
+            <form onSubmit={handleSave} ref={formRef} className='addUpdateItemForm'>
                 <h3 className='closeFormButton' onClick={() => setForm(false)}>X</h3>
                 <div className="formInnerWrapper">
                     <div>
@@ -102,9 +164,19 @@ const Section3 = () => {
                                     setFile(e.target.files[0]);
                                 }}
                             />
-                            <h5><i className="fa-solid fa-images"></i>{file ? 'Change image' : 'Add image'}</h5>
+                            <h5><i className="fa-solid fa-images"></i>{file || itemObj.imageLink ? 'Change image' : 'Add image'}</h5>
                         </label>
-                        {file && <img className='formImageView' src={URL.createObjectURL(file)} alt="Preview" onClick={() => setFile(null)} />}
+                        {(file || itemObj.id) &&
+                        <img
+                            className='formImageView'
+                            src={
+                                file ?
+                                URL.createObjectURL(file) :
+                                `/section3-images/${itemObj.imageLink}`
+                            }
+                            alt="Preview"
+                            onClick={() => setFile(null)}
+                        />}
                         <button disabled={!itemObj.title || !itemObj.description || !file} type='submit'>Save</button>
                     </div>
                 </div>
@@ -117,6 +189,7 @@ const Section3 = () => {
                         key={item.id}
                         item={item}
                         handlePrepareUpdate={handlePrepareUpdate}
+                        handleDelete={handleDelete}
                     />
                 )}
             </div>
