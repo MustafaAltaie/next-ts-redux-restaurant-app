@@ -1,14 +1,16 @@
 'user client';
-import { useEffect, useRef, useState } from 'react';
+import { SetStateAction, useEffect, useRef, useState } from 'react';
 import './Header.css';
 import { usePathname, useRouter } from 'next/navigation';
 
 interface HeaderProps {
     scrollToItems?: () => void,
-    scrollToContact: () => void
+    scrollToContact: () => void,
+    setShowCart: React.Dispatch<SetStateAction<boolean>>,
+    showCart: boolean
 }
 
-const Header = ({ scrollToItems, scrollToContact }: HeaderProps) => {
+const Header = ({ scrollToItems, scrollToContact, setShowCart, showCart }: HeaderProps) => {
     const [nav, setNav] = useState(false);
     const [isDark, setIsDark] = useState(false);
     const navRef = useRef<HTMLElement>(null);
@@ -22,7 +24,7 @@ const Header = ({ scrollToItems, scrollToContact }: HeaderProps) => {
         lastScrollYRef.current = window.scrollY;
 
         const handleScroll = () => {
-            setShowHeader(window.scrollY <lastScrollYRef.current);
+            setShowHeader(window.scrollY < lastScrollYRef.current);
             lastScrollYRef.current = window.scrollY;
         }
 
@@ -74,7 +76,7 @@ const Header = ({ scrollToItems, scrollToContact }: HeaderProps) => {
                         <div className={isDark ? 'darkToggleThumb' : 'lightToggleThumb'}></div>
                     </div>
                     <div className='cartWrapper'>
-                        <h1>🛒</h1>
+                        <h1 onClick={() => setShowCart(!showCart)}>🛒</h1>
                     </div>
                     <div className='toggleNav' onClick={() => setNav(!nav)}>
                         <div style={{ transform: `translateY(${nav ? '800%' : '0%'}) rotate(${nav ? '45deg' : '0deg'})` }}></div>

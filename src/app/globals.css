@@ -17,7 +17,9 @@
 }
 .darkMode header,
 .darkMode section,
-.darkMode .itemSectionsNav {
+.darkMode .itemSectionsNav,
+.darkMode .shoppingCartWrapper,
+.darkMode .cartItemWrapper {
     color: #fff;
     background-image: radial-gradient(circle at 0% 0%, #23344f, transparent 40%);
     background-color: #1E2126;
@@ -25,7 +27,9 @@
 }
 .lightMode header,
 .lightMode section,
-.lightMode .itemSectionsNav {
+.lightMode .itemSectionsNav,
+.lightMode .shoppingCartWrapper,
+.lightMode .cartItemWrapper {
     color: #000;
     background-image: radial-gradient(circle at 0% 0%, #4fbeffa3, transparent 40%);
     background-color: #F1EEE0;
