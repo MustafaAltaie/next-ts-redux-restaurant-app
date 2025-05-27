@@ -107,9 +107,9 @@ const TeamSection = () => {
         if(!file && !memberObj.id) return;
         const imageLink = file?.name || memberObj.imageLink;
         try {
-            if(!memberObj.id) {
+            if(!memberObj.id && file) {
                 const formData = new FormData();
-                formData.append('image', file!);
+                formData.append('image', file);
                 await uploadMemberImage(formData).unwrap();
             } else if(file) {
                 const formData = new FormData();

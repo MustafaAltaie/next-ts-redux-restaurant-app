@@ -74,9 +74,9 @@ const Section2 = () => {
         if(!file && !itemObj.id) return;
         const imageLink = file?.name || itemObj.imageLink;
         try {
-            if(!itemObj.id) {
+            if(!itemObj.id && file) {
                 const formData = new FormData();
-                formData.append('image', file!);
+                formData.append('image', file);
                 await uploadMilkShakeImage(formData).unwrap();
             } else if(file) {
                 const formData = new FormData();
@@ -190,7 +190,7 @@ const Section2 = () => {
                             onClick={() => setFile(null)}
                         />
                         )}
-                        <button disabled={!itemObj.title || !itemObj.price || !itemObj.description || !file} type='submit'>{itemObj.id ? 'Update' : 'Save'}</button>
+                        <button disabled={!itemObj.title || !itemObj.price || !itemObj.description} type='submit'>{itemObj.id ? 'Update' : 'Save'}</button>
                     </div>
                 </div>
             </form>

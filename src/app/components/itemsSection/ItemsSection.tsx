@@ -3,107 +3,19 @@ import { useState, useRef, useEffect, forwardRef } from 'react';
 import './ItemsSection.css';
 import ProductItem from './ProductItem';
 import Nav from './Nav';
-
-interface Item {
-    id?: string,
-    title: string,
-    description: string,
-    price: number | string
-    imageLink: string,
-    category: string
-}
+import { Item } from '../../../../types/Item';
+import {
+    useCreateItemMutation,
+    useUploadItemImageMutation,
+    useReadItemQuery,
+    useUpdateItemMutation,
+    useChangeItemImageMutation,
+    useDeleteItemMutation,
+    useDeleteItemImageMutation,
+} from '../../../../features/itemSection/itemSectionApi';
 
 const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
-    const [itemList, setItemList] = useState<Item[]>([
-        {
-            id: '0',
-            title: 'Item title',
-            description: 'Lorem ipsum dolor sit amet consectetur',
-            price: 100,
-            imageLink: '/images/items-section-images/1.webp',
-            category: 'meal'
-        },
-        {
-            id: '1',
-            title: 'Item title',
-            description: 'Lorem ipsum dolor sit amet consectetur',
-            price: 90,
-            imageLink: '/images/items-section-images/2.webp',
-            category: 'hamburger'
-        },
-        {
-            id: '2',
-            title: 'Item title',
-            description: 'Lorem ipsum dolor sit amet consectetur',
-            price: 90,
-            imageLink: '/images/items-section-images/3.png',
-            category: 'hamburger'
-        },
-        {
-            id: '3',
-            title: 'Item title',
-            description: 'Lorem ipsum dolor sit amet consectetur',
-            price: 90,
-            imageLink: '/images/items-section-images/4.png',
-            category: 'beef'
-        },
-        {
-            id: '4',
-            title: 'Item title',
-            description: 'Lorem ipsum dolor sit amet consectetur',
-            price: 90,
-            imageLink: '/images/items-section-images/5.webp',
-            category: 'hamburger'
-        },
-        {
-            id: '5',
-            title: 'Item title',
-            description: 'Lorem ipsum dolor sit amet consectetur',
-            price: 90,
-            imageLink: '/images/items-section-images/6.webp',
-            category: 'meal'
-        },
-        {
-            id: '6',
-            title: 'Item title',
-            description: 'Lorem ipsum dolor sit amet consectetur',
-            price: 90,
-            imageLink: '/images/items-section-images/7.png',
-            category: 'meal'
-        },
-        {
-            id: '7',
-            title: 'Item title',
-            description: 'Lorem ipsum dolor sit amet consectetur',
-            price: 90,
-            imageLink: '/images/items-section-images/8.png',
-            category: 'salad'
-        },
-        {
-            id: '8',
-            title: 'Item title',
-            description: 'Lorem ipsum dolor sit amet consectetur',
-            price: 90,
-            imageLink: '/images/items-section-images/9.png',
-            category: 'salad'
-        },
-        {
-            id: '9',
-            title: 'Item title',
-            description: 'Lorem ipsum dolor sit amet consectetur',
-            price: 90,
-            imageLink: '/images/items-section-images/10.webp',
-            category: 'salad'
-        },
-        {
-            id: '10',
-            title: 'Item title',
-            description: 'Lorem ipsum dolor sit amet consectetur',
-            price: 90,
-            imageLink: '/images/items-section-images/11.webp',
-            category: 'salad'
-        },
-    ]);
+    const [itemList, setItemList] = useState<Item[]>([]);
     const categoryList: string[] = [...new Set(itemList.map(item => item.category))];
     const [selected, setSelected] = useState<string>('SHOW ALL');
     const [menuPanel, setMenuPanel] = useState(false);
@@ -121,6 +33,27 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
     const [hideSec, setHideSec] = useState(false);
     const lastScrollYRef = useRef(0);
     const [showNav, setshowNav] = useState(true);
+    const [createItem] = useCreateItemMutation();
+    const [uploadItemImage] = useUploadItemImageMutation();
+    const { data: items = [], isLoading } = useReadItemQuery();
+    const [updateItem] = useUpdateItemMutation();
+    const [changeItemImage] = useChangeItemImageMutation();
+    const [deleteItem] = useDeleteItemMutation();
+    const [deleteItemImage] = useDeleteItemImageMutation();
+
+    useEffect(() => {
+        if(items && !isLoading) {
+            const transformed: Item[] = items.map(item => ({
+                id: item._id,
+                title: item.title,
+                description: item.description,
+                price: item.price,
+                imageLink: item.imageLink,
+                category: item.category
+            }));
+            setItemList(transformed);
+        }
+    }, [items, isLoading]);
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
@@ -155,24 +88,38 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
         }));
     }
 
-    const handleSaveUpdateItem = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSaveItem = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const newItem: Item = {
-            id: itemObj.id,
-            title: itemObj.title,
-            description: itemObj.description,
-            price: Number(itemObj.price),
-            imageLink: '',
-            category: itemObj.category
-        }
-        setItemList(prev => {
-            const isExisted = itemList.some(item => item.id === itemObj.id);
-            if(isExisted) {
-                return prev.map(item => item.id === newItem.id ? newItem : item)
-            } else {
-                return [...prev, newItem];
+        if(!file && !itemObj.id) return;
+        const imageLink = file?.name || itemObj.imageLink;
+        try {
+            if(itemObj.id && file) { // Update
+                const formData = new FormData();
+                formData.append('image', file);
+                await changeItemImage({ formData, oldImage: itemObj.imageLink }).unwrap();
+            } else if (file) { // Create
+                const formData = new FormData();
+                formData.append('image', file);
+                await uploadItemImage(formData).unwrap();
             }
-        });
+
+            const newItem: Item = {
+                ...itemObj,
+                imageLink,
+            }
+
+            if(itemObj.id) { // Update
+                await updateItem({id: itemObj.id, data: newItem}).unwrap();
+            } else { // Create
+                await createItem(newItem).unwrap();
+            }
+
+            clearFields();
+            setFile(null);
+        } catch (err) {
+            console.error('Error saving item:', err);
+            alert('Error saving item');
+        }
     }
 
     const handlePrepareUpdate = (item: Item) => {
@@ -186,6 +133,17 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
             imageLink: item.imageLink,
             category: item.category
         });
+    }
+
+    const handleDeleteItem = async (item: Item) => {
+        if(!item) return;
+        try {
+            await deleteItemImage(item.imageLink).unwrap();
+            await deleteItem(item.id!).unwrap();
+        } catch (err) {
+            console.error('Error deleting item:', err);
+            alert('Error deleting item');
+        }
     }
 
     const clearFields = () => {
@@ -212,7 +170,7 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
                 <h5 onClick={() => setMenuPanel(false)}><i className="fa-solid fa-xmark"></i>Close menu</h5>
             </div>
             {/* addUpdateItemForm */}
-            <form onSubmit={handleSaveUpdateItem} ref={formRef} className="addUpdateItemForm">
+            <form onSubmit={handleSaveItem} ref={formRef} className="addUpdateItemForm">
                 <div className="formInnerWrapper">
                     <h3 className='closeFormButton' onClick={() => setForm(false)}>X</h3>
                     <div>
@@ -238,10 +196,19 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
                                     setFile(e.target.files[0]);
                                 }}
                             />
-                            <h5><i className="fa-solid fa-images"></i>{file ? 'Change image' : 'Add image'}</h5>
+                            <h5><i className="fa-solid fa-images"></i>{file || itemObj.id ? 'Change image' : 'Add image'}</h5>
                         </label>
-                        {file && <img className='formImageView' src={URL.createObjectURL(file)} alt="Preview" onClick={() => setFile(null)} />}
-                        <button disabled={!itemObj.title || !itemObj.price || !itemObj.description || !file} type='submit'>Save</button>
+                        {(file || itemObj.id) &&
+                        <img
+                            className='formImageView'
+                            src={file ?
+                                URL.createObjectURL(file) :
+                                `/itemSection/${itemObj.imageLink}`
+                            }
+                            alt="Preview"
+                            onClick={() => setFile(null)}
+                        />}
+                        <button disabled={!itemObj.title || !itemObj.price || !itemObj.description || !itemObj.imageLink} type='submit'>Save</button>
                     </div>
                 </div>
             </form>
@@ -264,11 +231,12 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
                     <div></div>
                     <div></div>
                 </div>
-                {itemList.map(item => (item.category.toLowerCase() === selected.toLowerCase() || selected === 'SHOW ALL') ?
+                {itemList.map((item: Item) => (item.category.toLowerCase() === selected.toLowerCase() || selected === 'SHOW ALL') ?
                     <ProductItem
                         key={item.id}
                         item={item}
                         handlePrepareUpdate={handlePrepareUpdate}
+                        handleDeleteItem={handleDeleteItem}
                     />
                 : null)}
             </div>

@@ -81,9 +81,9 @@ const Section3 = () => {
         if(!file && !itemObj.id) return;
         const imageLink = file?.name || itemObj.imageLink;
         try {
-            if(!itemObj.id) {
+            if(!itemObj.id && file) {
                 const formData = new FormData();
-                formData.append('image', file!);
+                formData.append('image', file);
                 await uploadImage(formData).unwrap(); 
             } else if(file) {
                 const formData = new FormData();
@@ -177,7 +177,7 @@ const Section3 = () => {
                             alt="Preview"
                             onClick={() => setFile(null)}
                         />}
-                        <button disabled={!itemObj.title || !itemObj.description || !file} type='submit'>Save</button>
+                        <button disabled={!itemObj.title || !itemObj.description} type='submit'>Save</button>
                     </div>
                 </div>
             </form>

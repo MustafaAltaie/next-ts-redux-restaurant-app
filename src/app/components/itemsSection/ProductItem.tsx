@@ -12,10 +12,11 @@ interface Item {
 
 interface ItemProps {
     item: Item,
-    handlePrepareUpdate: (item: Item) => void
+    handlePrepareUpdate: (item: Item) => void,
+    handleDeleteItem: (item: Item) => void
 }
 
-const ProductItem = ({ item, handlePrepareUpdate }: ItemProps) => {
+const ProductItem = ({ item, handlePrepareUpdate, handleDeleteItem }: ItemProps) => {
     const [itemMenu, setItemMenu] = useState(false);
     return (
         <div className="itemCard flexColumn10">
@@ -31,7 +32,7 @@ const ProductItem = ({ item, handlePrepareUpdate }: ItemProps) => {
                     ${itemMenu ? 'overflowMenuPanelOn' : ''}
                 `}>
                 <h5 onClick={() => {handlePrepareUpdate(item); setItemMenu(false)}}><i className="fa-solid fa-pen-to-square"></i>Edit item</h5>
-                <h5><i className="fa-solid fa-trash"></i>Remove item</h5>
+                <h5 onClick={() => handleDeleteItem(item)}><i className="fa-solid fa-trash"></i>Remove item</h5>
                 <h5 onClick={() => setItemMenu(false)}><i className="fa-solid fa-xmark"></i>Close menu</h5>
             </div>
             <p className='itemCardCategory'>{item.category.toUpperCase()}</p>
@@ -40,7 +41,7 @@ const ProductItem = ({ item, handlePrepareUpdate }: ItemProps) => {
                     className='itemWrapperImage'
                     width={150}
                     height={150}
-                    src={item.imageLink}
+                    src={`/itemSection/${item.imageLink}`}
                     alt='Category'
                     priority
                 />
