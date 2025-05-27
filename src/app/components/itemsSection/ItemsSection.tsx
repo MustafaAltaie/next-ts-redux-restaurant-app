@@ -73,7 +73,9 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
         if(formRef.current) {
             if(form) {
                 formRef.current.style.height = `${formRef.current.scrollHeight}px`;
-                formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                setTimeout(() => {
+                    formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 200);
             } else {
                 formRef.current.style.height = '0px';
                 clearFields();
