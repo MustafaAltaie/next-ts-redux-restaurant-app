@@ -23,18 +23,17 @@
 }
 .teamMember {
     position: relative;
-    width: calc(100%/3 - 20px/3);
+    width: calc(100%/2 - 10px/2);
     text-align: center;
     align-items: center;
     justify-content: space-between;
     padding: 15px;
-    border-radius: 20px;
 }
 .darkMode .teamMember {
     border: solid 0.5px #ffffff55;
 }
 .lightMode .teamMember {
-    border: solid 0.7px #ffffff;
+    border: solid 0.7px #00000033;
     background-image:
     radial-gradient(circle at -20% 30%, #009dff6a, transparent 40%),
     radial-gradient(circle at 120% 70%, #6a6a6a3e, transparent 40%);
@@ -123,9 +122,9 @@
 }
 .teamMember .overflowMenuPanel {
     padding: 5px;
-    width: 100%;
-    left: 0;
-    top: 0;
+    width: 90%;
+    left: 5px;
+    top: 5px;
 }
 .teamMember .overflowMenuPanel > h5 {
     font-weight: normal;
@@ -157,5 +156,9 @@
     .lightMode .memberImageWrapper {
         background-image: radial-gradient(circle at 20% 20%, #44444476, transparent 80%);
         border: solid 0.5px #00000055;
+    }
+    .teamSection > .addUpdateItemForm {
+        width: 40%;
+        margin: 0 auto;
     }
 }
