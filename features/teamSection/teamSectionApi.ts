@@ -22,6 +22,14 @@ export const teamApi = api.injectEndpoints({
         updateMemberImage: builder.mutation<void, { formData: FormData, oldImage: string }>({
             query: ({ formData, oldImage }) => ({ url: `/api/memberSection/update/${oldImage}`, method: 'POST', body: formData }),
             invalidatesTags: ['members']
+        }),
+        deleteMember: builder.mutation<void, string>({
+            query: (id) => ({ url: `/api/memberSection/${id}`, method: 'DELETE' }),
+            invalidatesTags: ['members']
+        }),
+        deleteMemberImage: builder.mutation<void, string>({
+            query: (imageName) => ({ url: `/api/memberSection/deleteImages/${imageName}`, method: 'DELETE' }),
+            invalidatesTags: ['members']
         })
     }),
     overrideExisting: true
@@ -33,4 +41,6 @@ export const {
     useReadMemberQuery,
     useUpdateMemberMutation,
     useUpdateMemberImageMutation,
+    useDeleteMemberMutation,
+    useDeleteMemberImageMutation,
 } = teamApi;

@@ -9,6 +9,8 @@ import {
     useReadMemberQuery,
     useUpdateMemberMutation,
     useUpdateMemberImageMutation,
+    useDeleteMemberMutation,
+    useDeleteMemberImageMutation,
 } from '../../../../features/teamSection/teamSectionApi';
 
 const TeamSection = () => {
@@ -35,6 +37,8 @@ const TeamSection = () => {
     const { data: members = [], isLoading: isMemberListLoading } = useReadMemberQuery();
     const [updateMember] = useUpdateMemberMutation();
     const [updateMemberImage] = useUpdateMemberImageMutation();
+    const [deleteMember] = useDeleteMemberMutation();
+    const [deleteMemberImage] = useDeleteMemberImageMutation()
 
     useEffect(() => {
         if(members && !isMemberListLoading) {
@@ -132,6 +136,17 @@ const TeamSection = () => {
         }
     }
 
+    const handleDeleteMember = async (member: Member) => {
+        if(!member) return;
+        try {
+            await deleteMemberImage(member.imageLink).unwrap();
+            await deleteMember(member.id!).unwrap();
+        } catch (err) {
+            console.error('Could not complete deletion:', err);
+            alert('Error delete member');
+        }
+    }
+
     const clearFields = () => {
         setMemberObj({
             id: '',
@@ -224,6 +239,7 @@ const TeamSection = () => {
                     key={member.id}
                     member={member}
                     handlePrepareUpdate={handlePrepareUpdate}
+                    handleDeleteMember={handleDeleteMember}
                 />
                 )}
             </div>

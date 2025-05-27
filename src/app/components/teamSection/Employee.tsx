@@ -5,9 +5,10 @@ import { Member } from '../../../../types/Member';
 interface EmployeeProps {
     member: Member,
     handlePrepareUpdate: (member: Member) => void
+    handleDeleteMember: (member: Member) => void
 }
 
-const Employee = ({ member, handlePrepareUpdate }: EmployeeProps) => {
+const Employee = ({ member, handlePrepareUpdate, handleDeleteMember }: EmployeeProps) => {
     const [menu, setMenu] = useState(false);
 
     return (
@@ -24,7 +25,7 @@ const Employee = ({ member, handlePrepareUpdate }: EmployeeProps) => {
                     ${menu ? 'overflowMenuPanelOn' : ''}
                 `}>
                 <h5 onClick={() => {setMenu(false); handlePrepareUpdate(member)}}><i className="fa-solid fa-pen-to-square"></i>Update</h5>
-                <h5><i className="fa-solid fa-trash"></i>Remove</h5>
+                <h5 onClick={() => handleDeleteMember(member)}><i className="fa-solid fa-trash"></i>Remove</h5>
                 <h5 onClick={() => setMenu(false)}><i className="fa-solid fa-xmark"></i>Close</h5>
             </div>
             <div className='flexColumn10'>
