@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import './ShoppingCart.css';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../store/store';
+import ShoppingCartItem from './ShoppingCartItem';
 
 interface CartProps {
     showCart: boolean,
@@ -9,6 +12,7 @@ const Cart = ({ showCart }: CartProps) => {
     const cartRef = useRef<HTMLDivElement>(null);
     const lastScrollYRef = useRef(0);
     const [shiftCartDown, setShiftCartDown] = useState(true);
+    const list = useSelector((state: RootState) => state.cart.items);
 
     useEffect(() => {
         if(typeof window === 'undefined') return;
@@ -40,14 +44,12 @@ const Cart = ({ showCart }: CartProps) => {
             ${shiftCartDown ? 'cartShiftDown' : ''}
         `}>
             <div className="shoppingCartInnerWrapper flexColumn10">
-                <div className="cartItem">
-                    <div className='cartItemWrapper'></div>
-                    <div className="cartItemBackground"></div>
-                </div>
-                <div className="cartItem">
-                    <div className='cartItemWrapper'></div>
-                    <div className="cartItemBackground"></div>
-                </div>
+                {list.map(item =>
+                    <ShoppingCartItem
+                        key={item.id}
+                        item={item}
+                    />
+                )}
             </div>
             <button>CHECKOUT</button>
         </div>

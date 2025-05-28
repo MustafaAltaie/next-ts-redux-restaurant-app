@@ -2,48 +2,79 @@
     z-index: 900;
     position: fixed;
     right: 0;
-    width: 100%;
+    width: 70%;
     border-bottom: solid 0.5px;
-    padding: 20px;
-    gap: 20px;
+    border-left: solid 0.5px;
+    padding: 10px;
+    gap: 10px;
     transform: translateY(-50px);
+    border-radius: 0 0 0 10px;
     transition: transform 0.3s, top 0.5s;
+}
+.lightMode .shoppingCartWrapper {
+    box-shadow: -3px 3px 3px #00000033;
 }
 .cartShiftDown {
     transform: translateY(0);
 }
 .shoppingCartWrapper > button {
-    background: #007004;
+    background: #00a305;
     color: white;
     padding: 10px;
-    border-radius: 0;
 }
 .shoppingCartInnerWrapper {
     overflow-y: scroll;
     scrollbar-width: none;
     max-height: 400px;
-    gap: 20px;
+    gap: 10px;
 }
 .cartItem {
     position: relative;
     width: 100%;
-    min-height: 100px;
+    height: 60px;
     border-radius: 20px;
 }
 .cartItem > div {
     position: absolute;
     width: 100%;
     height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    border-radius: 5px;
 }
 .cartItemWrapper {
     z-index: 1;
+    transform: translateX(0%);
     transition: 0.3s;
+}
+.cartItemWrapperDeleted {
+    transform: translateX(-100%);
 }
 .darkMode .cartItemWrapper {
     border: solid 0.5px #aaa;
 }
 .lightMode .cartItemWrapper {
     border: solid 0.5px #555;
+}
+.cartItemImageWrapper {
+    width: 40%;
+    height: 100%;
+}
+.cartItemImageWrapper > img {
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+}
+.cartItemDetailsWrapper {
+    width: 40%;
+}
+.cartItemDeleteWrapper {
+    width: 20%;
+    text-align: center;
+    height: 100%;
+    cursor: pointer;
 }
 .cartItemBackground {
     z-index: 0;
@@ -54,7 +85,7 @@
 /* Laptop */
 @media (min-width: 1024px) {
     .shoppingCartWrapper {
-        width: 500px;
+        width: 250px;
         transform: translateY(-60px);
         top: 0;
     }
