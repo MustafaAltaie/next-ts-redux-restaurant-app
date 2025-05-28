@@ -27,7 +27,7 @@ const ShoppingCartItem = ({ item }: ShoppingCartItemProps) => {
                 `}>
                 <div className="cartItemImageWrapper flexCenter">
                     <Image
-                        src={`/section2-images/${item.image!}`}
+                        src={item.image!}
                         alt='ItemImage'
                         width={70}
                         height={70}

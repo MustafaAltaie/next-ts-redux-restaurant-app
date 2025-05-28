@@ -29,7 +29,7 @@ const Sec2Item = ({ item, handlePrepareUpdate, handleDelete }: Sec2ItemProps) =>
             title: item.title,
             price: Number(item.price),
             quantity: 1,
-            image: item.imageLink,
+            image: `/section2-images/${item.imageLink}`,
         }
         dispatch(addToCart(newItem));
     }

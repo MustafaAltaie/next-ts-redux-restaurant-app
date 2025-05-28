@@ -1,5 +1,9 @@
 import Image from 'next/image';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../../store/store';
+import { addToCart } from '../../../../features/cart/cartSlice';
+import { CartItem } from '../../../../types/Cart';
 
 interface Item {
     id?: string,
@@ -18,6 +22,19 @@ interface ItemProps {
 
 const ProductItem = ({ item, handlePrepareUpdate, handleDeleteItem }: ItemProps) => {
     const [itemMenu, setItemMenu] = useState(false);
+    const dispatch = useDispatch<AppDispatch>();
+
+    const handleAddToCart = (item: Item) => {
+        const newItem: CartItem = {
+            id: item.id!,
+            title: item.title,
+            price: Number(item.price),
+            quantity: 1,
+            image: `/itemSection/${item.imageLink}`
+        }
+        dispatch(addToCart(newItem));
+    }
+
     return (
         <div className="itemCard flexColumn10">
             <div className="itemCardSpace">
@@ -50,7 +67,7 @@ const ProductItem = ({ item, handlePrepareUpdate, handleDeleteItem }: ItemProps)
             <p>{item.description}</p>
             <div className='flexSpaceBetween'>
                 <h3>{item.price}:-</h3>
-                <h4>🛒</h4>
+                <h4 onClick={() => handleAddToCart(item)}>🛒</h4>
             </div>
         </div>
     )
