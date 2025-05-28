@@ -1,0 +1,81 @@
+.cartSection {
+    padding-top: 50px;
+}
+.cartMainWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    max-height: 500px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+/* Item */
+.mainCartItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+    padding: 5px 10px;
+    border: solid 0.5px;
+    border-radius: 20px;
+    transition: 0.3s;
+}
+.mainCartItemDeleted {
+    transform: translateX(-100%);
+}
+.mainCartImageWrapper {
+    width: 30%;
+    padding: 10px;
+}
+.mainCartImageWrapper > img {
+    object-fit: contain;
+    pointer-events: none;
+}
+.mainCartDetailWrapper {
+    width: fit-content;
+    max-width: 30%;
+}
+.mainCartAmountWrapper {
+    width: 30%;
+    text-align: center;
+}
+.mainCartAmountWrapper > div {
+    display: flex;
+    justify-content: space-around;
+    border: solid 0.5px;
+    border-radius: 10px;
+}
+.mainCartAmountWrapper > div > h1 {
+    width: 35%;
+    height: 30px;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+.mainCartAmountWrapper > div > h3 {
+    width: 30%;
+    border-right: solid 0.5px;
+    border-left: solid 0.5px;
+}
+.mainCartAmountWrapper > h4 {
+    white-space: nowrap;
+}
+.mainCartDeleteWrapper {
+    width: 10%;
+    cursor: pointer;
+}
+
+
+.cartPaymentDetailWrapper {
+    min-height: 400px;
+    background-color: #888;
+}
+
+
+/* Laptop */
+@media (min-width: 1024px) {
+    .cartSection {
+        padding-top: 60px;
+    }
+}

@@ -5,9 +5,9 @@ import { usePathname, useRouter } from 'next/navigation';
 
 interface HeaderProps {
     scrollToItems?: () => void,
-    scrollToContact: () => void,
-    setShowCart: React.Dispatch<SetStateAction<boolean>>,
-    showCart: boolean
+    scrollToContact?: () => void,
+    setShowCart?: React.Dispatch<SetStateAction<boolean>>,
+    showCart?: boolean
 }
 
 const Header = ({ scrollToItems, scrollToContact, setShowCart, showCart }: HeaderProps) => {
@@ -75,9 +75,10 @@ const Header = ({ scrollToItems, scrollToContact, setShowCart, showCart }: Heade
                     <div className='toggleDarkMode' onClick={toggleMode}>
                         <div className={isDark ? 'darkToggleThumb' : 'lightToggleThumb'}></div>
                     </div>
+                    {pathName !== '/cart' &&
                     <div className='cartWrapper'>
-                        <h1 onClick={() => setShowCart(!showCart)}>🛒</h1>
-                    </div>
+                        <h1 onClick={() => setShowCart!(!showCart)}>🛒</h1>
+                    </div>}
                     <div className='toggleNav' onClick={() => setNav(!nav)}>
                         <div style={{ transform: `translateY(${nav ? '800%' : '0%'}) rotate(${nav ? '45deg' : '0deg'})` }}></div>
                         <div style={{ opacity: nav ? 0 : 1 }}></div>
@@ -88,10 +89,10 @@ const Header = ({ scrollToItems, scrollToContact, setShowCart, showCart }: Heade
             <nav ref={navRef}>
                 <ul>
                     <li className={`${pathName === '/' ? 'active' : ''}`} onClick={() => router.push('/')}>Home</li>
-                    {pathName !== "/about" &&
+                    {pathName !== "/about" && pathName !== '/cart' &&
                     <li onClick={() => {scrollToItems && scrollToItems(); window.innerWidth < 1024 && setNav(false)}}>Food list</li>}
                     <li className={`${pathName === '/about' ? 'active' : ''}`} onClick={() => router.push('/about')}>About us</li>
-                    <li className={`${pathName === '/contact' ? 'active' : ''}`} onClick={() => {scrollToContact(); window.innerWidth < 1024 && setNav(false)}}>Contact</li>
+                    <li className={`${pathName === '/contact' ? 'active' : ''}`} onClick={() => {scrollToContact!(); window.innerWidth < 1024 && setNav(false)}}>Contact</li>
                 </ul>
             </nav>
         </header>

@@ -1,8 +1,11 @@
+'use client';
 import { useEffect, useRef, useState } from 'react';
 import './ShoppingCart.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
 import ShoppingCartItem from './ShoppingCartItem';
+import { useRouter } from 'next/navigation';
+import { CartItem } from '../../../../types/Cart';
 
 interface CartProps {
     showCart: boolean,
@@ -13,6 +16,7 @@ const Cart = ({ showCart }: CartProps) => {
     const lastScrollYRef = useRef(0);
     const [shiftCartDown, setShiftCartDown] = useState(true);
     const list = useSelector((state: RootState) => state.cart.items);
+    const router = useRouter();
 
     useEffect(() => {
         if(typeof window === 'undefined') return;
@@ -30,11 +34,11 @@ const Cart = ({ showCart }: CartProps) => {
     useEffect(() => {
         if(!cartRef.current) return;
         if(showCart) {
-            cartRef.current.style.top = `-${cartRef.current?.offsetHeight}px`;
+            cartRef.current.style.top = `-${cartRef.current?.offsetHeight + 50}px`;
         } else {
             cartRef.current.style.top = window.innerWidth >= 1024 ? '60px' : '50px';
         }
-    }, [showCart]);
+    }, [showCart, list]);
 
     return (
         <div
@@ -53,7 +57,8 @@ const Cart = ({ showCart }: CartProps) => {
                     />
                 )}
             </div>
-            <button>CHECKOUT</button>
+            {list.length > 0 &&
+            <button onClick={() => router.push('/cart')}>CHECKOUT</button>}
         </div>
     )
 }
