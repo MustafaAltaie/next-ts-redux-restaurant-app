@@ -14,7 +14,7 @@ const page = () => {
   const contactRef = useRef<HTMLDivElement>(null);
   const scrollToItems = () => itemRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   const scrollToContact = () => contactRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  const [showCart, setShowCart] = useState(false);
+  const [showCart, setShowCart] = useState(true);
 
   return (
     <div>

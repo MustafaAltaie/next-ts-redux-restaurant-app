@@ -8,22 +8,7 @@ interface CartState {
 }
 
 const initialState: CartState = {
-    items: [
-        {
-            id: '1',
-            name: 'dfgsdg',
-            price: 22,
-            quantity: 2,
-            image: '/section2-images/1.webp',
-        },
-        {
-            id: '2',
-            name: 'dsredrhv',
-            price: 32,
-            quantity: 1,
-            image: '/section2-images/2.png',
-        },
-    ],
+    items: [],
     totalQuantity: 0,
     totalPrice: 0,
 }
@@ -34,8 +19,9 @@ const cartSlice = createSlice({
     reducers: {
         addToCart(state, action: PayloadAction<CartItem>) {
             const item = action.payload;
-            const existing = state.items.find(i => i === item);
+            const existing = state.items.find(i => i.id === item.id);
             if(existing) {
+                existing.quantity += 1;
                 state.totalQuantity += 1;
                 state.totalPrice += item.price * item.quantity;
             } else {

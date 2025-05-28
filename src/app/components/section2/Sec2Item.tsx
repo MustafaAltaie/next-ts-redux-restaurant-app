@@ -1,5 +1,9 @@
 import Image from 'next/image';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../../store/store';
+import { addToCart } from '../../../../features/cart/cartSlice';
+import { CartItem } from '../../../../types/Cart';
 
 interface Item {
     id?: string,
@@ -17,6 +21,18 @@ interface Sec2ItemProps {
 
 const Sec2Item = ({ item, handlePrepareUpdate, handleDelete }: Sec2ItemProps) => {
     const [itemMenu, setItemMenu] = useState(false);
+    const dispatch = useDispatch<AppDispatch>();
+
+    const handleAddToCart = (item: Item) => {
+        const newItem: CartItem = {
+            id: item.id!,
+            title: item.title,
+            price: Number(item.price),
+            quantity: 1,
+            image: item.imageLink,
+        }
+        dispatch(addToCart(newItem));
+    }
 
     return (
         <div className="sec2Card flexColumn10">
@@ -50,7 +66,7 @@ const Sec2Item = ({ item, handlePrepareUpdate, handleDelete }: Sec2ItemProps) =>
                 <h5>{item.description}</h5>
                 <div className='flexSpaceBetween gap10'>
                     <h3>{item.price}:-</h3>
-                    <button>🛒</button>
+                    <button onClick={() => handleAddToCart(item)}>🛒</button>
                 </div>
             </div>
         </div>

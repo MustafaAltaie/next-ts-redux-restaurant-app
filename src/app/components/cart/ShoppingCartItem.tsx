@@ -27,7 +27,7 @@ const ShoppingCartItem = ({ item }: ShoppingCartItemProps) => {
                 `}>
                 <div className="cartItemImageWrapper flexCenter">
                     <Image
-                        src={item.image!}
+                        src={`/section2-images/${item.image!}`}
                         alt='ItemImage'
                         width={70}
                         height={70}
@@ -35,7 +35,7 @@ const ShoppingCartItem = ({ item }: ShoppingCartItemProps) => {
                     />
                 </div>
                 <div className="cartItemDetailsWrapper">
-                    <h6>{item.name}</h6>
+                    <h6>{item.title}</h6>
                     <h6>Quantity: {item.quantity} st</h6>
                 </div>
                 <div className="cartItemDeleteWrapper flexCenter" onClick={() => {setDeleted(true); handleDelete(item.id)}}>

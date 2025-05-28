@@ -44,6 +44,8 @@ const Cart = ({ showCart }: CartProps) => {
             ${shiftCartDown ? 'cartShiftDown' : ''}
         `}>
             <div className="shoppingCartInnerWrapper flexColumn10">
+                {list.length === 0 &&
+                <h3 style={{ padding: '10px', textAlign: 'center' }}>Your cart is empty</h3>}
                 {list.map(item =>
                     <ShoppingCartItem
                         key={item.id}
