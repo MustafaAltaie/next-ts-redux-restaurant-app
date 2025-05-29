@@ -104,6 +104,21 @@ header nav li:hover {
 .lightToggleThumb {
     left: 2px;
 }
+.cartWrapper {
+    position: relative;
+    cursor: pointer;
+}
+.cartNumOfItems {
+    position: absolute;
+    left: 10px;
+    top: -10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #f07;
+    color: #fff;
+    pointer-events: none;
+}
 
 
 /* Laptop scale */
@@ -131,9 +146,6 @@ header nav li:hover {
     }
     header nav li:hover {
         background: #215687;
-    }
-    .cartWrapper {
-        cursor: pointer;
     }
     .lightMode .toggleDarkMode {
         border: solid 1px #00000055;

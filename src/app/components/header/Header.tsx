@@ -2,6 +2,8 @@
 import { SetStateAction, useEffect, useRef, useState } from 'react';
 import './Header.css';
 import { usePathname, useRouter } from 'next/navigation';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../store/store';
 
 interface HeaderProps {
     scrollToItems?: () => void,
@@ -18,6 +20,7 @@ const Header = ({ scrollToItems, scrollToContact, setShowCart, showCart }: Heade
     const router = useRouter();
     const lastScrollYRef = useRef(0);
     const [showHeader, setShowHeader] = useState(true);
+    const itemNm = useSelector((state: RootState) => state.cart.totalQuantity);
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
@@ -77,6 +80,7 @@ const Header = ({ scrollToItems, scrollToContact, setShowCart, showCart }: Heade
                     </div>
                     {pathName !== '/cart' &&
                     <div className='cartWrapper'>
+                        <h6 className='cartNumOfItems flexCenter'>{itemNm}</h6>
                         <h1 onClick={() => setShowCart!(!showCart)}>🛒</h1>
                     </div>}
                     <div className='toggleNav' onClick={() => setNav(!nav)}>

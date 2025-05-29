@@ -1,14 +1,18 @@
 .cartSection {
+    position: relative;
     padding-top: 50px;
+    display: flex;
+    flex-direction: column;
 }
 .cartMainWrapper {
     display: flex;
     flex-direction: column;
     gap: 20px;
     padding: 20px;
-    max-height: 500px;
-    overflow-y: scroll;
-    scrollbar-width: none;
+    /* max-height: 500px; */
+    /* overflow-y: scroll; */
+    /* scrollbar-width: none; */
+    overflow-x: hidden;
 }
 /* Item */
 .mainCartItem {
@@ -18,9 +22,16 @@
     width: 100%;
     gap: 10px;
     padding: 5px 10px;
-    border: solid 0.5px;
     border-radius: 20px;
     transition: 0.3s;
+}
+.darkMode .mainCartItem,
+.darkMode .mainCartAmountWrapper > div {
+    border: solid 0.5px #ffffff77;
+}
+.lightMode .mainCartItem,
+.lightMode .mainCartAmountWrapper > div {
+    border: solid 0.5px #00000077;
 }
 .mainCartItemDeleted {
     transform: translateX(-100%);
@@ -44,7 +55,6 @@
 .mainCartAmountWrapper > div {
     display: flex;
     justify-content: space-around;
-    border: solid 0.5px;
     border-radius: 10px;
 }
 .mainCartAmountWrapper > div > h1 {
@@ -58,6 +68,16 @@
     border-right: solid 0.5px;
     border-left: solid 0.5px;
 }
+.mainCartAmountWrapper > div > h1,
+.mainCartAmountWrapper > div > h3 {
+    font-size: 14px;
+}
+.darkMode .mainCartAmountWrapper > div > h3 {
+    border-color: #ffffff77;
+}
+.lightMode .mainCartAmountWrapper > div > h3 {
+    border-color: #00000077;
+}
 .mainCartAmountWrapper > h4 {
     white-space: nowrap;
 }
@@ -66,10 +86,29 @@
     cursor: pointer;
 }
 
-
-.cartPaymentDetailWrapper {
+.orderSummaryWrapper {
+    position: sticky;
+    top: 0;
     min-height: 400px;
-    background-color: #888;
+    padding: 20px;
+    border-top: solid 0.5px;
+}
+.orderSummaryTotalWrapper {
+    display: flex;
+    justify-content: space-between;
+    border-top: solid 0.5px;
+    border-bottom: solid 0.5px;
+    padding: 10px 0;
+}
+.orderSummaryFormInnerWrapper > div > input,
+.orderSummaryFormInnerWrapper > div > textarea,
+.orderSummaryFormInnerWrapper > button {
+    width: 100%;
+}
+.orderSummaryFormInnerWrapper > button {
+    background-color: #07a;
+    color: white;
+    padding: 10px;
 }
 
 
@@ -77,5 +116,28 @@
 @media (min-width: 1024px) {
     .cartSection {
         padding-top: 60px;
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    .cartMainWrapper {
+        width: 50%;
+        border-right: solid 0.5px;
+        padding: 50px;
+    }
+    .orderSummaryWrapper {
+        width: 50%;
+        height: 100%;
+        border-top: none;
+        padding: 50px;
+        border-left: solid 0.5px;
+    }
+    .mainCartAmountWrapper {
+        width: 20%;
+    }
+    .mainCartAmountWrapper > div > h1 {
+        width: 35%;
+    }
+    .mainCartAmountWrapper > div > h3 {
+        width: 30%;
     }
 }

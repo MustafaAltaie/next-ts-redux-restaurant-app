@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { CartItem } from "../../../types/Cart";
 import { useState } from "react";
-import { removeFromCart } from "../../../features/cart/cartSlice";
+import { removeFromCart, handleIncrement, handleDecrement } from "../../../features/cart/cartSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../store/store";
 
@@ -11,16 +11,15 @@ interface MainCartItemProps {
 }
 
 const MainCartItem = ({ item }: MainCartItemProps) => {
-    const [count, setCount] = useState(1);
     const [deleted, setDeleted] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
 
-    const handleDicrease = () => {
-        setCount(prev => prev <= 1 ? 1 : prev - 1);
+    const handleDicrease = (id: string) => {
+        dispatch(handleDecrement(id));
     }
 
-    const handleIncrease = () => {
-        setCount(prev => prev + 1);
+    const handleIncrease = (id: string) => {
+        dispatch(handleIncrement(id));
     }
 
     const handleDelete = (id: string) => {
@@ -45,17 +44,17 @@ const MainCartItem = ({ item }: MainCartItemProps) => {
                 />
             </div>
             <div className="mainCartDetailWrapper">
-                <h4>{item.title}</h4>
-                <p>Price: {item.price}:-</p>
-                <h5>Quantity: {item.quantity}st</h5>
+                <h5>{item.title.slice(0, 10)}...</h5>
+                <h5>Price: {item.price}:-</h5>
+                <h5>{item.quantity} st</h5>
             </div>
             <div className="mainCartAmountWrapper flexColumn10">
                 <div>
-                    <h1 className='flexCenter' onClick={handleDicrease} style={{ pointerEvents: count <= 1 ? 'none' : 'all' }}>-</h1>
-                    <h3 className='flexCenter'>{count}</h3>
-                    <h1 className='flexCenter' onClick={handleIncrease}>+</h1>
+                    <h1 className='flexCenter' onClick={() => handleDicrease(item.id)} style={{ pointerEvents: item.quantity <= 1 ? 'none' : 'all' }}>-</h1>
+                    <h3 className='flexCenter'>{item.quantity}</h3>
+                    <h1 className='flexCenter' onClick={() => handleIncrease(item.id)}>+</h1>
                 </div>
-                <h4>Total price: {item.price * count}:-</h4>
+                <h4>Total price: {item.price * item.quantity}:-</h4>
             </div>
             <div className='mainCartDeleteWrapper flexCenter' onClick={() => handleDelete(item.id)}><h3>🗑️</h3></div>
         </div>
