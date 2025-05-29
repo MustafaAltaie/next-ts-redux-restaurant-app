@@ -73,10 +73,14 @@ const Header = ({ scrollToItems, scrollToContact, setShowCart, showCart }: Heade
     return (
         <header className={`${!showHeader ? 'hideHeader' : ''}`}>
             <div>
-                <h2>Restaurant logo</h2>
+                <h3 className='logo'>Restaurant <span>logo</span></h3>
                 <div>
-                    <div className='toggleDarkMode' onClick={toggleMode}>
-                        <div className={isDark ? 'darkToggleThumb' : 'lightToggleThumb'}></div>
+                    <div className="toggleModeWrapper">
+                        <p>Light</p>
+                        <div className='toggleDarkMode' onClick={toggleMode}>
+                            <div className={isDark ? 'darkToggleThumb' : 'lightToggleThumb'}></div>
+                        </div>
+                        <p>Dark</p>
                     </div>
                     {pathName !== '/cart' &&
                     <div className='cartWrapper'>

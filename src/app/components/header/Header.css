@@ -14,6 +14,15 @@ header {
 .hideHeader {
     transform: translateY(-100%);
 }
+.logo {
+    border-left: solid 5px #a70;
+    padding: 0 4px 2px 4px;
+}
+.logo > span {
+    background: #a70;
+    color: white;
+    padding: 0 4px 2px 4px;
+}
 header > div {
     display: flex;
     align-items: center;
@@ -24,6 +33,11 @@ header > div > div {
     display: flex;
     align-items: center;
     gap: 20px;
+}
+.toggleModeWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 .toggleNav {
     display: flex;
