@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../../../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../../../store/store';
 import { addToCart } from '../../../../features/cart/cartSlice';
 import { CartItem } from '../../../../types/Cart';
 
@@ -23,6 +23,9 @@ interface ItemProps {
 const ProductItem = ({ item, handlePrepareUpdate, handleDeleteItem }: ItemProps) => {
     const [itemMenu, setItemMenu] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
+    const items = useSelector((state: RootState) => state.cart.items);
+    const currentItem = items.find(i => i.id === item.id);
+    const itemQuantity = currentItem?.quantity;
 
     const handleAddToCart = (item: Item) => {
         const newItem: CartItem = {
@@ -67,7 +70,11 @@ const ProductItem = ({ item, handlePrepareUpdate, handleDeleteItem }: ItemProps)
             <p>{item.description}</p>
             <div className='flexSpaceBetween'>
                 <h3>{item.price}:-</h3>
-                <h4 onClick={() => handleAddToCart(item)}>🛒</h4>
+                <button onClick={() => handleAddToCart(item)} className='relatived'>
+                    🛒
+                    {itemQuantity && itemQuantity > 0 &&
+                    <span className='itemButtonLabel'>{itemQuantity}</span>}
+                </button>
             </div>
         </div>
     )

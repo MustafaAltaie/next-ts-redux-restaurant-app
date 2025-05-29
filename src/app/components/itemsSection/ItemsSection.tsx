@@ -31,8 +31,6 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
         category: ''
     });
     const [hideSec, setHideSec] = useState(false);
-    const lastScrollYRef = useRef(0);
-    const [showNav, setshowNav] = useState(true);
     const [createItem] = useCreateItemMutation();
     const [uploadItemImage] = useUploadItemImageMutation();
     const { data: items = [], isLoading } = useReadItemQuery();
@@ -54,20 +52,6 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
             setItemList(transformed);
         }
     }, [items, isLoading]);
-
-    useEffect(() => {
-        if (typeof window === 'undefined') return;
-        lastScrollYRef.current = window.scrollY;
-
-        const handleScroll = () => {
-            setshowNav(window.scrollY <lastScrollYRef.current);
-            lastScrollYRef.current = window.scrollY;
-        }
-
-        window.addEventListener('scroll', handleScroll);
-
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
 
     useEffect(() => {
         if(formRef.current) {
@@ -214,7 +198,7 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
                     </div>
                 </div>
             </form>
-            <nav className={`itemSectionsNav ${showNav ? 'itemSectionsNav0' : ''}`}>
+            <nav className="itemSectionsNav">
                 <ul>
                     <li className={selected === 'SHOW ALL' ? 'selectedCategoryOption' : ''} onClick={() => setSelected('SHOW ALL')}>SHOW ALL</li>
                     {categoryList.map((category: string) =>

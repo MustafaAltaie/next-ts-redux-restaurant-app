@@ -8,16 +8,22 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import { CartItem } from '../../../types/Cart';
 import MainCartItem from './MainCartItem';
+import DiningInForm from './DiningInForm';
+import SomeWhereElseForm from './SomeWhereElseForm';
 
 const page = () => {
     const contactRef = useRef<HTMLDivElement>(null);
     const scrollToContact = () => contactRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     const items = useSelector((state: RootState) => state.cart.items);
     const subTotal = useSelector((state: RootState) => state.cart.totalPrice);
+    const [selected, setSelected] = useState<string>('diningIn');
 
     const handleSendOrder = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        alert()
+    }
+
+    const handleSendOrderRemote = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
     }
 
     return (
@@ -40,25 +46,23 @@ const page = () => {
                     <h3>Subtotal:</h3>
                     <p>{subTotal}:-</p>
                 </div>
-                <form onSubmit={handleSendOrder} className='orderSummaryForm'>
-                    <div className='orderSummaryFormInnerWrapper flexColumn10'>
-                        <div>
-                            <h5>Full name</h5>
-                            <input type="text" placeholder='Full name' title='Full name' name='fullName' />
-                        </div>
-                        <div>
-                            <h5>Tabel number</h5>
-                            <input type="text" placeholder='Tabel number' title='Tabel number' name='tableNumber' />
-                        </div>
-                        <div>
-                            <h5>Message to the chefs</h5>
-                            <textarea placeholder='Message to the chefs' title='Message to the chefs' name='message'></textarea>
-                        </div>
-                        <button type='submit'>Send order</button>
+                <div className='orderSummaryOrderOptionsWrapper flexColumn10'>
+                    <div>
+                        <input type="radio" id='diningIn' checked={selected === 'diningIn'} onChange={() => setSelected('diningIn')} />
+                        <label htmlFor='diningIn'>Dining in (at the restaurant)</label>
                     </div>
-                </form>
-                <p>Payment will be when the food's served</p>
-            </div>}
+                    <div>
+                        <input type="radio" id='someWhereElse' checked={selected === 'someWhereElse'}  onChange={() => setSelected('someWhereElse')} />
+                        <label htmlFor='someWhereElse'>Ordering from somewhere else</label>
+                    </div>
+                </div>
+                {selected === 'diningIn' &&
+                <DiningInForm handleSendOrder={handleSendOrder} />}
+                {selected === 'someWhereElse' &&
+                <SomeWhereElseForm handleSendOrderRemote={handleSendOrderRemote} />
+                }
+            </div>
+            }
         </section>
         <Footer ref={contactRef} />
         </>

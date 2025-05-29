@@ -59,6 +59,7 @@
 .sec2Card > div > .flexSpaceBetween > button {
     background: #444;
     width: 50%;
+    font-size: 20px;
 }
 
 /* settings */

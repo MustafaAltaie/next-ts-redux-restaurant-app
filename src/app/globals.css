@@ -18,8 +18,7 @@
 .darkMode header,
 .darkMode section,
 .darkMode .itemSectionsNav,
-.darkMode .shoppingCartWrapper,
-.darkMode .cartItemWrapper {
+.darkMode .shoppingCartWrapper {
     color: #fff;
     background-image: radial-gradient(circle at 0% 0%, #23344f, transparent 40%);
     background-color: #1E2126;
@@ -28,8 +27,7 @@
 .lightMode header,
 .lightMode section,
 .lightMode .itemSectionsNav,
-.lightMode .shoppingCartWrapper,
-.lightMode .cartItemWrapper {
+.lightMode .shoppingCartWrapper {
     color: #000;
     background-image: radial-gradient(circle at 0% 0%, #4fbeffa3, transparent 40%);
     background-color: #F1EEE0;
@@ -50,6 +48,9 @@ button, input, textarea {
     border-radius: 5px;
     padding: 5px 10px;
     touch-action: manipulation;
+}
+.relatived {
+    position: relative;
 }
 .flexSpaceBetween {
     display: flex;
@@ -100,6 +101,22 @@ button, input, textarea {
     text-align: center;
     font-size: 200px;
     opacity: 0.1;
+}
+.itemButtonLabel {
+    position: absolute;
+    top: 40%;
+    right: 32%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #c05;
+    color: #fff !important;
+    pointer-events: none;
 }
 
 /* Settings */

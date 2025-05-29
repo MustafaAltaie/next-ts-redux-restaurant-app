@@ -100,6 +100,10 @@
     border-bottom: solid 0.5px;
     padding: 10px 0;
 }
+.lightMode .orderSummaryFormInnerWrapper > div > input,
+.lightMode .orderSummaryFormInnerWrapper > div > textarea {
+    border: solid 0.5px #00000055;
+}
 .orderSummaryFormInnerWrapper > div > input,
 .orderSummaryFormInnerWrapper > div > textarea,
 .orderSummaryFormInnerWrapper > button {
@@ -109,6 +113,17 @@
     background-color: #07a;
     color: white;
     padding: 10px;
+}
+.orderSummaryOrderOptionsWrapper {
+    border-bottom: dashed 0.5px;
+    padding-bottom: 10px;
+}
+.orderSummaryOrderOptionsWrapper > div {
+    display: flex;
+}
+.orderSummaryOrderOptionsWrapper > div > label {
+    padding-left: 5px;
+    cursor: pointer;
 }
 
 

@@ -18,31 +18,19 @@ const Header = ({ scrollToItems, scrollToContact, setShowCart, showCart }: Heade
     const navRef = useRef<HTMLElement>(null);
     const pathName = usePathname();
     const router = useRouter();
-    const lastScrollYRef = useRef(0);
-    const [showHeader, setShowHeader] = useState(true);
     const itemNm = useSelector((state: RootState) => state.cart.totalQuantity);
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
-        lastScrollYRef.current = window.scrollY;
-
-        const handleScroll = () => {
-            setShowHeader(window.scrollY < lastScrollYRef.current);
-            lastScrollYRef.current = window.scrollY;
-        }
 
         const handleResize = () => {
             setNav(window.innerWidth >= 1024);
         }
         handleResize();
 
-        window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleResize);
 
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('resize', handleResize);
-        }
+        return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     useEffect(() => {
@@ -71,7 +59,7 @@ const Header = ({ scrollToItems, scrollToContact, setShowCart, showCart }: Heade
     }
 
     return (
-        <header className={`${!showHeader ? 'hideHeader' : ''}`}>
+        <header>
             <div>
                 <h3 className='logo'>Restaurant <span>logo</span></h3>
                 <div>
@@ -84,7 +72,8 @@ const Header = ({ scrollToItems, scrollToContact, setShowCart, showCart }: Heade
                     </div>
                     {pathName !== '/cart' &&
                     <div className='cartWrapper'>
-                        <h6 className='cartNumOfItems flexCenter'>{itemNm}</h6>
+                        {itemNm > 0 &&
+                        <h6 className='cartNumOfItems flexCenter'>{itemNm}</h6>}
                         <h1 onClick={() => setShowCart!(!showCart)}>🛒</h1>
                     </div>}
                     <div className='toggleNav' onClick={() => setNav(!nav)}>
