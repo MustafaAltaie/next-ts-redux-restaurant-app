@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { CartItem } from '../../../../types/Cart';
 import { useDispatch } from 'react-redux';

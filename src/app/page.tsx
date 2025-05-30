@@ -9,7 +9,7 @@ import Section3 from "./components/section3/Section3";
 import TeamSection from "./components/teamSection/TeamSection";
 import ShoppingCart from './components/cart/ShoppingCart';
 
-const page = () => {
+const Page = () => {
   const itemRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
   const scrollToItems = () => itemRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -35,4 +35,4 @@ const page = () => {
   )
 }
 
-export default page;
+export default Page;
