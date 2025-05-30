@@ -156,6 +156,20 @@ header nav li:hover {
     header nav li:hover {
         background: #215687;
     }
+    .toggleDarkMode {
+        width: 35px;
+        height: 25px;
+    }
+    .toggleDarkMode > div {
+        width: 21px;
+        height: 21px;
+    }
+    .darkToggleThumb {
+        left: 12px;
+    }
+    .lightToggleThumb {
+        left: 1px;
+    }
     .lightMode .toggleDarkMode {
         border: solid 1px #00000055;
     }
