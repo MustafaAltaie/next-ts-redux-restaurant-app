@@ -1,11 +1,10 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import './ShoppingCart.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
 import ShoppingCartItem from './ShoppingCartItem';
 import { useRouter } from 'next/navigation';
-import { CartItem } from '../../../../types/Cart';
 
 interface CartProps {
     showCart: boolean,
