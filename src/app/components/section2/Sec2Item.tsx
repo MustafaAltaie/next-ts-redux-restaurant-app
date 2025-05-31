@@ -16,10 +16,11 @@ interface Item {
 interface Sec2ItemProps {
     item: Item,
     handlePrepareUpdate: (item: Item) => void,
-    handleDelete: (item: Item) => void
+    handleDelete: (item: Item) => void,
+    isAdminLogedIn: boolean
 }
 
-const Sec2Item = ({ item, handlePrepareUpdate, handleDelete }: Sec2ItemProps) => {
+const Sec2Item = ({ item, handlePrepareUpdate, handleDelete, isAdminLogedIn }: Sec2ItemProps) => {
     const [itemMenu, setItemMenu] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
     const items = useSelector((state: RootState) => state.cart.items);
@@ -49,11 +50,12 @@ const Sec2Item = ({ item, handlePrepareUpdate, handleDelete }: Sec2ItemProps) =>
             </div>
             <h4>
                 {item.title}
+                {isAdminLogedIn &&
                 <div className="overflowMenuButton" onClick={() => setItemMenu(true)}>
                     <div></div>
                     <div></div>
                     <div></div>
-                </div>
+                </div>}
             </h4>
             <div className='flexCenter sec2CardImageWrapper'>
                 <Image

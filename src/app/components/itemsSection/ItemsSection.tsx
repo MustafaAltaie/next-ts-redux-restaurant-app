@@ -13,6 +13,8 @@ import {
     useDeleteItemMutation,
     useDeleteItemImageMutation,
 } from '../../../../features/itemSection/itemSectionApi';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../store/store';
 
 const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
     const [itemList, setItemList] = useState<Item[]>([]);
@@ -38,6 +40,7 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
     const [changeItemImage] = useChangeItemImageMutation();
     const [deleteItem] = useDeleteItemMutation();
     const [deleteItemImage] = useDeleteItemImageMutation();
+    const isAdminLogedIn = useSelector((state: RootState) => state.admin.isLogedIn);
 
     useEffect(() => {
         if(items && !isLoading) {
@@ -147,6 +150,8 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
     return (
         <section ref={ref} className='itemsSection'>
             {/* settings */}
+            {isAdminLogedIn &&
+            <>
             <div className={`
                     overflowMenuPanel
                     ${menuPanel ? 'overflowMenuPanelOn' : ''}
@@ -198,6 +203,8 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
                     </div>
                 </div>
             </form>
+            </>}
+            {/* html */}
             <nav className="itemSectionsNav">
                 <ul>
                     <li className={selected === 'SHOW ALL' ? 'selectedCategoryOption' : ''} onClick={() => setSelected('SHOW ALL')}>SHOW ALL</li>
@@ -212,17 +219,19 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
                 </ul>
             </nav>
             <div className="itemsWrapper">
+                {isAdminLogedIn &&
                 <div className="overflowMenuButton" onClick={() => setMenuPanel(true)}>
                     <div></div>
                     <div></div>
                     <div></div>
-                </div>
+                </div>}
                 {itemList.map((item: Item) => (item.category.toLowerCase() === selected.toLowerCase() || selected === 'SHOW ALL') ?
                     <ProductItem
                         key={item.id}
                         item={item}
                         handlePrepareUpdate={handlePrepareUpdate}
                         handleDeleteItem={handleDeleteItem}
+                        isAdminLogedIn={isAdminLogedIn}
                     />
                 : null)}
             </div>

@@ -1,5 +1,8 @@
 import './Footer.css';
 import { forwardRef } from 'react';
+// import { useSelector } from 'react-redux';
+// import { RootState } from '../../../../store/store';
+// const isAdminLogedIn = useSelector((state: RootState) => state.admin.isLogedIn);
 
 const Footer = forwardRef<HTMLDivElement>((_, ref) => {
     return (

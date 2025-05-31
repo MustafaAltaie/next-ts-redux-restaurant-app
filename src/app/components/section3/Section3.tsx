@@ -12,6 +12,8 @@ import {
     useUpdateDishMutation,
     useUpdateImageMutation,
 } from '../../../../features/section3/section3Api';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../store/store';
 
 const Section3 = () => {
     const [list, setList] = useState<Item[]>([]);
@@ -33,6 +35,7 @@ const Section3 = () => {
     const [deleteImage] = useDeleteImageMutation();
     const [updateDish] = useUpdateDishMutation();
     const [updateImage] = useUpdateImageMutation();
+    const isAdminLogedIn = useSelector((state: RootState) => state.admin.isLogedIn);
 
     useEffect(() => {
         if(dishes && !isDishListLoading) {
@@ -135,6 +138,9 @@ const Section3 = () => {
 
     return (
         <section className='section3'>
+            {/* settings */}
+            {isAdminLogedIn &&
+            <>
             <div className="overflowMenuButton" onClick={() => setMenuPanel(true)}>
                 <div></div>
                 <div></div>
@@ -183,6 +189,8 @@ const Section3 = () => {
                     </div>
                 </div>
             </form>
+            </>}
+            {/* html */}
             {hideSec && <h1 className='hiddenSection'>HIDDEN</h1>}
             <h1>Most popular Pasta salad, Macaroni salad, and Mixed salad</h1>
             <div className="sec3ItemsWrapper">
@@ -192,6 +200,7 @@ const Section3 = () => {
                         item={item}
                         handlePrepareUpdate={handlePrepareUpdate}
                         handleDelete={handleDelete}
+                        isAdminLogedIn={isAdminLogedIn}
                     />
                 )}
             </div>

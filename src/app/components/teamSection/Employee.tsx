@@ -4,15 +4,18 @@ import { Member } from '../../../../types/Member';
 
 interface EmployeeProps {
     member: Member,
-    handlePrepareUpdate: (member: Member) => void
-    handleDeleteMember: (member: Member) => void
+    handlePrepareUpdate: (member: Member) => void,
+    handleDeleteMember: (member: Member) => void,
+    isAdminLogedIn: boolean,
 }
 
-const Employee = ({ member, handlePrepareUpdate, handleDeleteMember }: EmployeeProps) => {
+const Employee = ({ member, handlePrepareUpdate, handleDeleteMember, isAdminLogedIn }: EmployeeProps) => {
     const [menu, setMenu] = useState(false);
 
     return (
         <div className="teamMember flexColumn10">
+            {isAdminLogedIn &&
+            <>
             <div className="teamMemberSpace">
                 <div className="overflowMenuButton" onClick={() => setMenu(true)}>
                     <div></div>
@@ -28,6 +31,7 @@ const Employee = ({ member, handlePrepareUpdate, handleDeleteMember }: EmployeeP
                 <h5 onClick={() => handleDeleteMember(member)}><i className="fa-solid fa-trash"></i>Remove</h5>
                 <h5 onClick={() => setMenu(false)}><i className="fa-solid fa-xmark"></i>Close</h5>
             </div>
+            </>}
             <div className='flexColumn10'>
                 <div className="memberImageWrapper flexCenter">
                     <Image

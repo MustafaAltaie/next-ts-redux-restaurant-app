@@ -17,10 +17,11 @@ interface Item {
 interface ItemProps {
     item: Item,
     handlePrepareUpdate: (item: Item) => void,
-    handleDeleteItem: (item: Item) => void
+    handleDeleteItem: (item: Item) => void,
+    isAdminLogedIn: boolean
 }
 
-const ProductItem = ({ item, handlePrepareUpdate, handleDeleteItem }: ItemProps) => {
+const ProductItem = ({ item, handlePrepareUpdate, handleDeleteItem, isAdminLogedIn }: ItemProps) => {
     const [itemMenu, setItemMenu] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
     const items = useSelector((state: RootState) => state.cart.items);
@@ -40,6 +41,8 @@ const ProductItem = ({ item, handlePrepareUpdate, handleDeleteItem }: ItemProps)
 
     return (
         <div className="itemCard flexColumn10">
+            {isAdminLogedIn &&
+            <>
             <div className="itemCardSpace">
                 <div className="overflowMenuButton" onClick={() => setItemMenu(true)}>
                     <div></div>
@@ -55,6 +58,7 @@ const ProductItem = ({ item, handlePrepareUpdate, handleDeleteItem }: ItemProps)
                 <h5 onClick={() => handleDeleteItem(item)}><i className="fa-solid fa-trash"></i>Remove item</h5>
                 <h5 onClick={() => setItemMenu(false)}><i className="fa-solid fa-xmark"></i>Close menu</h5>
             </div>
+            </>}
             <p className='itemCardCategory'>{item.category.toUpperCase()}</p>
             <div className='itemWrapperImageWrapper flexCenter'>
                 <Image

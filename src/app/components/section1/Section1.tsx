@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import './Section1.css';
 import Image from 'next/image';
 import { useUploadHomeImagesMutation, useGetHomeImagesQuery, useDeleteHomeImagesMutation } from '../../../../features/restaurant/restaurantApi';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../store/store';
 
 const Section1 = () => {
     const [list, setList] = useState<string[]>([]);
@@ -14,6 +16,7 @@ const Section1 = () => {
     const [uploadHomeImages] = useUploadHomeImagesMutation();
     const { data: images = [], isLoading } = useGetHomeImagesQuery();
     const [deleteHomeImages] = useDeleteHomeImagesMutation();
+    const isAdminLogedIn = useSelector((state: RootState) => state.admin.isLogedIn);
 
     useEffect(() => {
         if(images && !isLoading) {
@@ -68,11 +71,13 @@ const Section1 = () => {
 
     return (
         <section className="section1">
+            {isAdminLogedIn &&
             <div className="overflowMenuButton" onClick={() => setMenuPanel(true)}>
                 <div></div>
                 <div></div>
                 <div></div>
-            </div>
+            </div>}
+            {isAdminLogedIn &&
             <div className={`
                 overflowMenuPanel
                 ${menuPanel ? 'overflowMenuPanelOn' : ''}
@@ -100,7 +105,7 @@ const Section1 = () => {
                     </div>
                 </div>
                 <p onClick={() => setMenuPanel(false)}><i className="fa-solid fa-xmark"></i>Close menu</p>
-            </div>
+            </div>}
             <div className="sec1DetailsWrapper">
                 <div>
                     <h5>Lorem ipsum dolor sit amet consectetur.</h5>

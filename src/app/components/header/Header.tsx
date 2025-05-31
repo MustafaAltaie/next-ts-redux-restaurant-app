@@ -19,6 +19,7 @@ const Header = ({ scrollToItems, scrollToContact, setShowCart, showCart }: Heade
     const pathName = usePathname();
     const router = useRouter();
     const itemNm = useSelector((state: RootState) => state.cart.totalQuantity);
+    const isAdminLogedIn = useSelector((state: RootState) => state.admin.isLogedIn);
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
@@ -90,6 +91,8 @@ const Header = ({ scrollToItems, scrollToContact, setShowCart, showCart }: Heade
                     <li onClick={() => {scrollToItems && scrollToItems(); window.innerWidth < 1024 && setNav(false)}}>Food list</li>}
                     <li className={`${pathName === '/about' ? 'active' : ''}`} onClick={() => router.push('/about')}>About us</li>
                     <li className={`${pathName === '/contact' ? 'active' : ''}`} onClick={() => {scrollToContact!(); window.innerWidth < 1024 && setNav(false)}}>Contact</li>
+                    {isAdminLogedIn &&
+                    <li className={`${pathName === '/orderScreen' ? 'active' : ''}`} onClick={() => router.push('/orderScreen')}>Orders screen</li>}
                 </ul>
             </nav>
         </header>

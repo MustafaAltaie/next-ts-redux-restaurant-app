@@ -12,6 +12,8 @@ import {
     useDeleteMemberMutation,
     useDeleteMemberImageMutation,
 } from '../../../../features/teamSection/teamSectionApi';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../store/store';
 
 const TeamSection = () => {
     const [list, setList] = useState<Member[]>([]);
@@ -39,6 +41,7 @@ const TeamSection = () => {
     const [updateMemberImage] = useUpdateMemberImageMutation();
     const [deleteMember] = useDeleteMemberMutation();
     const [deleteMemberImage] = useDeleteMemberImageMutation()
+    const isAdminLogedIn = useSelector((state: RootState) => state.admin.isLogedIn);
 
     useEffect(() => {
         if(members && !isMemberListLoading) {
@@ -165,6 +168,9 @@ const TeamSection = () => {
 
     return (
         <section className='teamSection shiningTop'>
+            {/* settings */}
+            {isAdminLogedIn &&
+            <>
             <div className="overflowMenuButton" onClick={() => setMenuPanel(true)}>
                 <div></div>
                 <div></div>
@@ -229,6 +235,8 @@ const TeamSection = () => {
                     </div>
                 </div>
             </form>
+            </>}
+            {/* html */}
             {hideSec && <h1 className='hiddenSection'>HIDDEN</h1>}
             <h6>Restaurant team</h6>
             <h1>Meet our awesome team</h1>
@@ -240,6 +248,7 @@ const TeamSection = () => {
                     member={member}
                     handlePrepareUpdate={handlePrepareUpdate}
                     handleDeleteMember={handleDeleteMember}
+                    isAdminLogedIn={isAdminLogedIn}
                 />
                 )}
             </div>

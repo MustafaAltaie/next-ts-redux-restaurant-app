@@ -11,10 +11,11 @@ interface Item {
 interface Sec3ItemProps {
     item: Item,
     handlePrepareUpdate: (item: Item) => void,
-    handleDelete: (item: Item) => void
+    handleDelete: (item: Item) => void,
+    isAdminLogedIn: boolean
 }
 
-const Sec3Item = ({ item, handlePrepareUpdate, handleDelete }: Sec3ItemProps) => {
+const Sec3Item = ({ item, handlePrepareUpdate, handleDelete, isAdminLogedIn }: Sec3ItemProps) => {
     const [menu, setMenu] = useState(false);
     return (
         <div key={item.id} className="sec3Item flexCenter">
@@ -27,6 +28,8 @@ const Sec3Item = ({ item, handlePrepareUpdate, handleDelete }: Sec3ItemProps) =>
                     height={150}
                     priority
                 />
+                {isAdminLogedIn &&
+                <>
                 <div className="overflowMenuButton" onClick={() => setMenu(true)}>
                     <div></div>
                     <div></div>
@@ -40,6 +43,7 @@ const Sec3Item = ({ item, handlePrepareUpdate, handleDelete }: Sec3ItemProps) =>
                     <h5 onClick={() => handleDelete(item)}><i className="fa-solid fa-trash"></i>Remove item</h5>
                     <h5 onClick={() => setMenu(false)}><i className="fa-solid fa-xmark"></i>Close menu</h5>
                 </div>
+                </>}
             </div>
             <div className="sec3DetailsWrapper">
                 <h3>{item.title}</h3>

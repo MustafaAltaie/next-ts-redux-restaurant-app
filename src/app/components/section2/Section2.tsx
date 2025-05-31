@@ -12,6 +12,8 @@ import {
     useUpdateSec2ImageMutation,
 } from '../../../../features/section2/section2Api';
 import { Item } from '../../../../types/MilkShake';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../store/store';
 
 const Section2 = () => {
     const [list, setList] = useState<Item[]>([]);
@@ -34,6 +36,7 @@ const Section2 = () => {
     const [deleteSec2Image] = useDeleteSec2ImageMutation();
     const [updateMilkShake] = useUpdateMilkShakeMutation();
     const [updateSec2Image] = useUpdateSec2ImageMutation();
+    const isAdminLogedIn = useSelector((state: RootState) => state.admin.isLogedIn);
 
     useEffect(() => {
         if(itemList && !isItemListLoading) {
@@ -140,6 +143,8 @@ const Section2 = () => {
     return (
         <section className="section2">
             {/* settings */}
+            {isAdminLogedIn &&
+            <>
             <div className="overflowMenuButton" onClick={() => setMenuPanel(true)}>
                 <div></div>
                 <div></div>
@@ -194,6 +199,7 @@ const Section2 = () => {
                     </div>
                 </div>
             </form>
+            </>}
             {/* html */}
             <div className="sec2MainWrapper">
                 {hideSec && <h1 className='hiddenSection'>HIDDEN</h1>}
@@ -205,6 +211,7 @@ const Section2 = () => {
                                 item={item}
                                 handlePrepareUpdate={handlePrepareUpdate}
                                 handleDelete={handleDelete}
+                                isAdminLogedIn={isAdminLogedIn}
                             />
                         )}
                     </div>
