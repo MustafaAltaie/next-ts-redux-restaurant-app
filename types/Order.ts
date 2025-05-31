@@ -1,6 +1,7 @@
 import { CartItem } from "./Cart"
 
 export interface Order {
+    _id?: string,
     name: string,
     table?: number | string,
     message?: string,
@@ -10,5 +11,6 @@ export interface Order {
     orderType: 'diningIn' | 'delivery',
     totalQuantity: number,
     subTotal: number,
-    items: CartItem[]
+    items: CartItem[],
+    createdAt?: number
 }
