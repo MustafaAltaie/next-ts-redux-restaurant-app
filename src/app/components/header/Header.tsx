@@ -62,7 +62,7 @@ const Header = ({ scrollToItems, scrollToContact, setShowCart, showCart }: Heade
     return (
         <header>
             <div>
-                <h3 className='logo'>Restaurant <span>logo</span></h3>
+                <h3 className='logo' onClick={() => router.push('/')}>Restaurant <span>logo</span></h3>
                 <div>
                     <div className="toggleModeWrapper">
                         <p>Light</p>

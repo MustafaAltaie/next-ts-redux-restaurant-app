@@ -57,12 +57,29 @@ const page = () => {
                 items: items
             }
             await createOrder(newOrder).unwrap();
+            clearFields();
+            alert('Thanks for your order! We’ll prepare it right away and serve you as soon as possible.');
         } catch (err) {
             console.error('Error saving order:', err);
             alert('Error saving order');
         } finally {
             setSending(false);
         }
+    }
+
+    const clearFields = () => {
+        setOrder({
+            name: '',
+            table: undefined,
+            message: undefined,
+            address: undefined,
+            mobile: undefined,
+            portCode: undefined,
+            orderType: 'diningIn',
+            totalQuantity: 0,
+            subTotal: 0,
+            items: []
+        });
     }
 
     return (
@@ -77,7 +94,7 @@ const page = () => {
                 <MainCartItem key={item.id} item={item} />
                 )}
             </div>}
-            {/* {items.length > 0 && */}
+            {items.length > 0 &&
             <div className="orderSummaryWrapper flexColumn10">
                 <h1>Order Summary</h1>
                 <h5>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus ratione aliquid in quibusdam, dolore architecto beatae.</h5>
@@ -115,7 +132,7 @@ const page = () => {
                 />
                 }
             </div>
-            {/* } */}
+            }
         </section>
         <Footer ref={contactRef} />
         </>
