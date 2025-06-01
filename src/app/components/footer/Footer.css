@@ -1,4 +1,5 @@
 footer {
+    position: relative;
     background: #111;
     color: #ffffffaa;
     overflow-x: hidden;
@@ -33,7 +34,7 @@ footer * {
     justify-content: center;
     gap: 15px;
 }
-.footerTop > div > i {
+.footerTop > div > a {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -171,6 +172,32 @@ footer * {
 
 .footerDeveloper {
     text-align: center;
+}
+
+
+/* Settings */
+.footerFormSettings {
+    overflow-y: hidden;
+    transition: 0.4s;
+}
+.footerGearWrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 20px;
+    color: #fff;
+    cursor: pointer;
+}
+.footerFormSettingsInnerWrapper {
+    padding: 10px;
+}
+.footerFormSettingsInnerWrapper > input,
+.footerFormSettingsInnerWrapper > button {
+    padding: 10px;
+}
+.footerFormSettingsInnerWrapper > button {
+    background: #005b82;
+    color: #fff;
 }
 
 

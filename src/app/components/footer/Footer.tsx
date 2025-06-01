@@ -1,23 +1,44 @@
 import './Footer.css';
-import { forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
+import Form from './Form';
+import { useReadFooterQuery } from '../../../../features/footer/footerApi';
+import { ContactObj } from '../../../../types/Footer';
 // import { useSelector } from 'react-redux';
 // import { RootState } from '../../../../store/store';
 // const isAdminLogedIn = useSelector((state: RootState) => state.admin.isLogedIn);
 
 const Footer = forwardRef<HTMLDivElement>((_, ref) => {
+    const [form, setForm] = useState(false);
+    const { data } = useReadFooterQuery();
+    const [contactObj, setContactObj] = useState<ContactObj>({
+        mobile: '',
+        email: '',
+        messenger: '',
+        whatsapp: '',
+    });
+
     return (
         <footer ref={ref}>
             <div className="footerMainWrapper">
+                <div className="footerGearWrapper" onClick={() => setForm(!form)}>
+                    <i className="fa-solid fa-gear"></i>
+                </div>
                 {/* footerTop */}
                 <div className="footerTop">
                     <p>Reach us directly</p>
                     <div>
-                        <i className="fa-solid fa-comment-dots"></i>
-                        <i className="fa-solid fa-phone-volume"></i>
-                        <i className="fa-solid fa-envelope"></i>
-                        <i className="fa-brands fa-facebook-messenger"></i>
-                        <i className="fa-brands fa-whatsapp"></i>
+                        <a href={`sms:${contactObj.mobile}`}><i className="fa-solid fa-comment-dots"></i></a>
+                        <a href={`tel:${contactObj.mobile}`}><i className="fa-solid fa-phone-volume"></i></a>
+                        <a href={`mailto:${contactObj.email}`}><i className="fa-solid fa-envelope"></i></a>
+                        <a href={contactObj.messenger} target='_blank' rel='noopener noreferrer'><i className="fa-brands fa-facebook-messenger"></i></a>
+                        <a href={`https://wa.me/${contactObj.whatsapp}`} target='_blank' rel='noopener noreferrer'><i className="fa-brands fa-whatsapp"></i></a>
                     </div>
+                    <Form
+                        form={form}
+                        data={data}
+                        setContactObj={setContactObj}
+                        contactObj={contactObj}
+                    />
                 </div>
                 <div className='footerPart1_2MainWrapper'>
                     {/* footerPart1 */}
