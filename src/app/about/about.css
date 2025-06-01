@@ -1,4 +1,160 @@
+.aboutSection {
+    overflow-x: hidden;
+}
 .aboutPage {
-    min-height: 100vh;
-    padding: 50px 0 0 0;
+    padding: 70px 20px 20px 20px;
+}
+.aboutSection h6 > span,
+.aboutSection p > span {
+    font-weight: bold;
+}
+.aboutPart1 {
+    display: flex;
+    gap: 20px;
+}
+.aboutPart1MainImageWrapper {
+    width: 200px;
+    height: 270px;
+}
+.aboutPart1MainImageWrapper > img {
+    object-fit: cover;
+}
+.aboutPart1SmallImageWrapper > img,
+.aboutTeamMemberImageWrapper > img,
+.aboutPart1MainImageWrapper > img {
+    width: 100%;
+    height: 100%;
+}
+.aboutPart1DetailsWrapper > h1,
+.aboutPart1DetailsWrapper > h1 > span {
+    line-height: 1.5rem;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+.aboutPart1DetailsWrapper > h1 > span {
+    color: #777;
+}
+.aboutPart2Wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 0;
+}
+.aboutPart1SmallImageWrapper {
+    width: calc(100%/3 - 20px/3);
+    height: 100px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.aboutTeamWrapper {
+    padding: 20px 20px 30px 20px;
+    border-top: solid 0.5px;
+    border-bottom: solid 0.5px;
+}
+.aboutTeamWrapper > h2 {
+    font-weight: bold;
+}
+.aboutTeamInnerWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding-top: 20px;
+}
+.aboutTeamMemberWrapper {
+    width: calc(100%/3 - 40px/3);
+    text-align: center;
+    padding: 10px;
+    border-radius: 15px;
+    background: #77777733;
+}
+.darkMode .aboutTeamMemberWrapper {
+    border: solid 0.5px #ffffff33;
+}
+.lightMode .aboutTeamMemberWrapper {
+    border: solid 0.5px #00000077;
+}
+.aboutTeamMemberImageWrapper {
+    width: 90px;
+    height: 90px;
+    overflow: hidden;
+    background: #555;
+    margin: 0 auto 10px auto;
+    border-radius: 10px;
+}
+.aboutTeamMemberImageWrapper > img {
+    object-fit: cover;
+    object-position: top;
+}
+
+.aboutDishesWrapper {
+    padding: 20px;
+}
+.aboutDishesInnerWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 0;
+}
+.aboutDish {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border: solid 0.5px;
+    padding-right: 20px;
+}
+.aboutDishImageWrapper {
+    background: #77777755;
+}
+.aboutDishImageWrapper > img {
+    object-fit: cover;
+}
+.aboutDishesWrapper > h1 {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.aboutDishDetailsWrapper > p {
+    font-weight: bold;
+}
+
+
+/* Laptop */
+@media (min-width: 1024px) {
+    .aboutPage,
+    .aboutTeamWrapper,
+    .aboutDishesWrapper {
+        width: 1000px;
+        margin: 0 auto;
+    }
+    .aboutPage {
+        padding: 90px 30px 30px 30px;
+    }
+    .aboutPart1 {
+        gap: 50px;
+        align-items: center;
+    }
+    .aboutPart1MainImageWrapper {
+        width: 600px;
+        height: 300px;
+    }
+    .aboutPart1SmallImageWrapper {
+        height: 200px;
+    }
+    .aboutTeamMemberWrapper {
+        width: calc(100%/5 - 80px/5);
+    }
+    .aboutTeamMemberImageWrapper {
+        width: 150px;
+        height: 150px;
+    }
+    .aboutDishesInnerWrapper {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 20px 0;
+    }
+    .aboutDish {
+        width: calc(100%/2 - 20px/2);
+    }
 }

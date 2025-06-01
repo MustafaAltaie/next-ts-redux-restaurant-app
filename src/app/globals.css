@@ -104,17 +104,17 @@ button, input, textarea {
 }
 .itemButtonLabel {
     position: absolute;
-    top: 40%;
-    right: 32%;
+    top: 30%;
+    right: 35%;
     transform: translate(-50%, -50%);
     font-size: 12px;
-    width: 15px;
-    height: 15px;
+    width: 13px;
+    height: 13px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #c05;
+    background: #e05;
     color: #fff !important;
     pointer-events: none;
 }
