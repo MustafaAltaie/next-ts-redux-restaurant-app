@@ -15,6 +15,7 @@ import {
 } from '../../../../features/itemSection/itemSectionApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
+import Form from './Form';
 
 const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
     const [itemList, setItemList] = useState<Item[]>([]);
@@ -161,48 +162,15 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
                 <h5 onClick={() => setMenuPanel(false)}><i className="fa-solid fa-xmark"></i>Close menu</h5>
             </div>
             {/* addUpdateItemForm */}
-            <form onSubmit={handleSaveItem} ref={formRef} className="addUpdateItemForm">
-                <div className="formInnerWrapper">
-                    <h3 className='closeFormButton' onClick={() => setForm(false)}>X</h3>
-                    <div>
-                        <h5>Title</h5>
-                        <input type="text" title='Title' placeholder='Title' name='title' value={itemObj.title || ''} onChange={handlePrepareItem} />
-                    </div>
-                    <div>
-                        <h5>Description</h5>
-                        <textarea title='Description' placeholder='Description' name='description' value={itemObj.description || ''} onChange={handlePrepareItem}></textarea>
-                    </div>
-                    <div>
-                        <h5>Price</h5>
-                        <input type="number" title='Price' placeholder='Price' name='price' value={itemObj.price || ''} onChange={handlePrepareItem} />
-                    </div>
-                    <div>
-                        <h5>Category</h5>
-                        <input type="string" title='Category' placeholder='Category' name='category' value={itemObj.category || ''} onChange={handlePrepareItem} />
-                    </div>
-                    <div className='labelButtonWrapper'>
-                        <label>
-                            <input type="file" onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                if(e.target.files && e.target.files[0])
-                                    setFile(e.target.files[0]);
-                                }}
-                            />
-                            <h5><i className="fa-solid fa-images"></i>{file || itemObj.id ? 'Change image' : 'Add image'}</h5>
-                        </label>
-                        {(file || itemObj.id) &&
-                        <img
-                            className='formImageView'
-                            src={file ?
-                                URL.createObjectURL(file) :
-                                `/itemSection/${itemObj.imageLink}`
-                            }
-                            alt="Preview"
-                            onClick={() => setFile(null)}
-                        />}
-                        <button disabled={!itemObj.title || !itemObj.price || !itemObj.description || !itemObj.imageLink} type='submit'>Save</button>
-                    </div>
-                </div>
-            </form>
+            <Form
+                itemObj={itemObj}
+                handleSaveItem={handleSaveItem}
+                formRef={formRef}
+                setForm={setForm}
+                setFile={setFile}
+                file={file}
+                handlePrepareItem={handlePrepareItem}
+            />
             </>}
             {/* html */}
             <nav className="itemSectionsNav">

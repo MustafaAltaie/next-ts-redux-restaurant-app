@@ -8,7 +8,7 @@ if (!fs.existsSync(imageDir)) {
   fs.mkdirSync(imageDir, { recursive: true });
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { filename: string } }) {
+export async function DELETE(_: NextRequest, { params }: { params: { filename: string } }) {
   try {
     const decodedFilename = decodeURIComponent(params.filename);
     const filePath = path.join(imageDir, decodedFilename);

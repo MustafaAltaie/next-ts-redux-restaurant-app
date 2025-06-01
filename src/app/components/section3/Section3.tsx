@@ -14,6 +14,7 @@ import {
 } from '../../../../features/section3/section3Api';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
+import Form from './Form';
 
 const Section3 = () => {
     const [list, setList] = useState<Item[]>([]);
@@ -154,41 +155,15 @@ const Section3 = () => {
                 <h5 onClick={() => {setHideSec(!hideSec); setMenuPanel(false)}}><i className={hideSec ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'}></i>{hideSec ? 'Show' : 'Hide'} this section</h5>
                 <h5 onClick={() => setMenuPanel(false)}><i className="fa-solid fa-xmark"></i>Close menu</h5>
             </div>
-            <form onSubmit={handleSave} ref={formRef} className='addUpdateItemForm'>
-                <h3 className='closeFormButton' onClick={() => setForm(false)}>X</h3>
-                <div className="formInnerWrapper">
-                    <div>
-                        <h5>Title</h5>
-                        <input type="text" title='Title' name='title' placeholder='Title' value={itemObj.title || ''} onChange={handlePrepareItem} />
-                    </div>
-                    <div>
-                        <h5>Description</h5>
-                        <textarea title='Description' name='description' placeholder='Description' value={itemObj.description || ''} onChange={handlePrepareItem}></textarea>
-                    </div>
-                    <div className='labelButtonWrapper'>
-                        <label>
-                            <input type="file" onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                if(e.target.files && e.target.files[0])
-                                    setFile(e.target.files[0]);
-                                }}
-                            />
-                            <h5><i className="fa-solid fa-images"></i>{file || itemObj.imageLink ? 'Change image' : 'Add image'}</h5>
-                        </label>
-                        {(file || itemObj.id) &&
-                        <img
-                            className='formImageView'
-                            src={
-                                file ?
-                                URL.createObjectURL(file) :
-                                `/section3-images/${itemObj.imageLink}`
-                            }
-                            alt="Preview"
-                            onClick={() => setFile(null)}
-                        />}
-                        <button disabled={!itemObj.title || !itemObj.description} type='submit'>Save</button>
-                    </div>
-                </div>
-            </form>
+            <Form
+                handleSave={handleSave}
+                formRef={formRef}
+                setForm={setForm}
+                itemObj={itemObj}
+                setFile={setFile}
+                file={file}
+                handlePrepareItem={handlePrepareItem}
+            />
             </>}
             {/* html */}
             {hideSec && <h1 className='hiddenSection'>HIDDEN</h1>}
