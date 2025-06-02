@@ -207,4 +207,6 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
     )
 });
 
+ItemsSection.displayName = 'ItemsSection';
+
 export default ItemsSection;

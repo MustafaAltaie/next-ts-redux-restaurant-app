@@ -13,7 +13,7 @@ import SomeWhereElseForm from './SomeWhereElseForm';
 import { Order } from '../../../types/Order';
 import { useCreateOrderMutation } from '../../../features/order/orderApi';
 
-const page = () => {
+const Page = () => {
     const contactRef = useRef<HTMLDivElement>(null);
     const scrollToContact = () => contactRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     const items = useSelector((state: RootState) => state.cart.items);
@@ -139,4 +139,4 @@ const page = () => {
     )
 }
 
-export default page;
+export default Page;

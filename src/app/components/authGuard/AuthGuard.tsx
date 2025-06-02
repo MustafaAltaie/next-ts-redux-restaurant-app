@@ -20,7 +20,7 @@ const AuthGuard = ({ children }: AuthGuardProps) => {
         if(!parsed){
             router.push('/dashboard');
         }
-    }, []);
+    }, [dispatch]);
 
     return (
         <>{children}</>

@@ -48,7 +48,7 @@ const Section3 = () => {
             }));
             setList(transformed);
         }
-    }, [dishes]);
+    }, [dishes, isDishListLoading]);
 
     useEffect(() => {
         if(formRef.current) {

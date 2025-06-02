@@ -1,4 +1,6 @@
-import { Item } from "../../../../types/MilkShake"
+import { Item } from "../../../../types/MilkShake";
+import Image from "next/image";
+
 interface FormProps {
     handleSave: (e: React.FormEvent<HTMLFormElement>) => void,
     formRef: React.RefObject<HTMLFormElement | null>,
@@ -44,7 +46,7 @@ const Form = ({
                         <h5><i className="fa-solid fa-images"></i>{file || itemObj.imageLink ? 'Change image' : 'Add image'}</h5>
                     </label>
                     {(file || itemObj.imageLink) && (
-                    <img
+                    <Image
                         className="formImageView"
                         src={
                         file
@@ -53,6 +55,9 @@ const Form = ({
                         }
                         alt="Preview"
                         onClick={() => setFile(null)}
+                        width={100}
+                        height={100}
+                        priority
                     />
                     )}
                     <button disabled={!itemObj.title || !itemObj.price || !itemObj.description} type='submit'>{itemObj.id ? 'Update' : 'Save'}</button>

@@ -14,6 +14,7 @@ export async function DELETE(_: NextRequest, { params }: { params: { id: string 
 
     return new Response(JSON.stringify(deletedItem), { status: 200 });
   } catch (error) {
+    console.error('Error occured:', error);
     return new Response(JSON.stringify({ error: 'Failed to delete item' }), { status: 500 });
   }
 }

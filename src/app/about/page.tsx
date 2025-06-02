@@ -8,7 +8,7 @@ import Image from "next/image";
 import { useReadMemberQuery } from "../../../features/teamSection/teamSectionApi";
 import { useReadDishesQuery } from "../../../features/section3/section3Api";
 
-const page = () => {
+const Page = () => {
     const contactRef = useRef<HTMLDivElement>(null);
     const scrollToContact = () => contactRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     const [showCart, setShowCart] = useState(true);
@@ -106,4 +106,4 @@ const page = () => {
     )
 }
 
-export default page;
+export default Page;

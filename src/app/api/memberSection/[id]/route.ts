@@ -14,6 +14,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
     if (!updated) return new Response(JSON.stringify({ message: 'Not Found' }), { status: 404 });
     return new Response(JSON.stringify(updated), { status: 200 });
   } catch (error) {
+    console.error('Error occured:', error);
     return new Response(JSON.stringify({ error: 'Failed to update' }), { status: 500 });
   }
 }
@@ -30,6 +31,7 @@ export async function DELETE(_: NextRequest, { params }: { params: { id: string 
 
     return new Response(JSON.stringify(deletedItem), { status: 200 });
   } catch (error) {
+    console.error('Error occured:', error);
     return new Response(JSON.stringify({ error: 'Failed to delete item' }), { status: 500 });
   }
 }

@@ -20,7 +20,7 @@ const Page = () => {
             dispatch(setLogin(true));
             router.push('/');
         }
-    }, []);
+    }, [dispatch, router]);
 
     const handleCheckPassword = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

@@ -29,7 +29,7 @@ const FollowForm = ({
                 tiktok: followLinks.tiktok,
             });
         }
-    }, [followLinks]);
+    }, [followLinks, setLinksObj]);
 
     useEffect(() => {
         if(!formRef.current) return;

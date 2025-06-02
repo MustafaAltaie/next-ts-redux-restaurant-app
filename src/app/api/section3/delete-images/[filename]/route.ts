@@ -21,6 +21,7 @@ export async function DELETE(_: NextRequest, { params }: { params: { filename: s
 
     return NextResponse.json({ success: true });
   } catch (error) {
+    console.error('Error occured:', error);
     return NextResponse.json({ error: (error as Error).message }, { status: 500 });
   }
 }

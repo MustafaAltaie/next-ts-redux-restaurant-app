@@ -1,4 +1,5 @@
 import { Member } from "../../../../types/Member";
+import Image from "next/image";
 
 interface FormProps {
     handleSaveMember: (e: React.FormEvent<HTMLFormElement>) => void,
@@ -59,7 +60,7 @@ const Form = ({
                         <h5><i className="fa-solid fa-images"></i>{file || memberObj.id ? 'Change image' : 'Add image'}</h5>
                     </label>
                     {(file || memberObj.id) &&
-                    <img
+                    <Image
                         className='formImageView'
                         src={file ?
                             URL.createObjectURL(file) :
@@ -67,6 +68,9 @@ const Form = ({
                         }
                         alt="Preview"
                         onClick={() => setFile(null)}
+                        width={100}
+                        height={100}
+                        priority
                     />
                     }
                     <button type='submit'>Save</button>
