@@ -75,7 +75,7 @@ const Header = ({ scrollToItems, scrollToContact, setShowCart, showCart }: Heade
                     <div className='cartWrapper'>
                         {itemNm > 0 &&
                         <h6 className='cartNumOfItems flexCenter'>{itemNm}</h6>}
-                        <h1 onClick={() => setShowCart!(!showCart)}>🛒</h1>
+                        <h1 onClick={() => setShowCart && setShowCart(!showCart)}>🛒</h1>
                     </div>}
                     <div className='toggleNav' onClick={() => setNav(!nav)}>
                         <div style={{ transform: `translateY(${nav ? '800%' : '0%'}) rotate(${nav ? '45deg' : '0deg'})` }}></div>
@@ -88,9 +88,15 @@ const Header = ({ scrollToItems, scrollToContact, setShowCart, showCart }: Heade
                 <ul>
                     <li className={`${pathName === '/' ? 'active' : ''}`} onClick={() => router.push('/')}>Home</li>
                     {pathName !== "/about" && pathName !== '/cart' &&
-                    <li onClick={() => {scrollToItems && scrollToItems(); window.innerWidth < 1024 && setNav(false)}}>Food list</li>}
+                    <li onClick={() => {
+                        if(scrollToItems) scrollToItems();
+                        if(window.innerWidth < 1024) setNav(false);
+                    }}>Food list</li>}
                     <li className={`${pathName === '/about' ? 'active' : ''}`} onClick={() => router.push('/about')}>About us</li>
-                    <li className={`${pathName === '/contact' ? 'active' : ''}`} onClick={() => {scrollToContact!(); window.innerWidth < 1024 && setNav(false)}}>Contact</li>
+                    <li className={`${pathName === '/contact' ? 'active' : ''}`} onClick={() => {
+                        if(scrollToContact) scrollToContact();
+                        if(window.innerWidth < 1024) setNav(false);
+                    }}>Contact</li>
                     {isAdminLogedIn &&
                     <li className={`${pathName === '/orderScreen' ? 'active' : ''}`} onClick={() => router.push('/orderScreen')}>Orders screen</li>}
                 </ul>
