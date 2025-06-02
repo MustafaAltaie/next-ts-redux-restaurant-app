@@ -10,16 +10,10 @@ if (!fs.existsSync(imageDir)) {
 
 export async function DELETE(
   _: NextRequest,
-  context: { params?: { filename?: string | string[] } }
+  { params }: { params: { filename: string } }
 ) {
   try {
-    const filenameParam = context.params?.filename;
-
-    if (!filenameParam || Array.isArray(filenameParam)) {
-      return NextResponse.json({ error: 'Invalid filename parameter' }, { status: 400 });
-    }
-
-    const decodedFilename = decodeURIComponent(filenameParam);
+    const decodedFilename = decodeURIComponent(params.filename);
     const filePath = path.join(imageDir, decodedFilename);
 
     if (!fs.existsSync(filePath)) {
