@@ -46,7 +46,7 @@ footer * {
     cursor: pointer;
     transition: 0.1s;
 }
-.footerTop > div > i:hover {
+.footerTop > div > a:hover {
     transform: scale(1.1);
 }
 
@@ -93,10 +93,10 @@ footer * {
     display: flex;
 }
 .footerPart21 {
-    width: 40%;
+    width: 45%;
 }
 .footerPart22 {
-    width: 60%;
+    width: 55%;
 }
 .footerPart2 > div {
     padding: 20px;
@@ -126,6 +126,7 @@ footer * {
 
 /* footerBottom */
 .footerBottom {
+    position: relative;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -139,7 +140,7 @@ footer * {
     gap: 10px;
     padding: 5px 0;
 }
-.footerBottom > div > i {
+.footerBottom > div > a {
     width: 30px;
     height: 30px;
     display: flex;
@@ -152,7 +153,7 @@ footer * {
     transition: 0.1s;
 }
 
-.footerBottom > div > i:hover {
+.footerBottom > div > a:hover {
     transform: scale(1.1);
 }
 .footerBottom > h5 {
@@ -176,26 +177,35 @@ footer * {
 
 
 /* Settings */
-.footerFormSettings {
+.footerFormSettings,
+.footerFollowForm {
     overflow-y: hidden;
     transition: 0.4s;
 }
-.footerGearWrapper {
+.footerGearWrapper,
+.footerGearWrapper2 {
     position: absolute;
     top: 0;
     right: 0;
-    padding: 20px;
+    padding: 10px 20px;
     color: #fff;
     cursor: pointer;
 }
-.footerFormSettingsInnerWrapper {
+.footerFormSettingsInnerWrapper,
+.footerFollowFormInnerWrapper {
     padding: 10px;
+}
+.footerFollowFormInnerWrapper {
+    padding: 0 30px 25px 30px;
 }
 .footerFormSettingsInnerWrapper > input,
-.footerFormSettingsInnerWrapper > button {
+.footerFormSettingsInnerWrapper > button,
+.footerFollowFormInnerWrapper > input,
+.footerFollowFormInnerWrapper > button {
     padding: 10px;
 }
-.footerFormSettingsInnerWrapper > button {
+.footerFormSettingsInnerWrapper > button,
+.footerFollowFormInnerWrapper > button {
     background: #005b82;
     color: #fff;
 }
@@ -264,5 +274,19 @@ footer * {
     }
     .footerBottom > h5 {
         text-align: right;
+    }
+
+    .footerGearWrapper {
+        right: 10%;
+    }
+    .footerFormSettings,
+    .footerFollowForm {
+        margin: 0 auto;
+    }
+    .footerFormSettingsInnerWrapper,
+    .footerFollowFormInnerWrapper {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 }

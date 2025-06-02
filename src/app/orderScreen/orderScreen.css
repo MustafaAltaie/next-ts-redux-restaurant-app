@@ -75,7 +75,6 @@
 /* Laptop */
 @media (min-width: 1024px) {
     .orderwrapper {
-        width: 80%;
         margin: 0 auto;
     }
     .order > div:nth-child(1) {

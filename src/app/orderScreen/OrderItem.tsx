@@ -12,7 +12,7 @@ const OrderItem = ({ order, handleDeleteOrder }: OrderProps) => {
         <div key={order._id} className="order flexColumn10" onClick={() => handleDeleteOrder(order._id!)}>
             <div className="orderPart1">
               <h1>{order.name}</h1>
-              <h3>Order type: <span>{order.orderType}</span>{order.orderType === 'delivery' ? " 🚗" : " 🍜"}</h3>
+              <h3><span>{order.orderType.toUpperCase()}</span>{order.orderType === 'delivery' ? " 🚗" : " 🍜"}</h3>
             </div>
             <div className="orderPart2">
               <div className="flexColumn10">

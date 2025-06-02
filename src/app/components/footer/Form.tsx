@@ -13,7 +13,6 @@ const Form = ({ form, data, setContactObj, contactObj }: FormProps) => {
     const formRef = useRef<HTMLFormElement>(null);
     const [updateFooter] = useUpdateFooterMutation();
 
-
     useEffect(() => {
         if(data) {
             setContactObj({

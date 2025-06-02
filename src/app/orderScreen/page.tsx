@@ -37,7 +37,7 @@ const page = () => {
       <div className="deletingOrderText flexCenter">
         <h1>Deleting Order...</h1>
       </div>}
-      {orders.length === 0 &&
+      {orders.length === 0 && !isLoading &&
       <h1 className="centeredElement">No orders</h1>}
       {isLoading && <p>Loading...</p>}
       <div className="orderwrapper flexColumn10">
