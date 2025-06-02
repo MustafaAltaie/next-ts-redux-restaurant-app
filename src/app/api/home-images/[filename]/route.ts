@@ -8,9 +8,9 @@ if (!fs.existsSync(imageDir)) {
   fs.mkdirSync(imageDir, { recursive: true });
 }
 
-export async function DELETE(_: NextRequest, { params }: { params: { filename: string } }) {
+export async function DELETE(_: NextRequest, context: { params: { filename: string } }) {
   try {
-    const decodedFilename = decodeURIComponent(params.filename);
+    const decodedFilename = decodeURIComponent(context.params.filename);
     const filePath = path.join(imageDir, decodedFilename);
 
     if (!fs.existsSync(filePath)) {
@@ -21,7 +21,7 @@ export async function DELETE(_: NextRequest, { params }: { params: { filename: s
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Error occured:', error);
+    console.error('Error occurred:', error);
     return NextResponse.json({ error: (error as Error).message }, { status: 500 });
   }
 }
