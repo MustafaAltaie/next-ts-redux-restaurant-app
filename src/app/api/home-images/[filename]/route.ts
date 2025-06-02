@@ -8,16 +8,13 @@ if (!fs.existsSync(imageDir)) {
   fs.mkdirSync(imageDir, { recursive: true });
 }
 
-interface RouteContext {
-  params: {
-    filename?: string | string[];
-  };
-}
-
-export async function DELETE(_: NextRequest, context: RouteContext) {
+export async function DELETE(
+  _: NextRequest,
+  { params }: { params: { filename: string } }
+) {
   try {
-    const filename = context.params?.filename;
-    if (!filename || Array.isArray(filename)) {
+    const { filename } = params;
+    if (!filename) {
       return NextResponse.json({ error: 'Invalid filename' }, { status: 400 });
     }
 
