@@ -46,13 +46,12 @@ const Footer = forwardRef<HTMLDivElement>((_, ref) => {
                         <a href={contactObj.messenger} target='_blank' rel='noopener noreferrer'><i className="fa-brands fa-facebook-messenger"></i></a>
                         <a href={`https://wa.me/${contactObj.whatsapp}`} target='_blank' rel='noopener noreferrer'><i className="fa-brands fa-whatsapp"></i></a>
                     </div>
-                    {isAdminLogedIn &&
                     <Form
                         form={form}
                         data={data}
                         setContactObj={setContactObj}
                         contactObj={contactObj}
-                    />}
+                    />
                 </div>
                 <div className='footerPart1_2MainWrapper'>
                     {/* footerPart1 */}
@@ -106,9 +105,10 @@ const Footer = forwardRef<HTMLDivElement>((_, ref) => {
                 </div>
                 {/* footerBottom */}
                 <div className="footerBottom">
+                    {isAdminLogedIn &&
                     <p className="footerGearWrapper2" onClick={() => setForm2(!form2)}>
                         <i className="fa-solid fa-gear"></i>
-                    </p>
+                    </p>}
                     <h6>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h6>
                     <div>
                         <a href={`https://facebook.com/${linksObj.facebook}`} target="_blank" rel="noopener noreferrer">
