@@ -10,10 +10,11 @@ if (!fs.existsSync(imageDir)) {
 
 export async function DELETE(
   _: NextRequest,
-  { params }: { params: { filename: string } }
-) {
+  context: { params: { filename: string } }
+): Promise<NextResponse> {
   try {
-    const { filename } = params;
+    const { filename } = context.params;
+    
     if (!filename) {
       return NextResponse.json({ error: 'Invalid filename' }, { status: 400 });
     }
@@ -30,6 +31,9 @@ export async function DELETE(
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Error occurred:', error);
-    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Unknown error' },
+      { status: 500 }
+    );
   }
 }
