@@ -8,7 +8,13 @@ if (!fs.existsSync(imageDir)) {
   fs.mkdirSync(imageDir, { recursive: true });
 }
 
-export async function DELETE(_: NextRequest, context: any) {
+interface RouteContext {
+  params: {
+    filename?: string | string[];
+  };
+}
+
+export async function DELETE(_: NextRequest, context: RouteContext) {
   try {
     const filename = context.params?.filename;
     if (!filename || Array.isArray(filename)) {
