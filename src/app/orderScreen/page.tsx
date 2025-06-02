@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import OrderItem from "./OrderItem";
 
-const page = () => {
+const Page = () => {
   const { data, isLoading } = useReadOrdersQuery();
   const [deleteOrder] = useDeleteOrderMutation();
   const orders: Order[] = data ?? [];
@@ -54,4 +54,4 @@ const page = () => {
   )
 }
 
-export default page;
+export default Page;

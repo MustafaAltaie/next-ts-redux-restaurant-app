@@ -18,15 +18,11 @@ declare global {
   var mongoose: MongooseGlobal | undefined;
 }
 
-const globalWithMongoose = global as typeof globalThis & {
-  mongoose?: MongooseGlobal;
-};
+const globalWithMongoose = global as typeof globalThis & { mongoose?: MongooseGlobal };
 
-let cached = globalWithMongoose.mongoose;
+globalWithMongoose.mongoose ??= { conn: null, promise: null };
 
-if (!cached) {
-  cached = globalWithMongoose.mongoose = { conn: null, promise: null };
-}
+const cached = globalWithMongoose.mongoose;
 
 async function dbConnect(): Promise<Mongoose> {
   if (cached!.conn) {
