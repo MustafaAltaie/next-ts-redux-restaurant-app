@@ -8,9 +8,18 @@ if (!fs.existsSync(imageDir)) {
   fs.mkdirSync(imageDir, { recursive: true });
 }
 
-export async function DELETE(_: NextRequest, context: { params: { filename: string } }) {
+export async function DELETE(
+  _: NextRequest,
+  context: { params?: { filename?: string | string[] } }
+) {
   try {
-    const decodedFilename = decodeURIComponent(context.params.filename);
+    const filenameParam = context.params?.filename;
+
+    if (!filenameParam || Array.isArray(filenameParam)) {
+      return NextResponse.json({ error: 'Invalid filename parameter' }, { status: 400 });
+    }
+
+    const decodedFilename = decodeURIComponent(filenameParam);
     const filePath = path.join(imageDir, decodedFilename);
 
     if (!fs.existsSync(filePath)) {
