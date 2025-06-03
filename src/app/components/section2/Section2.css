@@ -57,7 +57,7 @@
     white-space: nowrap;
 }
 .sec2Card > div > .flexSpaceBetween > button {
-    background: #444;
+    background: #000;
     width: 50%;
     font-size: 20px;
 }
