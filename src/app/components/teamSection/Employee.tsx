@@ -49,7 +49,7 @@ const Employee = ({ member, handlePrepareUpdate, handleDeleteMember, isAdminLoge
                     <p>{member.position}</p>
                 </div>
             </div>
-            <div className="memberSocialWrapper flexCenter gap10">
+            <div className="memberSocialWrapper flexCenter">
                 <i className="fa-brands fa-instagram"></i>
                 <i className="fa-brands fa-linkedin-in"></i>
                 <i className="fa-brands fa-facebook-f"></i>

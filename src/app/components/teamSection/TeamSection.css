@@ -67,6 +67,7 @@
     padding-top: 10px;
     border-top: 0.7px solid transparent;
     border-image-slice: 1;
+    gap: 10;
 }
 .darkMode .memberSocialWrapper {
     border-top: 0.7px solid transparent;
