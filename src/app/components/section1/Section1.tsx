@@ -43,12 +43,6 @@ const Section1 = () => {
         }
     }, [menuImages, list]);
 
-    useEffect(() => {
-        if(file) {
-            uploadImage();
-        }
-    }, [file]);
-
     const uploadImage = async () => {
         if(!file) return;
         if(list.some(image => image === file.name)) return;
@@ -61,6 +55,12 @@ const Section1 = () => {
             alert('Error uploading image');
         }
     }
+
+    useEffect(() => {
+        if(file) {
+            uploadImage();
+        }
+    }, [file, uploadImage]);
 
     const handleDeleteImage = async (img: string) => {
         const imageName = img.split('/').pop();
