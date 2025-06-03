@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface Item {
     id?: string,
@@ -17,17 +17,13 @@ interface Sec3ItemProps {
 
 const Sec3Item = ({ item, handlePrepareUpdate, handleDelete, isAdminLogedIn }: Sec3ItemProps) => {
     const [menu, setMenu] = useState(false);
-    const isFullUrl = item.imageLink.startsWith("http");
-    const imageSrc = isFullUrl
-    ? item.imageLink
-    : `https://res.cloudinary.com/dswmp2omq/image/upload/v1748945194/section3-images/${item.imageLink}`;
 
     return (
         <div key={item.id} className="sec3Item flexCenter">
             <div className="sec3ImageWrapper flexCenter">
                 <Image
                     className='sec3Image'
-                    src={imageSrc}
+                    src={`https://res.cloudinary.com/dswmp2omq/image/upload/v1748945194/section3-images/1.png`}
                     alt="Salad"
                     width={150}
                     height={150}
