@@ -27,6 +27,7 @@ const Sec3Item = ({ item, handlePrepareUpdate, handleDelete, isAdminLogedIn }: S
                     width={150}
                     height={150}
                     priority
+                    unoptimized
                 />
                 {isAdminLogedIn &&
                 <>
