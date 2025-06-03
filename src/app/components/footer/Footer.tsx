@@ -79,7 +79,7 @@ const Footer = forwardRef<HTMLDivElement>((_, ref) => {
                     </div>
                     {/* footerPart2 */}
                     <div className="footerPart2">
-                        <div className="footerPart21 flexColumn10">
+                        <div className="footerPart21">
                             <h4>Contact Information</h4>
                             <div>
                                 <i className="fa-solid fa-phone-volume"></i>
