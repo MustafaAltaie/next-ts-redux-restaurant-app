@@ -4,9 +4,12 @@ import { NextRequest } from 'next/server';
 
 // params routes
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   await dbConnect();
-  const { id } = params;
+  const { id } = await params;
   const data = await req.json();
 
   try {
@@ -19,9 +22,12 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   }
 }
 
-export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  _: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   await dbConnect();
-  const { id } = params;
+  const { id } = await params;
 
   try {
     const deletedItem = await Dishes.findByIdAndDelete(id);

@@ -2,9 +2,12 @@ import dbConnect from "../../../../../lib/mongodb";
 import Order from "../../../../../lib/models/OrderModel";
 import { NextRequest } from 'next/server';
 
-export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  _: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   await dbConnect();
-  const { id } = params;
+  const { id } = await params;
 
   try {
     const deletedItem = await Order.findByIdAndDelete(id);

@@ -3,18 +3,17 @@ import fs from 'fs';
 import path from 'path';
 
 const imageDir = path.join(process.cwd(), 'public', 'home-images');
-
 if (!fs.existsSync(imageDir)) {
   fs.mkdirSync(imageDir, { recursive: true });
 }
 
 export async function DELETE(
   _: NextRequest,
-  context: { params: { filename: string } }
+  context: { params: Promise<{ filename: string }> }
 ): Promise<NextResponse> {
   try {
-    const { filename } = context.params;
-    
+    const { filename } = await context.params;
+
     if (!filename) {
       return NextResponse.json({ error: 'Invalid filename' }, { status: 400 });
     }
@@ -27,7 +26,6 @@ export async function DELETE(
     }
 
     fs.unlinkSync(filePath);
-
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Error occurred:', error);

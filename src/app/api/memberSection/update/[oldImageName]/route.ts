@@ -3,21 +3,35 @@ import fs from 'fs';
 import path from 'path';
 
 const imageDir = path.join(process.cwd(), 'public', 'memberSection');
-if (!fs.existsSync(imageDir)) fs.mkdirSync(imageDir, { recursive: true });
+if (!fs.existsSync(imageDir)) {
+  fs.mkdirSync(imageDir, { recursive: true });
+}
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: { oldImageName: string } }
-) {
-  const formData = await req.formData();
-  const file = formData.get('image') as File;
-  if (!file) return NextResponse.json({ error: 'No file' }, { status: 400 });
+export async function DELETE(
+  _: NextRequest,
+  context: { params: Promise<{ filename: string }> }
+): Promise<NextResponse> {
+  try {
+    const { filename } = await context.params;
 
-  const oldPath = path.join(imageDir, decodeURIComponent(params.oldImageName));
-  if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+    if (!filename) {
+      return NextResponse.json({ error: 'Invalid filename' }, { status: 400 });
+    }
 
-  const buffer = Buffer.from(await file.arrayBuffer());
-  fs.writeFileSync(path.join(imageDir, file.name), buffer);
+    const decodedFilename = decodeURIComponent(filename);
+    const filePath = path.join(imageDir, decodedFilename);
 
-  return NextResponse.json({ success: true });
+    if (!fs.existsSync(filePath)) {
+      return NextResponse.json({ error: 'File not found' }, { status: 404 });
+    }
+
+    fs.unlinkSync(filePath);
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Error occurred:', error);
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Unknown error' },
+      { status: 500 }
+    );
+  }
 }
