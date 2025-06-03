@@ -22,7 +22,7 @@ const Form = ({ form, data, setContactObj, contactObj }: FormProps) => {
                 whatsapp: data.whatsapp,
             });
         }
-    }, [data]);
+    }, [data, setContactObj]);
 
     useEffect(() => {
         if(!formRef.current) return;
