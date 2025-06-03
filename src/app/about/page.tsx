@@ -64,7 +64,7 @@ const Page = () => {
                         <div key={member._id} className="aboutTeamMemberWrapper">
                             <div className="aboutTeamMemberImageWrapper">
                                 <Image
-                                    src={`/memberSection/${member.imageLink}`}
+                                    src={`https://res.cloudinary.com/dswmp2omq/image/upload/v1748945194/memberSection/${member.imageLink}`}
                                     alt="Image"
                                     width={100}
                                     height={100}
@@ -86,7 +86,7 @@ const Page = () => {
                         <div key={dish._id} className="aboutDish">
                             <div className="aboutDishImageWrapper">
                                 <Image
-                                    src={`/section3-images/${dish.imageLink}`}
+                                    src={`https://res.cloudinary.com/dswmp2omq/image/upload/v1748945194/section3-images/${dish.imageLink}`}
                                     alt="Dish image"
                                     width={180}
                                     height={180}
