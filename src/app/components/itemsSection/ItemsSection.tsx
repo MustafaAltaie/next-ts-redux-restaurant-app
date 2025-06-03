@@ -79,33 +79,47 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
     }
 
     const handleSaveItem = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if(!file && !itemObj.id) return;
-        const imageLink = file?.name || itemObj.imageLink;
-        try {
-            if(itemObj.id && file) { // Update
-                const formData = new FormData();
-                formData.append('image', file);
-                await changeItemImage({ formData, oldImage: itemObj.imageLink }).unwrap();
-            } else if (file) { // Create
-                const formData = new FormData();
-                formData.append('image', file);
-                await uploadItemImage(formData).unwrap();
-            }
+    e.preventDefault();
+    if (!file && !itemObj.id) return;
 
-            const newItem: Item = {
-                ...itemObj,
-                imageLink,
-            }
+    let imageLink = file?.name || itemObj.imageLink;
 
-            if(itemObj.id) { // Update
-                await updateItem({id: itemObj.id, data: newItem}).unwrap();
-            } else { // Create
-                await createItem(newItem).unwrap();
-            }
+    try {
+        if (itemObj.id && file) { // Update
+            const extension = file.name.substring(file.name.lastIndexOf('.')) || '.png';
+            const newFileName = `${Date.now()}${extension}`;
+            const renamedFile = new File([file], newFileName, { type: file.type });
 
-            clearFields();
-            setFile(null);
+            const formData = new FormData();
+            formData.append('image', renamedFile);
+            imageLink = newFileName;
+
+            await changeItemImage({ formData, oldImage: itemObj.imageLink }).unwrap();
+        } else if (file) { // Create
+            const extension = file.name.substring(file.name.lastIndexOf('.')) || '.png';
+            const newFileName = `${Date.now()}${extension}`;
+            const renamedFile = new File([file], newFileName, { type: file.type });
+
+            const formData = new FormData();
+            formData.append('image', renamedFile);
+            imageLink = newFileName;
+
+            await uploadItemImage(formData).unwrap();
+        }
+
+        const newItem: Item = {
+            ...itemObj,
+            imageLink,
+        };
+
+        if (itemObj.id) { // Update
+            await updateItem({ id: itemObj.id, data: newItem }).unwrap();
+        } else { // Create
+            await createItem(newItem).unwrap();
+        }
+
+        clearFields();
+        setFile(null);
         } catch (err) {
             console.error('Error saving item:', err);
             alert('Error saving item');
