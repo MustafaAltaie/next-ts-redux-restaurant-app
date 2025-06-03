@@ -17,12 +17,18 @@ interface Sec3ItemProps {
 
 const Sec3Item = ({ item, handlePrepareUpdate, handleDelete, isAdminLogedIn }: Sec3ItemProps) => {
     const [menu, setMenu] = useState(false);
+    const getImageUrl = () => {
+        // Remove any existing path segments from imageLink
+        const cleanImageLink = item.imageLink.replace(/^.*[\\\/]/, '');
+        return `https://res.cloudinary.com/dswmp2omq/image/upload/v1748945194/section3-images/${cleanImageLink}`;
+    }
+
     return (
         <div key={item.id} className="sec3Item flexCenter">
             <div className="sec3ImageWrapper flexCenter">
                 <Image
                     className='sec3Image'
-                    src={`https://res.cloudinary.com/dswmp2omq/image/upload/v1748945194/section3-images/${item.imageLink}`}
+                    src={getImageUrl()}
                     alt="Salad"
                     width={150}
                     height={150}
