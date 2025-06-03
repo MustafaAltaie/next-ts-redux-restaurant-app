@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
 
 type CloudinaryResource = {
   secure_url: string;
-};
+}
 
 export async function GET() {
   try {

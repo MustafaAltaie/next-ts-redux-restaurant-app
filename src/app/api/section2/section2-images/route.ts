@@ -41,6 +41,10 @@ export async function POST(req: NextRequest) {
   }
 }
 
+type CloudinaryResource = {
+  secure_url: string;
+}
+
 export async function GET() {
   try {
     const result = await cloudinary.search
@@ -49,7 +53,7 @@ export async function GET() {
       .max_results(30)
       .execute();
 
-    const urls = result.resources.map((file: any) => file.secure_url);
+    const urls = result.resources.map((file: CloudinaryResource) => file.secure_url);
 
     return NextResponse.json(urls);
   } catch (error) {
