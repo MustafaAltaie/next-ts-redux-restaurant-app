@@ -1,4 +1,4 @@
-
+import Image from 'next/image';
 import { useState } from 'react';
 
 interface Item {
@@ -20,12 +20,14 @@ const Sec3Item = ({ item, handlePrepareUpdate, handleDelete, isAdminLogedIn }: S
 
     return (
         <div key={item.id} className="sec3Item flexCenter">
-            xdrgs
             <div className="sec3ImageWrapper flexCenter">
-                <img
+                <Image
                     className='sec3Image'
                     src={`https://res.cloudinary.com/dswmp2omq/image/upload/v1748945194/section3-images/${item.imageLink}`}
-                    alt="xdfvs"
+                    alt="Salad"
+                    width={150}
+                    height={150}
+                    priority
                 />
                 {isAdminLogedIn &&
                 <>
