@@ -25,7 +25,7 @@ const Sec3Item = ({ item, handlePrepareUpdate, handleDelete, isAdminLogedIn }: S
                 <img
                     className='sec3Image'
                     src={`https://res.cloudinary.com/dswmp2omq/image/upload/v1748945194/section3-images/${item.imageLink}`}
-                    alt="Salad"
+                    alt="xdfvs"
                 />
                 {isAdminLogedIn &&
                 <>
