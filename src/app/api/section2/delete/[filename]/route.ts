@@ -1,12 +1,17 @@
 import { NextResponse } from 'next/server';
 import cloudinary from '../../../../../../lib/cloudinary';
 
+interface Props {
+  params: Promise<{ filename: string }>;
+}
+
 export async function DELETE(
   _: Request,
-  context: { params: { filename: string } }
+  props: Props
 ) {
   try {
-    const filename = context.params.filename;
+    // “params” is now a Promise—await it to get the actual object
+    const { filename } = await props.params;
     const publicId = `section2-images/${decodeURIComponent(filename).split('.')[0]}`;
 
     const { result } = await cloudinary.uploader.destroy(publicId, {
@@ -19,8 +24,8 @@ export async function DELETE(
     } else {
       return NextResponse.json({ error: 'Deletion failed' }, { status: 500 });
     }
-  } catch (error: unknown) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
