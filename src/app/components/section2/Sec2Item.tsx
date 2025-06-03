@@ -33,7 +33,7 @@ const Sec2Item = ({ item, handlePrepareUpdate, handleDelete, isAdminLogedIn }: S
             title: item.title,
             price: Number(item.price),
             quantity: 1,
-            image: `/section2-images/${item.imageLink}`,
+            image: `https://res.cloudinary.com/dswmp2omq/image/upload/v1748941553/section2-images/${item.imageLink}`,
         }
         dispatch(addToCart(newItem));
     }

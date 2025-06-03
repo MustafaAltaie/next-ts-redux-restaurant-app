@@ -34,7 +34,7 @@ const ProductItem = ({ item, handlePrepareUpdate, handleDeleteItem, isAdminLoged
             title: item.title,
             price: Number(item.price),
             quantity: 1,
-            image: `/itemSection/${item.imageLink}`
+            image: `https://res.cloudinary.com/dswmp2omq/image/upload/v1748941553/itemSection/${item.imageLink}`
         }
         dispatch(addToCart(newItem));
     }
