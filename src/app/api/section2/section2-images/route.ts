@@ -1,49 +1,59 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-
-const imageDir = path.join(process.cwd(), 'public', 'section2-images');
-
-if (!fs.existsSync(imageDir)) {
-  fs.mkdirSync(imageDir, { recursive: true });
-}
+import cloudinary from '../../../../../lib/cloudinary';
 
 export async function POST(req: NextRequest) {
   const formData = await req.formData();
-  const files = formData.getAll('image') as File[];
+  const file = formData.get('image') as File;
 
-  if (!files.length) {
-    return NextResponse.json({ error: 'No images uploaded' }, { status: 400 });
+  if (!file) {
+    console.log('❌ No file found in request');
+    return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
   }
 
+  const arrayBuffer = await file.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+
   try {
-    for (const file of files) {
-      const bytes = await file.arrayBuffer();
-      const buffer = Buffer.from(bytes);
+    const result = await new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      {
+        folder: 'section2-images',
+        public_id: file.name.split('.').slice(0, -1).join(''),
+        resource_type: 'image',
+      },
+      (error, result) => {
+        if (error) {
+          console.error('❌ Cloudinary error:', error);
+          return reject(error);
+        }
+        resolve(result);
+      }
+    );
 
-      const filePath = path.join(imageDir, file.name);
+    stream.end(buffer);
+  });
 
-      fs.writeFileSync(filePath, buffer);
-    }
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('Error occured:', error);
-    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
+    console.log('✅ Upload success:', result);
+    return NextResponse.json({ success: true, data: result });
+  } catch (err) {
+    console.error('❌ Upload failed:', err);
+    return NextResponse.json({ error: 'Upload failed' }, { status: 500 });
   }
 }
 
 export async function GET() {
   try {
-    const files = fs.existsSync(imageDir)
-      ? fs.readdirSync(imageDir).filter((f) => /\.(png|jpe?g|gif|webp|svg)$/i.test(f))
-      : [];
+    const result = await cloudinary.search
+      .expression('folder:section2-images AND resource_type:image')
+      .sort_by('public_id', 'desc')
+      .max_results(30)
+      .execute();
 
-    const urls = files.map((filename) => `/section2-images/${filename}`);
+    const urls = result.resources.map((file: any) => file.secure_url);
 
     return NextResponse.json(urls);
   } catch (error) {
-    console.error('Error occured:', error);
-    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
+    console.error('❌ Cloudinary fetch error:', error);
+    return NextResponse.json({ error: 'Failed to fetch images' }, { status: 500 });
   }
 }

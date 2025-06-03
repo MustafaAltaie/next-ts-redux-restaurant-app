@@ -22,7 +22,7 @@ const Sec3Item = ({ item, handlePrepareUpdate, handleDelete, isAdminLogedIn }: S
             <div className="sec3ImageWrapper flexCenter">
                 <Image
                     className='sec3Image'
-                    src={`/section3-images/${item.imageLink}`}
+                    src={`https://res.cloudinary.com/dswmp2omq/image/upload/v1748945194/section3-images/${item.imageLink}`}
                     alt="Salad"
                     width={150}
                     height={150}

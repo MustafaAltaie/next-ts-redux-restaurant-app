@@ -123,7 +123,7 @@ const Section2 = () => {
         if(!item.id || !item.imageLink) return;
         try {
             await deleteMilkShake(item.id).unwrap();
-            await deleteSec2Image(item.imageLink).unwrap();
+            await deleteSec2Image(`${item.imageLink}`).unwrap();
         } catch (err) {
             console.error('Could not delete item:', err);
             alert('Could not delete item');

@@ -65,7 +65,7 @@ const ProductItem = ({ item, handlePrepareUpdate, handleDeleteItem, isAdminLoged
                     className='itemWrapperImage'
                     width={150}
                     height={150}
-                    src={`/itemSection/${item.imageLink}`}
+                    src={`https://res.cloudinary.com/dswmp2omq/image/upload/v1748941553/itemSection/${item.imageLink}`}
                     alt='Category'
                     priority
                 />

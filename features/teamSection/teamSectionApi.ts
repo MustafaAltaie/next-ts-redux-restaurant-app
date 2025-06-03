@@ -28,7 +28,7 @@ export const teamApi = api.injectEndpoints({
             invalidatesTags: ['members']
         }),
         deleteMemberImage: builder.mutation<void, string>({
-            query: (imageName) => ({ url: `/api/memberSection/deleteImages/${imageName}`, method: 'DELETE' }),
+            query: (imageName) => ({ url: `/api/memberSection/deleteImages/${encodeURIComponent(imageName)}`, method: 'DELETE' }),
             invalidatesTags: ['members']
         })
     }),

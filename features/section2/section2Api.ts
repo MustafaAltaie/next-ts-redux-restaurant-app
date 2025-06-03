@@ -20,7 +20,7 @@ export const section2Api = api.injectEndpoints({
             invalidatesTags: ['section2']
         }),
         deleteSec2Image: builder.mutation<void, string>({
-            query: (image) => ({ url: `/api/section2/delete/${image}`, method: 'DELETE' }),
+            query: (image) => ({ url: `/api/section2/delete/${encodeURIComponent(image)}`, method: 'DELETE' }),
             invalidatesTags: ['section2']
         }),
         updateMilkShake: builder.mutation<Item, { id: string, data: Partial<Item> }>({

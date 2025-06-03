@@ -36,7 +36,7 @@ const Employee = ({ member, handlePrepareUpdate, handleDeleteMember, isAdminLoge
                 <div className="memberImageWrapper flexCenter">
                     <Image
                         className='memberImage'
-                        src={`/memberSection/${member.imageLink}`}
+                        src={`https://res.cloudinary.com/dswmp2omq/image/upload/v1748941553/memberSection/${member.imageLink}`}
                         alt={`${member.name}-image`}
                         width={130}
                         height={130}

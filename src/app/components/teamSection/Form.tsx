@@ -64,7 +64,7 @@ const Form = ({
                         className='formImageView'
                         src={file ?
                             URL.createObjectURL(file) :
-                            `/memberSection/${memberObj.imageLink}`
+                            `https://res.cloudinary.com/dswmp2omq/image/upload/v1748941553/memberSection/${memberObj.imageLink}`
                         }
                         alt="Preview"
                         onClick={() => setFile(null)}

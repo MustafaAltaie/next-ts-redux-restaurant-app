@@ -59,7 +59,7 @@ const Sec2Item = ({ item, handlePrepareUpdate, handleDelete, isAdminLogedIn }: S
             </h4>
             <div className='flexCenter sec2CardImageWrapper'>
                 <Image
-                    src={`/section2-images/${item.imageLink}`}
+                    src={`https://res.cloudinary.com/dswmp2omq/image/upload/v1748941553/section2-images/${item.imageLink}`}
                     alt='Milkshake'
                     className='sec2CardImage'
                     width={100}
