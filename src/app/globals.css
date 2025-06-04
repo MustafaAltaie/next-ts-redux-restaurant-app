@@ -22,7 +22,6 @@
     color: #fff;
     background-image: radial-gradient(circle at 0% 0%, #23344f, transparent 40%);
     background-color: #1E2126;
-    background-attachment: fixed;
 }
 .lightMode header,
 .lightMode section,
@@ -31,7 +30,6 @@
     color: #000;
     background-image: radial-gradient(circle at 0% 0%, #4fbeffa3, transparent 40%);
     background-color: #F1EEE0;
-    background-attachment: fixed;
 }
 ul {
     list-style: none;
