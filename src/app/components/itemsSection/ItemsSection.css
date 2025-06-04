@@ -111,12 +111,14 @@
 
 /* settings */
 .itemsSection > .overflowMenuPanel {
+    z-index: 200;
     top: 70px;
     left: 10px;
     padding: 10px;
 }
-.itemsSection > .overflowMenuPanel > h5 {
-    padding: 5px;
+.itemsSection .overflowMenuPanel > h5 {
+    padding: 15px;
+    font-size: 18px;
 }
 .itemsWrapper .overflowMenuButton {
     top: 5px;
@@ -129,14 +131,15 @@
     max-width: 10px;
 }
 .itemCard .overflowMenuPanel {
-    padding: 10px;
+    z-index: 190;
+    padding: 10px 0;
     top: 10px;
     width: 90%;
 }
 .itemCard > .overflowMenuPanel > h5 {
-    padding: 5px;
     font-weight: normal;
     text-align: left;
+    white-space: nowrap;
 }
 .itemsSection .formInnerWrapper {
     border-bottom: solid 0.5px;
@@ -164,11 +167,8 @@
         width: 40%;
         margin: 0 auto;
     }
-    .itemCard .overflowMenuPanel {
-        width: 95%;
-        top: 5px;
-    }
-    .itemCard .overflowMenuPanel > h5 {
+    .itemsSection .overflowMenuPanel > h5 {
         padding: 10px;
+        font-size: 14px;
     }
 }

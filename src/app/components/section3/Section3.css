@@ -62,13 +62,15 @@
 
 /* settings */
 .section3 .overflowMenuPanel {
-    top: 40px;
+    z-index: 200;
+    top: 10px;
     left: 10px;
     padding: 10px;
     gap: 0;
 }
-.sec3Item .overflowMenuPanel > h5 {
-    padding: 5px;
+.section3 .overflowMenuPanel > h5 {
+    padding: 20px;
+    font-size: 18px;
 }
 
 .section3 .closeFormButton {
@@ -81,6 +83,10 @@
     top: 50%;
     left: 0;
     transform: translateY(-50%);
+}
+.sec3Item .overflowMenuPanel {
+    z-index: 190;
+    top: 20px;
 }
 
 /* Laptop scale */
@@ -99,10 +105,8 @@
         width: 40%;
         margin: 0 auto;
     }
-    .section3 > .overflowMenuPanel > h5 {
-        padding: 5px;
-    }
-    .sec3Item .overflowMenuPanel > h5 {
+    .section3 .overflowMenuPanel > h5 {
         font-size: 12px;
+        padding: 5px;
     }
 }

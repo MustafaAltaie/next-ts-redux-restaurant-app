@@ -56,7 +56,13 @@
 /* settings */
 .section1 .overflowMenuPanel {
     padding: 10px;
-    width: 60%;
+    max-width: 55%;
+}
+.darkMode .section1 .overflowMenuPanel{
+    background-color: #33333377;
+}
+.lightMode .section1 .overflowMenuPanel{
+    background-color: #ffffff44;
 }
 .section1 .overflowMenuButton, .section1 .overflowMenuPanel {
     top: 70px;
@@ -65,8 +71,13 @@
 .section1 .overflowMenuPanel > label,
 .section1 .overflowMenuPanel > p {
     cursor: pointer;
-    font-size: 14px;
-    padding: 5px;
+    padding: 10px;
+}
+.darkMode .section1 .overflowMenuPanelImageWrapper > h5 {
+    color: #ff8787;
+}
+.lightMode .section1 .overflowMenuPanelImageWrapper > h5 {
+    color: #c40000;
 }
 
 

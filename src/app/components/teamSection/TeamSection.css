@@ -111,23 +111,27 @@
     top: 15px;
 }
 .teamSection .overflowMenuPanel {
+    z-index: 200;
     top: 10px;
     left: 10px;
     padding: 10px;
     gap: 0;
 }
+.teamSection .overflowMenuPanel > h5 {
+    font-weight: normal;
+    text-align: left;
+    font-size: 18px;
+    padding: 15px;
+}
 .teamSection .closeFormButton {
     padding: 0 20px;
 }
 .teamMember .overflowMenuPanel {
+    z-index: 190;
     padding: 5px;
-    width: 90%;
+    width: 95%;
     left: 5px;
     top: 5px;
-}
-.teamMember .overflowMenuPanel > h5 {
-    font-weight: normal;
-    text-align: left;
 }
 
 
@@ -159,5 +163,9 @@
     .teamSection > .addUpdateItemForm {
         width: 40%;
         margin: 0 auto;
+    }
+    .teamSection .overflowMenuPanel > h5 {
+        font-size: 14px;
+        padding: 5px;
     }
 }

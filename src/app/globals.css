@@ -101,11 +101,10 @@ button, input, textarea {
 .hiddenSection {
     z-index: 100;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(90deg);
+    top: 10%;
+    left: 10%;
     text-align: center;
-    font-size: 200px;
+    font-size: 50px;
     opacity: 0.1;
 }
 .itemButtonLabel {
@@ -300,6 +299,8 @@ button, input, textarea {
         height: 50px;
     }
     .hiddenSection {
+        top: 50%;
+        left: 50%;
         transform: translate(-50%, -50%) rotate(20deg);
         font-size: 300px;
     }
