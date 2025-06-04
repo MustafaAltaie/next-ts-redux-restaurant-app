@@ -11,7 +11,7 @@ export const tempApi = api.injectEndpoints({
       providesTags: ['home-images']
     }),
     deleteHomeImages: builder.mutation<void, string>({
-      query: (image) => ({ url: `/api/home-images/${encodeURIComponent(image)}`, method: 'DELETE' }),
+      query: (image) => ({ url: `/api/home-images/${image}`, method: 'DELETE' }),
       invalidatesTags: ['home-images']
     })
   }),

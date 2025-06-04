@@ -75,24 +75,33 @@ const Section2 = () => {
 
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if(!file && !itemObj.id) return;
-        const imageLink = file?.name || itemObj.imageLink;
+        if (!file && !itemObj.id) return;
+
+        let imageLink = file?.name || itemObj.imageLink;
+
         try {
-            if(!itemObj.id && file) {
+            if(file) {
+                const extension = file.name.includes('.') 
+                    ? file.name.substring(file.name.lastIndexOf('.')) 
+                    : '.png';
+                const newFileName = `${Date.now()}${extension}`;
+                const renamedFile = new File([file], newFileName, { type: file.type });
+
                 const formData = new FormData();
-                formData.append('image', file);
-                await uploadMilkShakeImage(formData).unwrap();
-            } else if(file) {
-                const formData = new FormData();
-                formData.append('image', file);
-                await updateSec2Image({ formData, oldImageName: itemObj.imageLink });
+                formData.append('image', renamedFile);
+                imageLink = newFileName;
+                if(itemObj.id) {
+                    await updateSec2Image({ formData, oldImageName: itemObj.imageLink }).unwrap();
+                } else {
+                    await uploadMilkShakeImage(formData).unwrap();
+                }
             }
 
             const newItem: Item = {
                 ...itemObj,
                 price: Number(itemObj.price),
                 imageLink
-            };
+            }
 
             if(itemObj.id){
                 await updateMilkShake({ id: itemObj.id, data: newItem }).unwrap();

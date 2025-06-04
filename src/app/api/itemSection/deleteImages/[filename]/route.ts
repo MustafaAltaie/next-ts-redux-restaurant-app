@@ -1,37 +1,32 @@
-import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { NextResponse } from 'next/server';
+import cloudinary from '../../../../../../lib/cloudinary';
 
-const imageDir = path.join(process.cwd(), 'public', 'itemSection');
-
-if (!fs.existsSync(imageDir)) {
-  fs.mkdirSync(imageDir, { recursive: true });
+interface Props {
+  params: Promise<{ filename: string }>;
 }
 
 export async function DELETE(
-  _: NextRequest,
-  context: { params: Promise<{ filename: string }> }
-): Promise<NextResponse> {
+  _: Request,
+  props: Props
+) {
   try {
-    const { filename } = await context.params;
+    const { filename } = await props.params;
+    const publicId = `itemSection/${filename.split('.')[0]}`;
 
-    if (!filename) {
-      return NextResponse.json({ error: 'Invalid filename' }, { status: 400 });
+    const { result } = await cloudinary.uploader.destroy(publicId, {
+      resource_type: 'image',
+      invalidate: true,
+    });
+
+    if (result === 'ok') {
+      return NextResponse.json({ success: true });
+    } else {
+      return NextResponse.json({ error: 'Deletion failed' }, { status: 500 });
     }
-
-    const decodedFilename = decodeURIComponent(filename);
-    const filePath = path.join(imageDir, decodedFilename);
-
-    if (!fs.existsSync(filePath)) {
-      return NextResponse.json({ error: 'File not found' }, { status: 404 });
-    }
-
-    fs.unlinkSync(filePath);
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('Error occurred:', error);
+  } catch (err) {
+    console.error(err);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Unknown error' },
+      { error: 'Internal server error' },
       { status: 500 }
     );
   }

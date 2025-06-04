@@ -28,7 +28,7 @@ export const itemApi = api.injectEndpoints({
             invalidatesTags: ['items']
         }),
         deleteItemImage: builder.mutation<void, string>({
-            query: (filename) => ({ url: `/api/itemSection/deleteImages/${encodeURIComponent(filename)}`, method: 'DELETE' }),
+            query: (filename) => ({ url: `/api/itemSection/deleteImages/${filename}`, method: 'DELETE' }),
             invalidatesTags: ['items']
         }),
     }),

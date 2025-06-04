@@ -84,28 +84,37 @@ const Section3 = () => {
 
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if(!file && !itemObj.id) return;
-        const imageLink = file?.name || itemObj.imageLink;
+        if (!file && !itemObj.id) return;
+
+        let imageLink = file?.name || itemObj.imageLink;
+
         try {
-            if(!itemObj.id && file) {
+            if(file) {
+                const extension = file.name.includes('.') 
+                    ? file.name.substring(file.name.lastIndexOf('.')) 
+                    : '.png';
+                const newFileName = `${Date.now()}${extension}`;
+                const renamedFile = new File([file], newFileName, { type: file.type });
+
                 const formData = new FormData();
-                formData.append('image', file);
-                await uploadImage(formData).unwrap(); 
-            } else if(file) {
-                const formData = new FormData();
-                formData.append('image', file);
-                await updateImage({ formData, oldImage: itemObj.imageLink }).unwrap();
+                formData.append('image', renamedFile);
+                imageLink = newFileName;
+                if(itemObj.id) {
+                    await updateImage({ formData, oldImage: itemObj.imageLink }).unwrap();
+                } else {
+                    await uploadImage(formData).unwrap();
+                }
             }
 
-            const mewItem: Item = {
+            const newItem: Item = {
                 ...itemObj,
-                imageLink
+                imageLink,
             }
 
-            if(!itemObj.id) {
-                await createDish(mewItem).unwrap();
+            if (itemObj.id) {
+                await updateDish({ id: itemObj.id, data: newItem }).unwrap();
             } else {
-                await updateDish({ id: itemObj.id, data: mewItem }).unwrap();
+                await createDish(newItem).unwrap();
             }
 
             clearFields();

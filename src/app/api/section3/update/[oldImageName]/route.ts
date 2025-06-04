@@ -1,34 +1,47 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import cloudinary from '../../../../../../lib/cloudinary';
+import { Readable } from 'stream';
 
-const imageDir = path.join(process.cwd(), 'public', 'section3-images');
-if (!fs.existsSync(imageDir)) {
-  fs.mkdirSync(imageDir, { recursive: true });
-}
-
-export async function DELETE(
-  _: NextRequest,
-  context: { params: Promise<{ filename: string }> }
+export async function POST(
+  req: NextRequest,
+  context: { params: { oldImageName: string } }
 ): Promise<NextResponse> {
   try {
-    const { filename } = await context.params;
+    const { oldImageName } = context.params;
 
-    if (!filename) {
-      return NextResponse.json({ error: 'Invalid filename' }, { status: 400 });
+    const formData = await req.formData();
+    const file = formData.get('image') as File;
+
+    if (!file || !(file instanceof File)) {
+      return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
     }
 
-    const decodedFilename = decodeURIComponent(filename);
-    const filePath = path.join(imageDir, decodedFilename);
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const filename = file.name.replace(/\.[^/.]+$/, ''); // Remove extension for public_id
 
-    if (!fs.existsSync(filePath)) {
-      return NextResponse.json({ error: 'File not found' }, { status: 404 });
-    }
+    // Delete old image from Cloudinary
+    await cloudinary.uploader.destroy(`section3-images/${oldImageName.replace(/\.[^/.]+$/, '')}`);
 
-    fs.unlinkSync(filePath);
-    return NextResponse.json({ success: true });
+    // Upload new image with your custom name
+    const uploadResult = await new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        {
+          folder: 'section3-images',
+          public_id: filename, // use the frontend-assigned name
+          overwrite: true,
+        },
+        (error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        }
+      );
+
+      Readable.from(buffer).pipe(uploadStream);
+    });
+
+    return NextResponse.json({ success: true, data: uploadResult });
   } catch (error) {
-    console.error('Error occurred:', error);
+    console.error('Cloudinary update error:', error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }

@@ -10,9 +10,8 @@ export async function DELETE(
   props: Props
 ) {
   try {
-    // “params” is now a Promise—await it to get the actual object
     const { filename } = await props.params;
-    const publicId = `section2-images/${decodeURIComponent(filename).split('.')[0]}`;
+    const publicId = `section2-images/${filename.split('.')[0]}`;
 
     const { result } = await cloudinary.uploader.destroy(publicId, {
       resource_type: 'image',

@@ -20,7 +20,7 @@ export const section3Api = api.injectEndpoints({
             invalidatesTags: ['section3']
         }),
         deleteImage: builder.mutation<void, string>({
-            query: (imageName) => ({ url: `/api/section3/delete-images/${encodeURIComponent(imageName)}`, method: 'DELETE' }),
+            query: (imageName) => ({ url: `/api/section3/delete-images/${imageName}`, method: 'DELETE' }),
             invalidatesTags: ['section3']
         }),
         updateDish: builder.mutation<Item, { id: string, data: Partial<Item> }>({
