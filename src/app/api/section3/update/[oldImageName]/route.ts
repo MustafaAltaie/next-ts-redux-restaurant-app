@@ -4,28 +4,28 @@ import { Readable } from 'stream';
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { oldImageName: string } }
+  { params }: { params: Promise<{ oldImageName: string }> }
 ): Promise<NextResponse> {
   try {
-    const { oldImageName } = params;
+    // 1. Await the dynamic params
+    const { oldImageName } = await params;
 
-    // 1. Parse the incoming FormData
+    // 2. Parse the incoming FormData
     const formData = await req.formData();
     const file = formData.get('image') as File;
     if (!file || !(file instanceof File)) {
       return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
     }
 
-    // 2. Convert the File into a Buffer
+    // 3. Convert File to Buffer and strip its extension for public_id
     const buffer = Buffer.from(await file.arrayBuffer());
-    // Strip extension for public_id (we assume frontend named it with Date.now())
     const publicId = file.name.replace(/\.[^/.]+$/, '');
 
-    // 3. Delete the old image (strip its extension too)
+    // 4. Delete the old image (strip extension from oldImageName)
     const oldPublicId = oldImageName.replace(/\.[^/.]+$/, '');
     await cloudinary.uploader.destroy(`section3-images/${oldPublicId}`);
 
-    // 4. Upload the new buffer, piping it into Cloudinary's upload_stream
+    // 5. Upload the new buffer under your custom public_id
     const uploadResult = await new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
@@ -38,7 +38,6 @@ export async function POST(
           resolve(result);
         }
       );
-
       Readable.from(buffer).pipe(uploadStream);
     });
 
