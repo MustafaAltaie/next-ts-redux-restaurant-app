@@ -15,6 +15,7 @@ import { Item } from '../../../../types/MilkShake';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
 import Form from './Form';
+import LoadingModal from '../loadingModal/LoadingModal';
 
 const Section2 = () => {
     const [list, setList] = useState<Item[]>([]);
@@ -38,6 +39,7 @@ const Section2 = () => {
     const [updateMilkShake] = useUpdateMilkShakeMutation();
     const [updateSec2Image] = useUpdateSec2ImageMutation();
     const isAdminLogedIn = useSelector((state: RootState) => state.admin.isLogedIn);
+    const [working, setWorking] = useState(false);
 
     useEffect(() => {
         if(itemList && !isItemListLoading) {
@@ -77,6 +79,8 @@ const Section2 = () => {
         e.preventDefault();
         if (!file && !itemObj.id) return;
 
+        setWorking(true);
+
         let imageLink = file?.name || itemObj.imageLink;
 
         try {
@@ -113,6 +117,8 @@ const Section2 = () => {
         } catch (err) {
             console.error('Error:', err);
             alert('Could not save the item and/or upload image');
+        } finally {
+            setWorking(false);
         }
     }
 
@@ -130,12 +136,15 @@ const Section2 = () => {
 
     const handleDelete = async (item: Item) => {
         if(!item.id || !item.imageLink) return;
+        setWorking(true);
         try {
             await deleteMilkShake(item.id).unwrap();
             await deleteSec2Image(`${item.imageLink}`).unwrap();
         } catch (err) {
             console.error('Could not delete item:', err);
             alert('Could not delete item');
+        } finally {
+            setWorking(false);
         }
     }
 
@@ -152,6 +161,8 @@ const Section2 = () => {
 
     return (
         <section className="section2">
+            {working &&
+            <LoadingModal />}
             {/* settings */}
             {isAdminLogedIn &&
             <>

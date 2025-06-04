@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useUploadHomeImagesMutation, useGetHomeImagesQuery, useDeleteHomeImagesMutation } from '../../../../features/restaurant/restaurantApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
+import LoadingModal from '../loadingModal/LoadingModal';
 
 const Section1 = () => {
     const [list, setList] = useState<string[]>([]);
@@ -71,6 +72,8 @@ const Section1 = () => {
 
     return (
         <section className="section1">
+            {isLoading &&
+            <LoadingModal />}
             {isAdminLogedIn &&
             <div className="overflowMenuButton" onClick={() => setMenuPanel(true)}>
                 <div></div>

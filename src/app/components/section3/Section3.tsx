@@ -15,6 +15,7 @@ import {
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
 import Form from './Form';
+import LoadingModal from '../loadingModal/LoadingModal';
 
 const Section3 = () => {
     const [list, setList] = useState<Item[]>([]);
@@ -37,6 +38,7 @@ const Section3 = () => {
     const [updateDish] = useUpdateDishMutation();
     const [updateImage] = useUpdateImageMutation();
     const isAdminLogedIn = useSelector((state: RootState) => state.admin.isLogedIn);
+    const [working, setWorking] = useState(false);
 
     useEffect(() => {
         if(dishes && !isDishListLoading) {
@@ -85,7 +87,7 @@ const Section3 = () => {
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!file && !itemObj.id) return;
-
+        setWorking(true);
         let imageLink = file?.name || itemObj.imageLink;
 
         try {
@@ -122,17 +124,22 @@ const Section3 = () => {
         } catch (err) {
             console.log('Error saving item:', err);
             alert('Error saving item');
+        } finally {
+            setWorking(false);
         }
     }
 
     const handleDelete = async (item: Item) => {
         if(!item) return;
+        setWorking(true);
         try {
             await deleteDish(item.id!).unwrap();
             await deleteImage(item.imageLink).unwrap();
         } catch (err) {
             console.log('Error deleting item:', err);
             alert('Error deleting item');
+        } finally {
+            setWorking(false);
         }
     }
 
@@ -148,6 +155,8 @@ const Section3 = () => {
 
     return (
         <section className='section3'>
+            {working&&
+            <LoadingModal />}
             {/* settings */}
             {isAdminLogedIn &&
             <>

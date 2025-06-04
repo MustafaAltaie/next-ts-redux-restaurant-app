@@ -15,6 +15,7 @@ import {
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
 import Form from './Form';
+import LoadingModal from '../loadingModal/LoadingModal';
 
 const TeamSection = () => {
     const [list, setList] = useState<Member[]>([]);
@@ -43,6 +44,7 @@ const TeamSection = () => {
     const [deleteMember] = useDeleteMemberMutation();
     const [deleteMemberImage] = useDeleteMemberImageMutation()
     const isAdminLogedIn = useSelector((state: RootState) => state.admin.isLogedIn);
+    const [working, setWorking] = useState(false);
 
     useEffect(() => {
         if(members && !isMemberListLoading) {
@@ -109,7 +111,7 @@ const TeamSection = () => {
     const handleSaveMember = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!file && !memberObj.id) return;
-
+        setWorking(true);
         let imageLink = file?.name || memberObj.imageLink;
 
         try {
@@ -146,17 +148,22 @@ const TeamSection = () => {
         } catch (err) {
             console.error('Could not complete saving:', err);
             alert('Error saving member');
+        } finally {
+            setWorking(false);
         }
     }
 
     const handleDeleteMember = async (member: Member) => {
         if(!member) return;
+        setWorking(true);
         try {
             await deleteMemberImage(member.imageLink).unwrap();
             await deleteMember(member.id!).unwrap();
         } catch (err) {
             console.error('Could not complete deletion:', err);
             alert('Error delete member');
+        } finally {
+            setWorking(false);
         }
     }
 
@@ -178,6 +185,8 @@ const TeamSection = () => {
 
     return (
         <section className='teamSection shiningTop'>
+            {working &&
+            <LoadingModal />}
             {/* settings */}
             {isAdminLogedIn &&
             <>

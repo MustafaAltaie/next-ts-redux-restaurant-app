@@ -16,6 +16,7 @@ import {
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
 import Form from './Form';
+import LoadingModal from '../loadingModal/LoadingModal';
 
 const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
     const [itemList, setItemList] = useState<Item[]>([]);
@@ -42,6 +43,7 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
     const [deleteItem] = useDeleteItemMutation();
     const [deleteItemImage] = useDeleteItemImageMutation();
     const isAdminLogedIn = useSelector((state: RootState) => state.admin.isLogedIn);
+    const [working, setWorking] = useState(false);
 
     useEffect(() => {
         if(items && !isLoading) {
@@ -81,7 +83,7 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
     const handleSaveItem = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!file && !itemObj.id) return;
-
+        setWorking(true);
         let imageLink = file?.name || itemObj.imageLink;
 
         try {
@@ -118,6 +120,8 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
         } catch (err) {
             console.error('Error saving item:', err);
             alert('Error saving item');
+        } finally {
+            setWorking(false);
         }
     }
 
@@ -136,12 +140,15 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
 
     const handleDeleteItem = async (item: Item) => {
         if(!item) return;
+        setWorking(true);
         try {
             await deleteItemImage(item.imageLink).unwrap();
             await deleteItem(item.id!).unwrap();
         } catch (err) {
             console.error('Error deleting item:', err);
             alert('Error deleting item');
+        } finally {
+            setWorking(false);
         }
     }
 
@@ -159,6 +166,8 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
 
     return (
         <section ref={ref} className='itemsSection'>
+            {working &&
+            <LoadingModal />}
             {/* settings */}
             {isAdminLogedIn &&
             <>
