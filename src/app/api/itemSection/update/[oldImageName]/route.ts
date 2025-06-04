@@ -1,34 +1,52 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-
-const imageDir = path.join(process.cwd(), 'public', 'itemSection');
-if (!fs.existsSync(imageDir)) fs.mkdirSync(imageDir, { recursive: true });
+import cloudinary from '../../../../../../lib/cloudinary';
+import { Readable } from 'stream';
 
 export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ oldImageName: string }> }
-) {
-  // 1) Await the `params` promise so we can pull out oldImageName:
-  const { oldImageName } = await params;
+): Promise<NextResponse> {
+  try {
+    // 1. Await the dynamic params
+    const { oldImageName } = await params;
 
-  // 2) Read the incoming FormData and get the new file
-  const formData = await req.formData();
-  const file = formData.get('image') as File;
-  if (!file) {
-    return NextResponse.json({ error: 'No file provided' }, { status: 400 });
+    // 2. Parse the incoming FormData
+    const formData = await req.formData();
+    const file = formData.get('image') as File;
+    if (!file || !(file instanceof File)) {
+      return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
+    }
+
+    // 3. Convert File to Buffer and strip its extension for public_id
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const publicId = file.name.replace(/\.[^/.]+$/, '');
+
+    // 4. Delete the old image (strip extension from oldImageName)
+    const oldPublicId = oldImageName.replace(/\.[^/.]+$/, '');
+    await cloudinary.uploader.destroy(`itemSection/${oldPublicId}`);
+
+    // 5. Upload the new buffer under your custom public_id
+    const uploadResult = await new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        {
+          folder: 'itemSection',
+          public_id: publicId,
+          overwrite: true,
+        },
+        (error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        }
+      );
+      Readable.from(buffer).pipe(uploadStream);
+    });
+
+    return NextResponse.json({ success: true, data: uploadResult });
+  } catch (err) {
+    console.error('Cloudinary update error:', err);
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : 'Unknown error' },
+      { status: 500 }
+    );
   }
-
-  // 3) Delete the old image if it exists
-  const decodedOld = decodeURIComponent(oldImageName);
-  const oldPath = path.join(imageDir, decodedOld);
-  if (fs.existsSync(oldPath)) {
-    fs.unlinkSync(oldPath);
-  }
-
-  // 4) Save the new file under its filename
-  const buffer = Buffer.from(await file.arrayBuffer());
-  fs.writeFileSync(path.join(imageDir, file.name), buffer);
-
-  return NextResponse.json({ success: true });
 }

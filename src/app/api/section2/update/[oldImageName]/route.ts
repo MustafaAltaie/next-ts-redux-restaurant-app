@@ -1,36 +1,51 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import cloudinary from '../../../../../../lib/cloudinary';
+import { Readable } from 'stream';
 
-const imageDir = path.join(process.cwd(), 'public', 'section2-images');
-if (!fs.existsSync(imageDir)) {
-  fs.mkdirSync(imageDir, { recursive: true });
-}
-
-export async function DELETE(
-  _: NextRequest,
-  context: { params: Promise<{ filename: string }> }
+export async function POST(
+  req: NextRequest,
+  { params }: { params: Promise<{ oldImageName: string }> }
 ): Promise<NextResponse> {
   try {
-    const { filename } = await context.params;
+    // 1. Await the dynamic params
+    const { oldImageName } = await params;
 
-    if (!filename) {
-      return NextResponse.json({ error: 'Invalid filename' }, { status: 400 });
+    // 2. Parse the incoming FormData
+    const formData = await req.formData();
+    const file = formData.get('image') as File;
+    if (!file || !(file instanceof File)) {
+      return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
     }
 
-    const decodedFilename = decodeURIComponent(filename);
-    const filePath = path.join(imageDir, decodedFilename);
+    // 3. Convert File to Buffer and strip its extension for public_id
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const publicId = file.name.replace(/\.[^/.]+$/, '');
 
-    if (!fs.existsSync(filePath)) {
-      return NextResponse.json({ error: 'File not found' }, { status: 404 });
-    }
+    // 4. Delete the old image (strip extension from oldImageName)
+    const oldPublicId = oldImageName.replace(/\.[^/.]+$/, '');
+    await cloudinary.uploader.destroy(`section2-images/${oldPublicId}`);
 
-    fs.unlinkSync(filePath);
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('Error occurred:', error);
+    // 5. Upload the new buffer under your custom public_id
+    const uploadResult = await new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        {
+          folder: 'section2-images',
+          public_id: publicId,
+          overwrite: true,
+        },
+        (error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        }
+      );
+      Readable.from(buffer).pipe(uploadStream);
+    });
+
+    return NextResponse.json({ success: true, data: uploadResult });
+  } catch (err) {
+    console.error('Cloudinary update error:', err);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Unknown error' },
+      { error: err instanceof Error ? err.message : 'Unknown error' },
       { status: 500 }
     );
   }

@@ -108,17 +108,26 @@ const TeamSection = () => {
 
     const handleSaveMember = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if(!file && !memberObj.id) return;
-        const imageLink = file?.name || memberObj.imageLink;
+        if (!file && !memberObj.id) return;
+
+        let imageLink = file?.name || memberObj.imageLink;
+
         try {
-            if(!memberObj.id && file) {
+            if(file) {
+                const extension = file.name.includes('.') 
+                    ? file.name.substring(file.name.lastIndexOf('.')) 
+                    : '.png';
+                const newFileName = `${Date.now()}${extension}`;
+                const renamedFile = new File([file], newFileName, { type: file.type });
+
                 const formData = new FormData();
-                formData.append('image', file);
-                await uploadMemberImage(formData).unwrap();
-            } else if(file) {
-                const formData = new FormData();
-                formData.append('image', file);
-                await updateMemberImage({ formData, oldImage: memberObj.imageLink }).unwrap();
+                formData.append('image', renamedFile);
+                imageLink = newFileName;
+                if(memberObj.id) {
+                    await updateMemberImage({ formData, oldImage: memberObj.imageLink }).unwrap();
+                } else {
+                    await uploadMemberImage(formData).unwrap();
+                }
             }
 
             const newMember: Member = {
