@@ -41,6 +41,9 @@ const Employee = ({ member, handlePrepareUpdate, handleDeleteMember, isAdminLoge
                         width={130}
                         height={130}
                         priority
+                        sizes='(max-width: 768px) 50vw, 300px'
+                        placeholder='blur'
+                        blurDataURL={`https://res.cloudinary.com/dswmp2omq/image/upload/w_10,q_10/v1748941553/memberSection/${member.imageLink}`}
                     />
                 </div>
                 <div className="memberInfoWrapper">

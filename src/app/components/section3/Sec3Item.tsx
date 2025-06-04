@@ -28,6 +28,9 @@ const Sec3Item = ({ item, handlePrepareUpdate, handleDelete, isAdminLogedIn }: S
                     width={150}
                     height={150}
                     priority
+                    sizes='(max-width: 768px) 50vw, 300px'
+                    placeholder='blur'
+                    blurDataURL={`https://res.cloudinary.com/dswmp2omq/image/upload/w_10,q_10/v1748945194/section3-images/${item.imageLink}`}
                 />
                 {isAdminLogedIn &&
                 <>

@@ -65,6 +65,9 @@ const Sec2Item = ({ item, handlePrepareUpdate, handleDelete, isAdminLogedIn }: S
                     width={100}
                     height={100}
                     priority
+                    sizes="(max-width: 768px) 50vw, 300px"
+                    placeholder="blur"
+                    blurDataURL={`https://res.cloudinary.com/dswmp2omq/image/upload/w_10,q_10/v1748941553/section2-images/${item.imageLink}`}
                 />
             </div>
             <div className='flexColumn10'>

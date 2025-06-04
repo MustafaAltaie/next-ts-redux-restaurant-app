@@ -68,6 +68,9 @@ const ProductItem = ({ item, handlePrepareUpdate, handleDeleteItem, isAdminLoged
                     src={`https://res.cloudinary.com/dswmp2omq/image/upload/v1748941553/itemSection/${item.imageLink}`}
                     alt='Category'
                     priority
+                    sizes='(max-width: 768px) 50vw, 300px'
+                    placeholder='blur'
+                    blurDataURL={`https://res.cloudinary.com/dswmp2omq/image/upload/w_10,q_10/v1748941553/itemSection/${item.imageLink}`}
                 />
             </div>
             <h3>{item.title}</h3>
