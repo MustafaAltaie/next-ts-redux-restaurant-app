@@ -15,15 +15,17 @@ const Section1 = () => {
     const galleryRef = useRef<HTMLDivElement>(null);
     const [file, setFile] = useState<File | null>(null);
     const [uploadHomeImages] = useUploadHomeImagesMutation();
-    const { data: images = [], isLoading } = useGetHomeImagesQuery();
+    const { data: images = [], isLoading, refetch } = useGetHomeImagesQuery();
     const [deleteHomeImages] = useDeleteHomeImagesMutation();
     const isAdminLogedIn = useSelector((state: RootState) => state.admin.isLogedIn);
+    const [working, setWorking] = useState(false);
 
     useEffect(() => {
         if(images && !isLoading) {
             setList(images);
         }
     }, [images, isLoading]);
+
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -46,33 +48,48 @@ const Section1 = () => {
 
     const uploadImage = async () => {
         if(!file) return;
-        if(list.some(image => image === file.name)) return;
+
+        setWorking(true);
+        const extension = file.name.includes('.') 
+            ? file.name.substring(file.name.lastIndexOf('.')) 
+            : '.png';
+        const newFileName = `${Date.now()}${extension}`;
+        const renamedFile = new File([file], newFileName, { type: file.type });
+
         const formData = new FormData();
-        formData.append('image', file);
+        formData.append('image', renamedFile);
         try {
             await uploadHomeImages(formData).unwrap();
+            setList(prev => [...prev, `home-images/${renamedFile.name}`]);
+            await refetch();
         } catch(err) {
             console.log('Error saving image:', err);
             alert('Error uploading image');
+        } finally {
+            setWorking(false);
+            setFile(null);
         }
     }
-
-    useEffect(() => {
-        if(file) {
-            uploadImage();
-        }
-    }, [file, uploadImage]);
 
     const handleDeleteImage = async (img: string) => {
         const imageName = img.split('/').pop();
         if(!imageName) return;
-        const encodedFilename = encodeURIComponent(imageName);
-        await deleteHomeImages(encodedFilename).unwrap();
+        try {
+            setWorking(true);
+            const encodedFilename = encodeURIComponent(imageName);
+            await deleteHomeImages(encodedFilename).unwrap();
+            setList(prev => prev.filter(image => !image.endsWith(imageName)));
+        } catch (err) {
+            console.log(err);
+            alert('Error deleting image');
+        } finally {
+            setWorking(false);
+        }
     }
 
     return (
         <section className="section1">
-            {isLoading &&
+            {isLoading || working &&
             <LoadingModal />}
             {isAdminLogedIn &&
             <div className="overflowMenuButton" onClick={() => setMenuPanel(true)}>
@@ -85,10 +102,26 @@ const Section1 = () => {
                 overflowMenuPanel
                 ${menuPanel ? 'overflowMenuPanelOn' : ''}
             `}>
+                {!file &&
                 <label><i className="fa-regular fa-square-plus"></i>
                     <input type="file" style={{ display: 'none' }} onChange={e => setFile(e.target.files?.[0] ?? null)} />
                     Add new image
-                </label>
+                </label>}
+                {file &&
+                <div
+                    className='flexCenter gap10'
+                    style={{ justifyContent: 'flex-start', background: '#00aa0055', padding: '5px', borderRadius: '10px', cursor: 'pointer' }}
+                    onClick={uploadImage}
+                >
+                    <Image
+                        src={file ? URL.createObjectURL(file) : ''}
+                        alt='Uploaded image'
+                        width={30}
+                        height={30}
+                        priority
+                    />
+                    <p>Add Image</p>
+                </div>}
                 <p onClick={() => setMenuImages(!menuImages)}><i className="fa-solid fa-images"></i>View images</p>
                 <div ref={galleryRef} className='overflowMenuPanelImageWrapper'>
                     <h5>Click on any image to delete it.</h5>
@@ -96,18 +129,21 @@ const Section1 = () => {
                         {list.map(image =>
                             <div key={image} className='overflowMenuPanelImageContainer' onClick={() => handleDeleteImage(image)}>
                                 <Image
-                                    src={image}
+                                    src={`https://res.cloudinary.com/dswmp2omq/image/upload/v1749064890/${image}`}
                                     alt='Image'
                                     className='overflowMenuPanelImage'
                                     width={300}
                                     height={300}
                                     priority
+                                    sizes='(max-width: 768px) 70vw, 700px'
+                                    placeholder='blur'
+                                    blurDataURL={`https://res.cloudinary.com/dswmp2omq/image/upload/w_10,p_10/v1749064890/${image}`}
                                 />
                             </div>
                         )}
                     </div>
                 </div>
-                <p onClick={() => setMenuPanel(false)}><i className="fa-solid fa-xmark"></i>Close menu</p>
+                <p onClick={() => {setMenuPanel(false); setFile(null)}}><i className="fa-solid fa-xmark"></i>Close menu</p>
             </div>}
             <div className="sec1DetailsWrapper">
                 <div>
@@ -119,9 +155,9 @@ const Section1 = () => {
             </div>
             <div className='sec1ImagesWrapper'>
                 {list.map((image, index) =>
-                    <div key={index} className={index === count ? 'sec1ImageShow' : 'sec1ImageHide'}>
+                    <div key={image} className={index === count ? 'sec1ImageShow' : 'sec1ImageHide'}>
                         <Image
-                            src={image}
+                            src={`https://res.cloudinary.com/dswmp2omq/image/upload/v1749064890/${image}`}
                             alt='Image'
                             className='sec1Image'
                             width={300}
