@@ -4,30 +4,33 @@ import { Readable } from 'stream';
 
 export async function POST(
   req: NextRequest,
-  context: { params: { oldImageName: string } }
+  { params }: { params: { oldImageName: string } }
 ): Promise<NextResponse> {
   try {
-    const { oldImageName } = context.params;
+    const { oldImageName } = params;
 
+    // 1. Parse the incoming FormData
     const formData = await req.formData();
     const file = formData.get('image') as File;
-
     if (!file || !(file instanceof File)) {
       return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
     }
 
+    // 2. Convert the File into a Buffer
     const buffer = Buffer.from(await file.arrayBuffer());
-    const filename = file.name.replace(/\.[^/.]+$/, ''); // Remove extension for public_id
+    // Strip extension for public_id (we assume frontend named it with Date.now())
+    const publicId = file.name.replace(/\.[^/.]+$/, '');
 
-    // Delete old image from Cloudinary
-    await cloudinary.uploader.destroy(`section3-images/${oldImageName.replace(/\.[^/.]+$/, '')}`);
+    // 3. Delete the old image (strip its extension too)
+    const oldPublicId = oldImageName.replace(/\.[^/.]+$/, '');
+    await cloudinary.uploader.destroy(`section3-images/${oldPublicId}`);
 
-    // Upload new image with your custom name
+    // 4. Upload the new buffer, piping it into Cloudinary's upload_stream
     const uploadResult = await new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
           folder: 'section3-images',
-          public_id: filename, // use the frontend-assigned name
+          public_id: publicId,
           overwrite: true,
         },
         (error, result) => {
@@ -40,10 +43,10 @@ export async function POST(
     });
 
     return NextResponse.json({ success: true, data: uploadResult });
-  } catch (error) {
-    console.error('Cloudinary update error:', error);
+  } catch (err) {
+    console.error('Cloudinary update error:', err);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Unknown error' },
+      { error: err instanceof Error ? err.message : 'Unknown error' },
       { status: 500 }
     );
   }
