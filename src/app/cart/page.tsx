@@ -93,7 +93,7 @@ const Page = () => {
                         <input type="radio" id='diningIn' checked={selected === 'diningIn'} onChange={() => {setSelected('diningIn'); setOrder((prev: Order) => ({
                             ...prev, orderType: 'diningIn'
                         }))}} />
-                        <label htmlFor='diningIn'>Dining in "at the restaurant"</label>
+                        <label htmlFor='diningIn'>Dining in ( at the restaurant )</label>
                     </div>
                     <div>
                         <input type="radio" id='delivery' checked={selected === 'delivery'}  onChange={() => {setSelected('delivery'); setOrder((prev: Order) => ({
