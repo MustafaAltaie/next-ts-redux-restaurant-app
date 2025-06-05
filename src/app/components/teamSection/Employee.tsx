@@ -16,8 +16,8 @@ const Employee = ({ member, handlePrepareUpdate, handleDeleteMember, isAdminLoge
     return (
         <motion.div
             className="teamMember flexColumn10"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true, amount: 0.3 }}
         >
