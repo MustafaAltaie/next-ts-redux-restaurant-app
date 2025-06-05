@@ -5,7 +5,6 @@ import { removeFromCart, handleIncrement, handleDecrement } from "../../../featu
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../store/store";
 
-
 interface MainCartItemProps {
     item: CartItem,
 }

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { Member } from '../../../../types/Member';
+import { motion } from 'framer-motion';
 
 interface EmployeeProps {
     member: Member,
@@ -13,7 +14,13 @@ const Employee = ({ member, handlePrepareUpdate, handleDeleteMember, isAdminLoge
     const [menu, setMenu] = useState(false);
 
     return (
-        <div className="teamMember flexColumn10">
+        <motion.div
+            className="teamMember flexColumn10"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true, amount: 0.3 }}
+        >
             {isAdminLogedIn &&
             <>
             <div className="teamMemberSpace">
@@ -57,7 +64,7 @@ const Employee = ({ member, handlePrepareUpdate, handleDeleteMember, isAdminLoge
                 <i className="fa-brands fa-linkedin-in"></i>
                 <i className="fa-brands fa-facebook-f"></i>
             </div>
-        </div>
+        </motion.div>
     )
 }
 

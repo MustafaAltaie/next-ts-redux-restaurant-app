@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../store/store';
 import { addToCart } from '../../../../features/cart/cartSlice';
 import { CartItem } from '../../../../types/Cart';
+import { motion } from 'framer-motion';
 
 interface Item {
     id?: string,
@@ -40,7 +41,13 @@ const ProductItem = ({ item, handlePrepareUpdate, handleDeleteItem, isAdminLoged
     }
 
     return (
-        <div className="itemCard flexColumn10">
+        <motion.div
+            className="itemCard flexColumn10"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true, amount: 0.3 }}
+        >
             {isAdminLogedIn &&
             <>
             <div className="itemCardSpace">
@@ -83,7 +90,7 @@ const ProductItem = ({ item, handlePrepareUpdate, handleDeleteItem, isAdminLoged
                     <span className='itemButtonLabel'>{itemQuantity}</span>}
                 </button>
             </div>
-        </div>
+        </motion.div>
     )
 }
 

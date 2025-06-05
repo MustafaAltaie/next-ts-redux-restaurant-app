@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../store/store';
 import { addToCart } from '../../../../features/cart/cartSlice';
 import { CartItem } from '../../../../types/Cart';
+import { motion } from 'framer-motion';
 
 interface Item {
     id?: string,
@@ -39,7 +40,13 @@ const Sec2Item = ({ item, handlePrepareUpdate, handleDelete, isAdminLogedIn }: S
     }
 
     return (
-        <div className="sec2Card flexColumn10">
+        <motion.div
+            className="sec2Card flexColumn10"
+            initial={{ opacity: 0, scale: 0.5 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true, amount: 0 }}
+        >
             <div className={`
                     overflowMenuPanel
                     ${itemMenu ? 'overflowMenuPanelOn' : ''}
@@ -81,7 +88,7 @@ const Sec2Item = ({ item, handlePrepareUpdate, handleDelete, isAdminLogedIn }: S
                     </button>
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }
 

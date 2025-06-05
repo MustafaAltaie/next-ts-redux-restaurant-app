@@ -13,6 +13,7 @@ import SomeWhereElseForm from './SomeWhereElseForm';
 import { Order } from '../../../types/Order';
 import { useCreateOrderMutation } from '../../../features/order/orderApi';
 import Modal from './Modal';
+import { motion } from 'framer-motion';
 
 const Page = () => {
     const contactRef = useRef<HTMLDivElement>(null);
@@ -71,7 +72,13 @@ const Page = () => {
     return (
         <>
         <Header scrollToContact={scrollToContact} />
-        <section className='cartSection'>
+        <motion.section
+            className='cartSection'
+            initial={{ opacity: 0, x: -100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true, amount: 0.3 }}
+        >
             {items.length === 0 &&
             <h1 style={{ padding: '50px', textAlign: 'center' }}>Your cart is empty</h1>}
             {items.length > 0 &&
@@ -119,7 +126,7 @@ const Page = () => {
                 }
             </div>
             }
-        </section>
+        </motion.section>
         <Modal
             modal={modal}
             setModal={setModal}

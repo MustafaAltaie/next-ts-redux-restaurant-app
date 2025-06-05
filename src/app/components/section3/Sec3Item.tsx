@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 interface Item {
     id?: string,
@@ -19,7 +20,13 @@ const Sec3Item = ({ item, handlePrepareUpdate, handleDelete, isAdminLogedIn }: S
     const [menu, setMenu] = useState(false);
 
     return (
-        <div key={item.id} className="sec3Item flexCenter">
+        <motion.div
+            className="sec3Item flexCenter"
+            initial={{ opacity: 0, x: -100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true, amount: 0.3 }}
+        >
             <div className="sec3ImageWrapper flexCenter">
                 <Image
                     className='sec3Image'
@@ -53,7 +60,7 @@ const Sec3Item = ({ item, handlePrepareUpdate, handleDelete, isAdminLogedIn }: S
                 <h3>{item.title}</h3>
                 <h4>{item.description}</h4>
             </div>
-        </div>
+        </motion.div>
     )
 }
 
