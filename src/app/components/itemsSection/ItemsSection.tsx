@@ -19,6 +19,8 @@ import Form from './Form';
 import LoadingModal from '../loadingModal/LoadingModal';
 
 const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
+    const [itemList, setItemList] = useState<Item[]>([]);
+    const categoryList: string[] = [...new Set(itemList.map(item => item.category))];
     const [selected, setSelected] = useState<string>('SHOW ALL');
     const [menuPanel, setMenuPanel] = useState(false);
     const [form, setForm] = useState(false);
@@ -35,14 +37,27 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
     const [hideSec, setHideSec] = useState(false);
     const [createItem] = useCreateItemMutation();
     const [uploadItemImage] = useUploadItemImageMutation();
-    const { data: items = [] } = useReadItemQuery();
-    const categoryList: string[] = [...new Set(items?.map(item => item.category))];
+    const { data: items = [], isLoading } = useReadItemQuery();
     const [updateItem] = useUpdateItemMutation();
     const [changeItemImage] = useChangeItemImageMutation();
     const [deleteItem] = useDeleteItemMutation();
     const [deleteItemImage] = useDeleteItemImageMutation();
     const isAdminLogedIn = useSelector((state: RootState) => state.admin.isLogedIn);
     const [working, setWorking] = useState(false);
+
+    useEffect(() => {
+        if(items && !isLoading) {
+            const transformed: Item[] = items.map(item => ({
+                id: item._id,
+                title: item.title,
+                description: item.description,
+                price: item.price,
+                imageLink: item.imageLink,
+                category: item.category
+            }));
+            setItemList(transformed);
+        }
+    }, [items, isLoading]);
 
     useEffect(() => {
         if(formRef.current) {
@@ -196,9 +211,9 @@ const ItemsSection = forwardRef<HTMLDivElement>((_, ref) => {
                     <div></div>
                     <div></div>
                 </div>}
-                {items?.map((item: Item) => (item.category.toLowerCase() === selected.toLowerCase() || selected === 'SHOW ALL') ?
+                {itemList.map((item: Item) => (item.category.toLowerCase() === selected.toLowerCase() || selected === 'SHOW ALL') ?
                     <ProductItem
-                        key={item._id}
+                        key={item.id}
                         item={item}
                         handlePrepareUpdate={handlePrepareUpdate}
                         handleDeleteItem={handleDeleteItem}
